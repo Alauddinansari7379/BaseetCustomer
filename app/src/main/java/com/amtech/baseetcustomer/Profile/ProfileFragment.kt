@@ -1,5 +1,6 @@
-package com.amtech.baseetcustomer.MainActivity.Fragments
+package com.amtech.baseetcustomer.Profile
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,5 +21,16 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding=FragmentProfileBinding.bind(view)
+        with(binding){
+            layoutEdit.setOnClickListener {
+                startActivity(Intent(requireContext(),EditProfile::class.java))
+            }
+
+            cardChange.setOnClickListener {
+                startActivity(Intent(requireContext(),ChangePassword::class.java))
+            }
+
+        }
+
     }
 }

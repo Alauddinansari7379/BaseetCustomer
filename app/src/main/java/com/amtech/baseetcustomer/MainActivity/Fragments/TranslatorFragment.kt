@@ -8,10 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import com.amtech.baseetcustomer.AddService.BookingDetail
 import com.amtech.baseetcustomer.R
-import com.amtech.baseetcustomer.Translator.Translator
-import com.amtech.baseetcustomer.databinding.FragmentHomeBinding
-import com.amtech.baseetcustomer.databinding.FragmentProfileBinding
+import com.amtech.baseetcustomer.AddService.Translator
 import com.amtech.baseetcustomer.databinding.FragmentTranslatorBinding
 import com.amtech.vendorservices.V.Dashboard.model.ModelSpinner
 
@@ -29,20 +28,31 @@ class TranslatorFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding= FragmentTranslatorBinding.bind(view)
+        with(binding){
         statisticsList.clear()
-        binding.btnRequest.setOnClickListener {
+        btnRequest.setOnClickListener {
             startActivity(Intent(requireContext(), Translator::class.java))
+        }
+
+            card1.setOnClickListener {
+            startActivity(Intent(requireContext(), BookingDetail::class.java))
+        }
+            card2.setOnClickListener {
+            startActivity(Intent(requireContext(), BookingDetail::class.java))
+        }
+            card3.setOnClickListener {
+            startActivity(Intent(requireContext(), BookingDetail::class.java))
         }
         statisticsList.add(ModelSpinner("All", "1"))
         statisticsList.add(ModelSpinner("Requested", "1"))
         statisticsList.add(ModelSpinner("Pending", "1"))
         statisticsList.add(ModelSpinner("Completed", "1"))
 
-        binding.spinnerStatistics.adapter = ArrayAdapter<ModelSpinner>(
+        spinnerStatistics.adapter = ArrayAdapter<ModelSpinner>(
             requireContext(), R.layout.spinner_layout, statisticsList
         )
 
-        binding.spinnerStatistics.onItemSelectedListener =
+        spinnerStatistics.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
                     p0: AdapterView<*>?, view: View?, i: Int, l: Long
@@ -55,6 +65,7 @@ class TranslatorFragment : Fragment() {
                 override fun onNothingSelected(adapterView: AdapterView<*>?) {
 
                 }
+            }
             }
     }
 }

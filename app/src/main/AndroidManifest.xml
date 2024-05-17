@@ -15,11 +15,39 @@
         android:theme="@style/Theme.BaseetCustomer"
         tools:targetApi="31">
         <activity
-            android:name=".Translator.Translator"
+            android:name=".Profile.ChangePassword"
+            android:exported="false" />
+        <activity
+            android:name=".Profile.EditProfile"
+            android:exported="false" />
+        <activity
+            android:name=".AddService.HomeRental"
+            android:exported="false" />
+        <activity
+            android:name=".AddService.CarRental"
+            android:exported="false" />
+        <activity
+            android:name=".AddService.BookingDetail"
+            android:exported="false" />
+        <activity
+            android:name=".SignUp.ResetPassword"
+            android:exported="false" />
+        <activity
+            android:name=".SignUp.OTPVerification"
+            android:exported="false" />
+        <activity
+            android:name=".SignUp.ForgotPassword"
+            android:exported="false" />
+        <activity
+            android:name=".SignUp.SignUp"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".AddService.Translator"
             android:exported="false" />
         <activity
             android:name=".MainActivity.MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".Login.Login"
             android:exported="true"

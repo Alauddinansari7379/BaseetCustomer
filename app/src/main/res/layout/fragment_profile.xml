@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".MainActivity.Fragments.ProfileFragment">
+    tools:context=".Profile.ProfileFragment">
     <androidx.cardview.widget.CardView
         app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -117,6 +117,7 @@
                                     android:layout_marginEnd="10dp"
                                       android:gravity="end">
                                     <LinearLayout
+                                        android:id="@+id/layoutEdit"
                                         android:layout_width="30dp"
                                         android:layout_height="30dp"
                                         android:layout_marginStart="5dp"
@@ -170,6 +171,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardChange"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_margin="15dp"

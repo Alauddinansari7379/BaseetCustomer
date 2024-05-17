@@ -1,4 +1,4 @@
-package com.amtech.baseetcustomer.Login
+package com.amtech.baseetcustomer.SignUp
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,25 +8,21 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.amtech.baseetcustomer.MainActivity.MainActivity
+import com.amtech.baseetcustomer.Login.Login
 import com.amtech.baseetcustomer.R
-import com.amtech.baseetcustomer.SignUp.ForgotPassword
-import com.amtech.baseetcustomer.SignUp.SignUp
-import com.amtech.baseetcustomer.databinding.ActivityLoginBinding
+import com.amtech.baseetcustomer.databinding.ActivitySignUpBinding
 
-class Login : AppCompatActivity() {
+class SignUp : AppCompatActivity() {
     private val binding by lazy {
-        ActivityLoginBinding.inflate(layoutInflater)
+        ActivitySignUpBinding.inflate(layoutInflater)
     }
-    val context=this@Login
+    val context=this@SignUp
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+
         with(binding) {
-            btnSignIn.setOnClickListener {
-                startActivity(Intent(this@Login, MainActivity::class.java))
-            }
             passwordToggle.setOnClickListener {
                 passwordToggleOff.visibility = View.VISIBLE
                 passwordToggle.visibility = View.GONE
@@ -36,13 +32,16 @@ class Login : AppCompatActivity() {
                 passwordToggleOff.visibility = View.GONE
                 passwordToggle.visibility = View.VISIBLE
                 edtPassword.transformationMethod = null
+                //binding.passwordEdt.transformationMethod =PasswordTransformationMethod(false)
+                //binding.passwordToggle.sw
+//        }
             }
-            layoutCreate.setOnClickListener {
-                startActivity(Intent(context,SignUp::class.java))
+            layoutLogin.setOnClickListener {
+                startActivity(Intent(context,Login::class.java))
             }
 
-            layoutForgot.setOnClickListener {
-                startActivity(Intent(context,ForgotPassword::class.java))
+            btnSignUp.setOnClickListener {
+                startActivity(Intent(context,Login::class.java))
             }
         }
     }

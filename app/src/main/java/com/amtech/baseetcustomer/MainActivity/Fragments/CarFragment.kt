@@ -8,12 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import com.amtech.baseetcustomer.AddService.BookingDetail
+import com.amtech.baseetcustomer.AddService.CarRental
 import com.amtech.baseetcustomer.R
-import com.amtech.baseetcustomer.Translator.Translator
+import com.amtech.baseetcustomer.AddService.Translator
 import com.amtech.baseetcustomer.databinding.FragmentCarBinding
-import com.amtech.baseetcustomer.databinding.FragmentHomeBinding
-import com.amtech.baseetcustomer.databinding.FragmentProfileBinding
-import com.amtech.baseetcustomer.databinding.FragmentTranslatorBinding
 import com.amtech.vendorservices.V.Dashboard.model.ModelSpinner
 
 class CarFragment : Fragment() {
@@ -37,7 +36,14 @@ class CarFragment : Fragment() {
         statisticsList.add(ModelSpinner("Completed", "1"))
 
         binding.btnRequest.setOnClickListener {
-            startActivity(Intent(requireContext(),Translator::class.java))
+            startActivity(Intent(requireContext(),CarRental::class.java))
+        }
+
+        binding.card1.setOnClickListener {
+            startActivity(Intent(requireContext(),BookingDetail::class.java))
+        }
+        binding.card2.setOnClickListener {
+            startActivity(Intent(requireContext(),BookingDetail::class.java))
         }
 
         binding.spinnerStatistics.adapter = ArrayAdapter<ModelSpinner>(

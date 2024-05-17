@@ -90,6 +90,7 @@
             android:gravity="start">
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgFood"
                 android:layout_width="180dp"
                 android:layout_height="160dp"
                 android:layout_gravity="center"
@@ -107,6 +108,7 @@
             android:gravity="end">
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgTranslator"
                 android:layout_width="180dp"
                 android:layout_height="160dp"
                 android:layout_gravity="center"
@@ -134,6 +136,7 @@
             android:gravity="start">
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgCar"
                 android:layout_width="180dp"
                 android:layout_height="160dp"
                 android:layout_gravity="center"
@@ -151,6 +154,7 @@
             android:gravity="end">
 
             <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgHome"
                 android:layout_width="180dp"
                 android:layout_height="160dp"
                 android:layout_gravity="center"

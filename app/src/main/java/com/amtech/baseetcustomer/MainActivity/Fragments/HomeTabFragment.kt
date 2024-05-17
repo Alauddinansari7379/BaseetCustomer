@@ -8,11 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import com.amtech.baseetcustomer.AddService.BookingDetail
+import com.amtech.baseetcustomer.AddService.HomeRental
 import com.amtech.baseetcustomer.R
-import com.amtech.baseetcustomer.Translator.Translator
-import com.amtech.baseetcustomer.databinding.FragmentHomeBinding
+import com.amtech.baseetcustomer.AddService.Translator
 import com.amtech.baseetcustomer.databinding.FragmentHomeTabBinding
-import com.amtech.baseetcustomer.databinding.FragmentProfileBinding
 import com.amtech.vendorservices.V.Dashboard.model.ModelSpinner
 
 class HomeTabFragment : Fragment() {
@@ -31,7 +31,11 @@ class HomeTabFragment : Fragment() {
         binding= FragmentHomeTabBinding.bind(view)
         statisticsList.clear()
         binding.btnRequest.setOnClickListener {
-            startActivity(Intent(requireContext(), Translator::class.java))
+            startActivity(Intent(requireContext(), HomeRental::class.java))
+        }
+
+        binding.card1.setOnClickListener {
+            startActivity(Intent(requireContext(), BookingDetail::class.java))
         }
         statisticsList.add(ModelSpinner("All", "1"))
         statisticsList.add(ModelSpinner("Requested", "1"))
