@@ -2,22 +2,26 @@ package com.amtech.baseetcustomer.MainActivity.Fragments
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import com.amtech.baseetcustomer.AddService.BookingDetail
+import androidx.fragment.app.Fragment
 import com.amtech.baseetcustomer.AddService.CarRental
+import com.amtech.baseetcustomer.MainActivity.Adapter.AdapterCar
+import com.amtech.baseetcustomer.MainActivity.MainActivity.Companion.car
+import com.amtech.baseetcustomer.MainActivity.MainActivity.Companion.statisticsList
+import com.amtech.baseetcustomer.MainActivity.Model.ModelGetTranslatorItem
 import com.amtech.baseetcustomer.R
-import com.amtech.baseetcustomer.AddService.Translator
 import com.amtech.baseetcustomer.databinding.FragmentCarBinding
 import com.amtech.vendorservices.V.Dashboard.model.ModelSpinner
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 
 class CarFragment : Fragment() {
     private lateinit var binding: FragmentCarBinding
-    private var statisticsList = ArrayList<ModelSpinner>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,26 +33,15 @@ class CarFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentCarBinding.bind(view)
-        statisticsList.clear()
-        statisticsList.add(ModelSpinner("All", "1"))
-        statisticsList.add(ModelSpinner("Requested", "1"))
-        statisticsList.add(ModelSpinner("Pending", "1"))
-        statisticsList.add(ModelSpinner("Completed", "1"))
+
 
         binding.btnRequest.setOnClickListener {
             startActivity(Intent(requireContext(),CarRental::class.java))
         }
-
-        binding.card1.setOnClickListener {
-            startActivity(Intent(requireContext(),BookingDetail::class.java))
-        }
-        binding.card2.setOnClickListener {
-            startActivity(Intent(requireContext(),BookingDetail::class.java))
-        }
-
         binding.spinnerStatistics.adapter = ArrayAdapter<ModelSpinner>(
             requireContext(), R.layout.spinner_layout, statisticsList
         )
+
 
         binding.spinnerStatistics.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
@@ -57,13 +50,54 @@ class CarFragment : Fragment() {
                 ) {
                     if (statisticsList.size > 0) {
                         val statusChange = statisticsList[i].text
+
+                        val requested = ArrayList<ModelGetTranslatorItem>()
+                        val pending = ArrayList<ModelGetTranslatorItem>()
+                        for (i in car) {
+                            val jsonArray = JsonArray()
+                            jsonArray.add("0")
+                            val jsonObject = JsonObject()
+                            jsonObject.add("accept_by", jsonArray)
+                            val jsonString = "${i.accept_by}"
+
+                            println(jsonString)
+                            Log.e("accept_by",jsonString)
+                            if (jsonString.contains("0")) {
+                                requested.add(i)
+                            } else {
+                                pending.add(i)
+                            }
+
+                        }
+                        when (statusChange) {
+                            "All Booking" -> {
+                                binding.recyclerViewCar.apply {
+                                    adapter = AdapterCar(requireContext(), car)
+                                }
+                            }
+
+                            "Pending" -> {
+                                binding.recyclerViewCar.apply {
+                                    adapter = AdapterCar(requireContext(), pending)
+                                }
+                            }
+
+                            else -> {
+                                binding.recyclerViewCar.apply {
+                                    adapter = AdapterCar(requireContext(), requested)
+                                }
+                            }
+
+                        }
                     }
                 }
 
                 override fun onNothingSelected(adapterView: AdapterView<*>?) {
 
                 }
+
             }
+
 
 
     }

@@ -1,34 +1,50 @@
-package com.example.instantapp.sharedpreferences
+package com.amtech.baseetcustomer.sharedpreferences
 
 import android.content.Context
 import android.preference.PreferenceManager
 
 class SessionManager(context: Context?) {
     private val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+    private val prefsNew = PreferenceManager.getDefaultSharedPreferences(context)
 
     companion object {
+
         private const val IS_LOGIN = "islogin"
-        private const val CUSTOMER_NAME = "customer_name"
-        private const val BASE_URL = "base_url"
-        private const val LATITUDE = "latitude"
-        private const val LONGITUDE = "longitude"
-        private const val EMAIL = "email"
-        private const val FCM_TOKEN = "fcm_token"
-        private const val AUTH_TOKEN = "auth_token"
-        private const val AUTH_TOKEN_USER = "auth_token_user"
-        private const val USER_EMAIL = "user_email"
-        private const val USER_NAME = "user_name"
-        private const val USER_MOBILE = "user_mobile"
-        private const val GENDER = "gender"
-        private const val ID = "id"
-        private const val PASSWORD = "password"
-        private const val PHONE_NUMBER = "phone_number"
-        private const val PHONE_WITH_CODE = "phone_with_code"
-        private const val PROFILE_PICTURE = "profile_picture"
-        private const val BOOKING_TYPE = "bookingType"
-        private const val PRICE = "pricing"
-        private const val DEVICEID = "deviceId"
-        private const val SELECTED_DATE = "selected_date"
+        private const val BLOOD_GROUP="blood_group"
+        private const val CREATED_AT="created_at"
+        private const val CUSTOMER_NAME="customer_name"
+        private const val LATITUDE="latitude"
+        private const val LONGITUDE="longitude"
+        private const val EMAIL="email"
+        private const val FCM_TOKEN="fcm_token"
+        private const val GENDER="gender"
+        private const val USERID="userId"
+        private const val USERTYPE="usertype"
+        private const val GROUP="group"
+        private const val HOSPITAL_ID="HOSPITALID"
+        private const val ID_TOKEN="ID_TOKEN"
+        private const val ION_ID="ION_ID"
+        private const val OBJECTIVE_INFORMATION="objective_information"
+        private const val ASSESSMENT="assessment"
+        private const val DOCTOR_NOTE="doctor_notes"
+        private const val TEST_NAME="test_name"
+        private const val INSTRUCATIONS="instructions"
+        private const val ID="id"
+        private const val LAST_ACTIVE_ADDRESS="last_active_address"
+        private const val NO_OF_RATINGS="no_of_ratings"
+        private const val OVERALL_RATING="overall_ratings"
+        private const val PASSWORD="password"
+        private const val PHONE_NUMBER="phone_number"
+        private const val PHONE_WITH_CODE="phone_with_code"
+        private const val BASE_URL="phone_with_code"
+        private const val PRE_EXISTING_DESEASE="pre_existing_desease"
+        private const val PROFILE_PICTURE="profile_picture"
+        private const val STATUS="status"
+        private const val UPDATED_AT="updated_at"
+        private const val WALLET="wallet"
+        private const val BOOKING_TYPE="bookingType"
+        private const val PRICE="pricing"
+        private const val SELECTED_DATE="selected_date"
     }
 
     var isLogin: Boolean
@@ -41,47 +57,80 @@ class SessionManager(context: Context?) {
         prefs.edit().clear().apply()
     }
 
+    var userId: String?
+        get() = prefs.getString(USERID, "")
+        set(userId) {
+            prefs.edit().putString(USERID, userId).apply()
+        }
+
+    var usertype: String?
+        get() = prefs.getString(USERTYPE, "")
+        set(usertype) {
+            prefs.edit().putString(USERTYPE, usertype).apply()
+        }
+
+    var group: String?
+        get() = prefs.getString(GROUP, "")
+        set(group) {
+            prefs.edit().putString(GROUP, group).apply()
+        }
+
+    var hospitalId: String?
+        get() = prefs.getString(HOSPITAL_ID, "")
+        set(hospitalId) {
+            prefs.edit().putString(HOSPITAL_ID, hospitalId).apply()
+        }
+
+    var idToken: String?
+        get() = prefs.getString(ID_TOKEN, "")
+        set(idToken) {
+            prefs.edit().putString(ID_TOKEN, idToken).apply()
+        }
+
+    var imageURL: String?
+        get() = prefs.getString(BASE_URL, "")
+        set(baseURL) {
+            prefs.edit().putString(BASE_URL, baseURL).apply()
+        }
+
+    var ionId: String?
+        get() = prefs.getString(ION_ID, "")
+        set(ionId) {
+            prefs.edit().putString(ION_ID, ionId).apply()
+        }
+
+    var objectiveInformation: String?
+        get() = prefs.getString(OBJECTIVE_INFORMATION, "")
+        set(objectiveInformation) {
+            prefs.edit().putString(OBJECTIVE_INFORMATION, objectiveInformation).apply()
+        }
+    var assessment: String?
+        get() = prefs.getString(ASSESSMENT, "")
+        set(assessment) {
+            prefs.edit().putString(ASSESSMENT, assessment).apply()
+        }
+    var doctorNotes: String?
+        get() = prefs.getString(DOCTOR_NOTE, "")
+        set(doctorNotes) {
+            prefs.edit().putString(DOCTOR_NOTE, doctorNotes).apply()
+        }
+
+    var instructions: String?
+        get() = prefs.getString(INSTRUCATIONS, "")
+        set(instructions) {
+            prefs.edit().putString(INSTRUCATIONS, instructions).apply()
+        }
+
+    var testName: String?
+        get() = prefs.getString(TEST_NAME, "")
+        set(testName) {
+            prefs.edit().putString(TEST_NAME, testName).apply()
+        }
+
     var fcmToken: String?
         get() = prefs.getString(FCM_TOKEN, "")
         set(fcmToken) {
             prefs.edit().putString(FCM_TOKEN, fcmToken).apply()
-        }
-
-
-    var authToken: String?
-        get() = prefs.getString(AUTH_TOKEN, "")
-        set(authToken) {
-            prefs.edit().putString(AUTH_TOKEN, authToken).apply()
-        }
-
-    var authTokenUser: String?
-        get() = prefs.getString(AUTH_TOKEN_USER, "")
-        set(authTokenUser) {
-            prefs.edit().putString(AUTH_TOKEN_USER, authTokenUser).apply()
-        }
-
-    var userEmail: String?
-        get() = prefs.getString(USER_EMAIL, "")
-        set(userEmail) {
-            prefs.edit().putString(USER_EMAIL, userEmail).apply()
-        }
-
-    var userName: String?
-        get() = prefs.getString(USER_NAME, "")
-        set(userName) {
-            prefs.edit().putString(USER_NAME, userName).apply()
-        }
-
-    var userMobile: String?
-        get() = prefs.getString(USER_MOBILE, "")
-        set(userMobile) {
-            prefs.edit().putString(USER_MOBILE, userMobile).apply()
-        }
-
-    var deviceId: String?
-        get() = prefs.getString(DEVICEID, "")
-        set(deviceId) {
-            prefs.edit().putString(DEVICEID, deviceId).apply()
         }
     var latitude: String?
         get() = prefs.getString(LATITUDE, "")
@@ -108,28 +157,23 @@ class SessionManager(context: Context?) {
         set(password) {
             prefs.edit().putString(PASSWORD, password).apply()
         }
-    var customerName: String?
+    var  customerName: String?
         get() = prefs.getString(CUSTOMER_NAME, "")
         set(customerName) {
             prefs.edit().putString(CUSTOMER_NAME, customerName).apply()
         }
-    var baseURL: String?
-        get() = prefs.getString(BASE_URL, "")
-        set(baseURL) {
-            prefs.edit().putString(BASE_URL, baseURL).apply()
-        }
-    var email: String?
+    var  email: String?
         get() = prefs.getString(EMAIL, "")
         set(email) {
             prefs.edit().putString(EMAIL, email).apply()
         }
 
-    var phoneNumber: String?
+    var  phoneNumber: String?
         get() = prefs.getString(PHONE_NUMBER, "")
         set(phoneNumber) {
             prefs.edit().putString(PHONE_NUMBER, phoneNumber).apply()
         }
-    var phoneWithCode: String?
+    var  phoneWithCode: String?
         get() = prefs.getString(PHONE_WITH_CODE, "")
         set(phoneWithCode) {
             prefs.edit().putString(PHONE_WITH_CODE, phoneWithCode).apply()
@@ -146,6 +190,7 @@ class SessionManager(context: Context?) {
         set(gender) {
             prefs.edit().putString(GENDER, gender).apply()
         }
+
     var selectedDate: String?
         get() = prefs.getString(SELECTED_DATE, "")
         set(selectedDate) {

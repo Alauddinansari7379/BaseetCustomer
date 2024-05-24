@@ -8,8 +8,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object ApiClient {
-     private const val BASE_URL = "https://baseet.thedemostore.in/api/v1/"
-     private var retrofit: Retrofit? = null
+    private const val BASE_URL = "https://baseet.thedemostore.in/api/v1/"
+    private var retrofit: Retrofit? = null
     private val client: Retrofit?
         get() {
             val interceptor = HttpLoggingInterceptor()
@@ -39,4 +39,3 @@ object ApiClient {
         .readTimeout(60, TimeUnit.SECONDS).build()
 
 }
-

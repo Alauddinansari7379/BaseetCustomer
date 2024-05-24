@@ -478,6 +478,84 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardLogout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_margin="15dp"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="2dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/dot_main_c"
+                android:gravity="center">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/main_color"
+                    android:background="@drawable/logout">
+
+                </androidx.appcompat.widget.AppCompatImageView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="10dp"
+                    android:gravity="center_vertical"
+                    android:text="Log out"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:textStyle="bold">
+
+                </androidx.appcompat.widget.AppCompatTextView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="5"
+                android:gravity="center_vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="5dp"
+                    android:background="@drawable/baseline_keyboard_arrow_right_24">
+
+                </androidx.appcompat.widget.AppCompatImageView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -37,7 +37,7 @@
             android:fontFamily="@font/poppins_bold"
             android:text="Booking Detail"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -107,18 +107,35 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
                             android:layout_weight="1"
-                            android:orientation="vertical"
+                             android:orientation="vertical"
                             tools:ignore="UselessParent">
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dp"
+                                 app:cardCornerRadius="15dp">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/image"
+                                android:layout_width="match_parent"
+                                android:layout_marginEnd="5dp"
+                                android:scaleType="centerCrop"
+                                android:background="@drawable/carnew"
+                                android:layout_height="120dp">
+
+                            </androidx.appcompat.widget.AppCompatImageView>
+                            </androidx.cardview.widget.CardView>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
 
                                 <LinearLayout
+                                    android:id="@+id/layoutProfile"
                                     android:layout_width="80dp"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
-                                    android:orientation="vertical">
+                                     android:orientation="vertical">
 
                                     <de.hdodenhof.circleimageview.CircleImageView
                                         android:layout_width="50dp"
@@ -142,8 +159,9 @@
                                         android:layout_marginStart="10dp">
 
                                         <androidx.appcompat.widget.AppCompatTextView
+                                            android:id="@+id/tvName"
                                             android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
+                                            android:layout_height="match_parent"
                                             android:fontFamily="@font/poppins_bold"
                                             android:text="Olive Yew"
                                             android:textColor="@color/text_color"
@@ -167,6 +185,7 @@
                                                 android:gravity="center">
 
                                                 <androidx.appcompat.widget.AppCompatTextView
+                                                    android:id="@+id/tvStatues"
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:fontFamily="@font/poppins_regular"
@@ -188,13 +207,13 @@
 
 
                                         <androidx.appcompat.widget.AppCompatTextView
+                                            android:id="@+id/tvFromTo"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/poppins_regular"
                                             android:text="Turkis to Arabic"
                                             android:textColor="@color/text_color"
-                                            android:textSize="12sp"
-                                            android:textStyle="bold">
+                                            android:textSize="12sp">
 
                                         </androidx.appcompat.widget.AppCompatTextView>
 
@@ -208,13 +227,14 @@
 
 
                                         <androidx.appcompat.widget.AppCompatTextView
+                                            android:id="@+id/tvTime"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/poppins_regular"
                                             android:text="7:23 to 8:23"
                                             android:textColor="@color/text_color"
                                             android:textSize="12sp"
-                                            android:textStyle="bold">
+                                           >
 
                                         </androidx.appcompat.widget.AppCompatTextView>
 
@@ -233,6 +253,7 @@
 
                             </androidx.viewpager.widget.ViewPager>
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvDescriptionH"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_bold"
@@ -240,7 +261,7 @@
                                 android:layout_marginTop="20dp"
                                 android:textColor="@color/text_color"
                                 android:textSize="12sp"
-                                android:textStyle="bold">
+                                >
 
                             </androidx.appcompat.widget.AppCompatTextView>
                             <LinearLayout
@@ -255,6 +276,7 @@
 
 
                                     <androidx.appcompat.widget.AppCompatTextView
+                                        android:id="@+id/tvDescription"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:fontFamily="@font/poppins_regular"
@@ -270,9 +292,57 @@
 
 
                             </LinearLayout>
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:id="@+id/layoutHomeDetial"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvHomeDetailH"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_bold"
+                                    android:text="Home Deatial"
+                                    android:layout_marginTop="20dp"
+                                    android:textColor="@color/text_color"
+                                    android:textSize="12sp"
+                                    >
+
+                                </androidx.appcompat.widget.AppCompatTextView>
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal">
+
+
+                                        <androidx.appcompat.widget.AppCompatTextView
+                                            android:id="@+id/tvHomeDetail"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="@font/poppins_regular"
+                                            android:layout_marginEnd="5dp"
+                                            android:layout_marginTop="10dp"
+                                            android:text="As Documents  this is the description As Documents  this is the description As Documents  this is the description "
+                                            android:textColor="@color/text_color"
+                                            android:textSize="12sp"
+                                            >
+
+                                        </androidx.appcompat.widget.AppCompatTextView>
+                                    </LinearLayout>
+
+
+                                </LinearLayout>
+
+                            </androidx.appcompat.widget.LinearLayoutCompat>
 
 
                             <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvCountry"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_bold"
@@ -280,7 +350,7 @@
                                 android:layout_marginTop="20dp"
                                  android:textColor="@color/text_color"
                                 android:textSize="12sp"
-                                android:textStyle="bold">
+                                >
 
                             </androidx.appcompat.widget.AppCompatTextView>
 
@@ -293,30 +363,33 @@
                                    >
 
                                     <androidx.appcompat.widget.AppCompatTextView
+                                        android:id="@+id/tvDoc"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:fontFamily="@font/poppins_regular"
                                         android:text="On Call"
                                          android:textColor="@color/text_color"
                                         android:textSize="12sp"
-                                        android:textStyle="bold">
+                                   >
 
                                     </androidx.appcompat.widget.AppCompatTextView>
                                     <androidx.appcompat.widget.AppCompatTextView
+                                        android:id="@+id/tvDates"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginEnd="5dp"
                                         android:layout_marginTop="10dp"
                                         android:fontFamily="@font/poppins_regular"
-                                        android:text="27/05/2024,27/05/2024,27/05/2024,27/05/2024,,27/05/2024,27/05/2024"
+                                        android:text="27/05/2024,27/05/2024"
                                         android:textColor="@color/text_color"
                                         android:textSize="12sp"
-                                        android:textStyle="bold">
+                                     >
 
                                     </androidx.appcompat.widget.AppCompatTextView>
 
 
                                     <androidx.appcompat.widget.AppCompatTextView
+                                        android:id="@+id/tvPrice"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:fontFamily="@font/poppins_bold"
@@ -353,7 +426,7 @@
                                 <androidx.appcompat.widget.AppCompatButton
                                     android:id="@+id/btnReject"
                                     android:layout_width="match_parent"
-                                    android:layout_height="45dp"
+                                    android:layout_height="35dp"
                                     android:layout_gravity="center"
                                     android:background="@drawable/gradient_button"
                                     android:fontFamily="@font/poppins_regular"
@@ -363,14 +436,14 @@
                                     android:layout_marginEnd="5dp"
                                     android:textAllCaps="false"
                                     android:textColor="@color/white"
-                                    android:textSize="14sp"
+                                    android:textSize="12sp"
                                     android:textStyle="bold">
 
                                 </androidx.appcompat.widget.AppCompatButton>
                                 <androidx.appcompat.widget.AppCompatButton
                                     android:id="@+id/btnAccept"
                                      android:layout_width="match_parent"
-                                    android:layout_height="45dp"
+                                    android:layout_height="35dp"
                                     android:layout_gravity="center"
                                     android:layout_weight="1"
                                     android:background="@drawable/corner_green"

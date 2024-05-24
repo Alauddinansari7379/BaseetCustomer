@@ -37,7 +37,7 @@
             android:fontFamily="@font/poppins_bold"
             android:text="Home Rental"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="12sp" />
 
     </androidx.appcompat.widget.Toolbar>
     <ScrollView
@@ -68,7 +68,7 @@
                         android:fontFamily="@font/poppins_bold"
                         android:text="Name"
                         android:textColor="@color/black"
-                        android:textSize="14sp">
+                        android:textSize="12sp">
 
                     </androidx.appcompat.widget.AppCompatTextView>
 
@@ -94,7 +94,7 @@
                     android:hint="Name"
                     android:inputType="text"
                     android:padding="10dp"
-                    android:textSize="14sp">
+                    android:textSize="12sp">
 
                 </androidx.appcompat.widget.AppCompatEditText>
 
@@ -114,7 +114,7 @@
                         android:fontFamily="@font/poppins_bold"
                         android:text="Country Name"
                         android:textColor="@color/black"
-                        android:textSize="14sp">
+                        android:textSize="12sp">
 
                     </androidx.appcompat.widget.AppCompatTextView>
 
@@ -125,22 +125,18 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="10dp">
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/corner">
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <Spinner
+                    android:id="@+id/spinnerCountry"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
-                    android:layout_marginEnd="5dp"
-                    android:background="@drawable/corner"
-                    android:fontFamily="@font/poppins_regular"
-                    android:hint="Country Name"
-                    android:inputType="text"
-                    android:padding="10dp"
-                    android:textSize="14sp">
+                    android:textSize="12sp">
 
-                </androidx.appcompat.widget.AppCompatEditText>
+                </Spinner>
+
 
             </LinearLayout>
             <LinearLayout
@@ -157,7 +153,7 @@
                     android:fontFamily="@font/poppins_bold"
                     android:text="Family Person"
                     android:textColor="@color/black"
-                    android:textSize="14sp">
+                    android:textSize="12sp">
 
                 </androidx.appcompat.widget.AppCompatTextView>
 
@@ -180,7 +176,7 @@
                         android:fontFamily="@font/poppins_regular"
                         android:text="Adults"
                         android:textColor="@color/black"
-                        android:textSize="14sp">
+                        android:textSize="12sp">
 
                     </androidx.appcompat.widget.AppCompatTextView>
                     <LinearLayout
@@ -191,6 +187,7 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
+                            android:id="@+id/layoutMinuAdult"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_marginStart="15dp"
@@ -211,14 +208,14 @@
 
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tvCount"
+                            android:id="@+id/tvCountAdult"
                             android:layout_width="30dp"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="1"
                             android:fontFamily="@font/poppins_bold"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="12sp"
                             android:textStyle="bold">
 
                         </androidx.appcompat.widget.AppCompatTextView>
@@ -233,6 +230,7 @@
                             android:gravity="center">
 
                             <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/layoutPlushAdult"
                                 android:layout_width="15dp"
                                 android:layout_height="15dp"
                                 android:layout_gravity="center"
@@ -261,7 +259,7 @@
                         android:fontFamily="@font/poppins_regular"
                         android:text="Childs"
                         android:textColor="@color/black"
-                        android:textSize="14sp">
+                        android:textSize="12sp">
 
                     </androidx.appcompat.widget.AppCompatTextView>
                     <LinearLayout
@@ -272,6 +270,7 @@
                         android:orientation="horizontal">
 
                         <LinearLayout
+                            android:id="@+id/layoutMinuChild"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:background="@drawable/dot_main_c"
@@ -291,19 +290,21 @@
 
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvCountChild"
                              android:layout_width="30dp"
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="0"
                             android:fontFamily="@font/poppins_bold"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="12sp"
                             android:textStyle="bold">
 
                         </androidx.appcompat.widget.AppCompatTextView>
 
 
                         <LinearLayout
+                            android:id="@+id/layoutPlushChild"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_marginStart="5dp"
@@ -353,7 +354,7 @@
                             android:fontFamily="@font/poppins_bold"
                             android:text="Home Type"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="12sp"
                             >
 
                         </androidx.appcompat.widget.AppCompatTextView>
@@ -377,12 +378,10 @@
                         android:background="@drawable/corner">
 
                         <Spinner
+                            android:id="@+id/spinnerHomeType"
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
-                            android:hint="Blood Group"
-                            android:inputType="textEmailAddress"
-                            android:padding="10dp"
-                            android:textSize="15dp">
+                            android:textSize="12sp">
 
                         </Spinner>
 
@@ -410,7 +409,7 @@
                         android:fontFamily="@font/poppins_bold"
                         android:text="Home Details"
                         android:textColor="@color/black"
-                        android:textSize="14sp">
+                        android:textSize="12sp">
 
                     </androidx.appcompat.widget.AppCompatTextView>
 
@@ -427,16 +426,17 @@
                 android:layout_marginRight="10dp">
 
                 <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edtDetail"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_marginEnd="5dp"
                     android:background="@drawable/corner"
                     android:fontFamily="@font/poppins_regular"
-                    android:hint="Enter Comment"
+                    android:hint="Enter Deatils"
                     android:inputType="text"
                     android:gravity="start"
                     android:padding="10dp"
-                    android:textSize="14sp">
+                    android:textSize="12sp">
 
                 </androidx.appcompat.widget.AppCompatEditText>
 
@@ -468,7 +468,7 @@
                             android:fontFamily="@font/poppins_bold"
                             android:text="Rent Date"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="12sp"
                             >
 
                         </androidx.appcompat.widget.AppCompatTextView>
@@ -501,7 +501,7 @@
                             android:inputType="textEmailAddress"
                             android:padding="10dp"
                             android:text="Select Rent Date"
-                            android:textSize="14sp">
+                            android:textSize="12sp">
 
                         </androidx.appcompat.widget.AppCompatTextView>
 
@@ -535,7 +535,7 @@
                             android:fontFamily="@font/poppins_bold"
                             android:text="Start time"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="12sp"
                             >
 
                         </androidx.appcompat.widget.AppCompatTextView>
@@ -555,7 +555,7 @@
                             android:fontFamily="@font/poppins_bold"
                             android:text="End time"
                             android:textColor="@color/black"
-                            android:textSize="14sp"
+                            android:textSize="12sp"
                             >
 
                         </androidx.appcompat.widget.AppCompatTextView>
@@ -578,12 +578,11 @@
                         android:background="@drawable/corner">
 
                         <Spinner
+                            android:id="@+id/spinnerStartT"
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
-                            android:hint="Blood Group"
-                            android:inputType="textEmailAddress"
-                            android:padding="10dp"
-                            android:textSize="15sp">
+
+                            android:textSize="12sp">
 
                         </Spinner>
 
@@ -597,12 +596,10 @@
                         android:background="@drawable/corner">
 
                         <Spinner
+                            android:id="@+id/spinnerEndT"
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
-                            android:hint="Blood Group"
-                            android:inputType="textEmailAddress"
-                            android:padding="10dp"
-                            android:textSize="15dp">
+                            android:textSize="12sp">
 
                         </Spinner>
 
@@ -626,7 +623,7 @@
                         android:fontFamily="@font/poppins_bold"
                         android:text="Expected Rent"
                         android:textColor="@color/black"
-                        android:textSize="14sp">
+                        android:textSize="12sp">
 
                     </androidx.appcompat.widget.AppCompatTextView>
 
@@ -650,7 +647,7 @@
                     android:hint="Enter Cost"
                     android:inputType="numberDecimal"
                     android:padding="10dp"
-                    android:textSize="14sp">
+                    android:textSize="12sp">
 
                 </androidx.appcompat.widget.AppCompatEditText>
 
@@ -669,7 +666,7 @@
                         android:fontFamily="@font/poppins_bold"
                         android:text="Description"
                         android:textColor="@color/black"
-                        android:textSize="14sp">
+                        android:textSize="12sp">
 
                     </androidx.appcompat.widget.AppCompatTextView>
 
@@ -684,16 +681,17 @@
                 android:layout_marginRight="10dp">
 
                 <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edtDescription"
                      android:layout_width="match_parent"
                     android:layout_height="75dp"
                     android:layout_marginEnd="5dp"
                     android:background="@drawable/corner"
                     android:fontFamily="@font/poppins_regular"
                     android:hint="Enter Description"
-                    android:inputType="numberDecimal"
+                    android:inputType="textMultiLine"
                     android:padding="10dp"
                     android:gravity="start"
-                    android:textSize="14sp">
+                    android:textSize="12sp">
 
                 </androidx.appcompat.widget.AppCompatEditText>
 
