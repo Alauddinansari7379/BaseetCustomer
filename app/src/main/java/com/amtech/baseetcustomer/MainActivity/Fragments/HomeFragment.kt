@@ -26,15 +26,15 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding= FragmentHomeBinding.bind(view)
         with(binding){
-//             imgHome.setOnClickListener {
-//                startActivity(Intent(requireContext(),HomeRental::class.java))
-//            }
-//            imgTranslator.setOnClickListener {
-//                startActivity(Intent(requireContext(),Translator::class.java))
-//            }
-//            imgCar.setOnClickListener {
-//                startActivity(Intent(requireContext(),CarRental::class.java))
-//            }
+             imgHome.setOnClickListener {
+                startActivity(Intent(requireContext(),HomeRental::class.java))
+            }
+            imgTranslator.setOnClickListener {
+                startActivity(Intent(requireContext(),Translator::class.java))
+            }
+            imgCar.setOnClickListener {
+                startActivity(Intent(requireContext(),CarRental::class.java))
+            }
         }
     }
 }

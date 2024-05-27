@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".SignUp.SignUp">
 
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@drawable/login_logo">
 
+    </androidx.appcompat.widget.AppCompatImageView>
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:background="@drawable/login_logo">
-
-            </androidx.appcompat.widget.AppCompatImageView>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,11 +25,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
                 android:fontFamily="@font/poppins_bold"
                 android:text="Signup"
                 android:textColor="@color/black"
@@ -41,9 +41,9 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
                 android:layout_marginLeft="10dp"
                 android:fontFamily="@font/poppins_regular"
-                android:layout_marginStart="15dp"
                 android:text="Please fill below details to continue"
                 android:textColor="@color/black"
                 android:textSize="14sp">
@@ -78,7 +78,8 @@
                 android:layout_marginRight="10dp">
 
                 <androidx.appcompat.widget.AppCompatEditText
-                     android:layout_width="match_parent"
+                    android:id="@+id/edtFirstName"
+                    android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
@@ -91,6 +92,7 @@
                 </androidx.appcompat.widget.AppCompatEditText>
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -118,7 +120,8 @@
                 android:layout_marginRight="10dp">
 
                 <androidx.appcompat.widget.AppCompatEditText
-                     android:layout_width="match_parent"
+                    android:id="@+id/edtLastName"
+                    android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
@@ -131,6 +134,7 @@
                 </androidx.appcompat.widget.AppCompatEditText>
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -158,7 +162,8 @@
                 android:layout_marginRight="10dp">
 
                 <androidx.appcompat.widget.AppCompatEditText
-                     android:layout_width="match_parent"
+                    android:id="@+id/edtEmail"
+                    android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
@@ -176,6 +181,50 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="Phone Number"
+                    android:textColor="@color/black"
+                    android:textSize="12sp">
+
+                </androidx.appcompat.widget.AppCompatTextView>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/edtPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1"
+                    android:maxLength="12"
+                    android:background="@drawable/corner"
+                    android:hint="Enter Phone Number"
+                    android:inputType="number"
+                    android:padding="10dp"
+                    android:textSize="14sp">
+
+                </androidx.appcompat.widget.AppCompatEditText>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp">
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -195,9 +244,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:orientation="horizontal"
+                android:layout_marginEnd="15dp"
                 android:background="@drawable/corner"
-                android:layout_marginEnd="15dp">
+                android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/edtPassword"
@@ -212,6 +261,7 @@
                     android:textSize="14sp">
 
                 </androidx.appcompat.widget.AppCompatEditText>
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -224,18 +274,19 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:padding="3dp"
-                        android:visibility="gone"
                         android:src="@drawable/ic_baseline_visibility_24"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="@+id/passwordEdt"
                         app:layout_constraintEnd_toEndOf="@+id/passwordEdt"
                         app:layout_constraintTop_toTopOf="@+id/passwordEdt"
                         app:tint="@color/black" />
+
                     <ImageView
                         android:id="@+id/password_toggleOff"
                         android:layout_width="25dp"
                         android:layout_height="25dp"
-                        android:padding="3dp"
                         android:background="?actionBarItemBackground"
+                        android:padding="3dp"
                         android:src="@drawable/ic_baseline_visibility_off_24"
                         app:layout_constraintBottom_toBottomOf="@+id/passwordEdt"
                         app:layout_constraintEnd_toEndOf="@+id/passwordEdt"
@@ -256,7 +307,7 @@
                 android:layout_marginTop="50dp"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/gradient_button"
-                 android:fontFamily="@font/poppins_regular"
+                android:fontFamily="@font/poppins_regular"
                 android:gravity="center"
                 android:text="Sign Up"
                 android:textAllCaps="false"
@@ -265,37 +316,40 @@
                 android:textStyle="bold">
 
             </androidx.appcompat.widget.AppCompatButton>
+
             <LinearLayout
                 android:id="@+id/layoutLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="15dp"
                 android:layout_gravity="center"
-                android:gravity="center"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
                 android:layout_marginBottom="15dp"
-                android:layout_marginTop="15dp">
+                android:gravity="center">
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:gravity="center"
                     android:fontFamily="@font/poppins_regular"
+                    android:gravity="center"
                     android:text="Already have an account?"
-                    android:textStyle="bold"
                     android:textColor="@color/text_color"
-                    android:textSize="12sp">
+                    android:textSize="12sp"
+                    android:textStyle="bold">
 
                 </androidx.appcompat.widget.AppCompatTextView>
+
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:gravity="center"
                     android:fontFamily="@font/poppins_regular"
+                    android:gravity="center"
                     android:text="Log In"
-                    android:textStyle="bold"
                     android:textColor="@color/main_color"
-                    android:textSize="12sp">
+                    android:textSize="12sp"
+                    android:textStyle="bold">
 
                 </androidx.appcompat.widget.AppCompatTextView>
 

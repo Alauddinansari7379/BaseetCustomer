@@ -11,24 +11,36 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import cn.pedant.SweetAlert.SweetAlertDialog
+import com.amtech.baseetcustomer.AddService.Model.ModelPlaceOrder
+import com.amtech.baseetcustomer.AddService.Payment
+import com.amtech.baseetcustomer.Helper.AppProgressBar
+import com.amtech.baseetcustomer.Helper.myToast
 import com.amtech.baseetcustomer.Login.Login
+import com.amtech.baseetcustomer.MainActivity.Model.ModelAllOrder
 import com.amtech.baseetcustomer.MainActivity.Model.ModelGetTranslatorItem
 import com.amtech.baseetcustomer.R
 import com.amtech.baseetcustomer.databinding.ActivityMainBinding
+import com.amtech.baseetcustomer.retrofit.ApiClient
 import com.amtech.baseetcustomer.sharedpreferences.SessionManager
 import com.amtech.vendorservices.V.Dashboard.model.ModelSpinner
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
+
     private var context = this@MainActivity
     lateinit var sessionManager: SessionManager
     var count = 0
     var countDes = 0
     private var paymentResponse = ""
     private var callFrom = ""
+    private var foodId = ""
+    private var id = ""
     private lateinit var bottomNav: BottomNavigationView
     companion object{
         var statisticsList = ArrayList<ModelSpinner>()
@@ -54,6 +66,9 @@ class MainActivity : AppCompatActivity() {
 
          paymentResponse= intent.getStringExtra("text").toString()
          callFrom= intent!!.getStringExtra("callFrom").toString()
+        foodId= intent!!.getStringExtra("foodId").toString()
+        id= intent!!.getStringExtra("foodId").toString()
+
 
       //  binding.tvTitle.setOnClickListener {
 
@@ -67,16 +82,7 @@ class MainActivity : AppCompatActivity() {
                     val statusValue = matchResult.groupValues[1]
                     if (statusValue=="TXN_SUCCESS"){
                         println("STATUS value: $statusValue")
-                        SweetAlertDialog(
-                            context,
-                            SweetAlertDialog.SUCCESS_TYPE
-                        ).setTitleText("Your Order is Placed")
-                            .setConfirmText("ok").showCancelButton(false)
-                            .setConfirmClickListener { sDialog ->
-                                sDialog.cancel()
-                            }.setCancelClickListener { sDialog ->
-                                sDialog.cancel()
-                            }.show()
+                        apiCallMakeOrder()
                     } else
                  {
                     println("STATUS key not found")
@@ -117,7 +123,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.fragment_Notification -> {
-                    binding.tvTitle.text = "Notifications"
+                    binding.tvTitle.text = "Order List"
 
                 }
 
@@ -132,6 +138,64 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+    }
+    private fun apiCallMakeOrder() {
+        AppProgressBar.showLoaderDialog(context)
+        ApiClient.apiService.makeOrder(
+            sessionManager.idToken.toString(),
+            foodId, sessionManager.userId.toString(), id, "cash_on_delivery", "take_away"
+        )
+            .enqueue(object : Callback<ModelPlaceOrder> {
+                @SuppressLint("LogNotTimber")
+                override fun onResponse(
+                    call: Call<ModelPlaceOrder>, response: Response<ModelPlaceOrder>
+                ) {
+                    try {
+                        if (response.code() == 404) {
+                            myToast(context, "Something went wrong")
+                            AppProgressBar.hideLoaderDialog()
+
+                        } else if (response.code() == 500) {
+                            myToast(context, "Server Error")
+                            AppProgressBar.hideLoaderDialog()
+
+                        } else {
+                            SweetAlertDialog(
+                                context,
+                                SweetAlertDialog.SUCCESS_TYPE
+                            ).setTitleText("Your Order is Placed")
+                                .setConfirmText("ok").showCancelButton(false)
+                                .setConfirmClickListener { sDialog ->
+                                    sDialog.cancel()
+                                }.setCancelClickListener { sDialog ->
+                                    sDialog.cancel()
+                                    AppProgressBar.hideLoaderDialog()
+                                }.show()
+                            AppProgressBar.hideLoaderDialog()
+
+                            // onBackPressed()
+                        }
+                    } catch (e: Exception) {
+                        myToast(context, "Something went wrong")
+                        e.printStackTrace()
+                        AppProgressBar.hideLoaderDialog()
+                    }
+                }
+
+                override fun onFailure(call: Call<ModelPlaceOrder>, t: Throwable) {
+                    myToast(context, t.message.toString())
+                    AppProgressBar.hideLoaderDialog()
+                    count++
+                    if (count <= 3) {
+                        Log.e("count", count.toString())
+                        apiCallMakeOrder()
+                    } else {
+                        myToast(context, t.message.toString())
+                        AppProgressBar.hideLoaderDialog()
+                    }
+                    AppProgressBar.hideLoaderDialog()
+                }
+            })
     }
 
 }

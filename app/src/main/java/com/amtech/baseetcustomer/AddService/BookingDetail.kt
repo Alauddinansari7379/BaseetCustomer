@@ -26,6 +26,7 @@ class BookingDetail : AppCompatActivity() {
     var id = ""
     private var foodId = ""
     private var price = ""
+    private var serviceDate = ""
     private lateinit var sessionManager: SessionManager
 
     @SuppressLint("SetTextI18n")
@@ -39,7 +40,6 @@ class BookingDetail : AppCompatActivity() {
                 onBackPressed()
             }
             try {
-
                 val callFrom = intent.getStringExtra("callFrom")
                 id = intent.getStringExtra("id").toString()
                 foodId = intent.getStringExtra("foodId").toString()
@@ -52,8 +52,8 @@ class BookingDetail : AppCompatActivity() {
                 val description = intent.getStringExtra("description")
                 val country = intent.getStringExtra("country")
                 val type = intent.getStringExtra("type")
-                val serviceDate = intent.getStringExtra("serv_date")
-                  price = intent!!.getStringExtra("price").toString()
+                 serviceDate = intent!!.getStringExtra("serv_date").toString()
+                price = intent!!.getStringExtra("price").toString()
                 val trPerson = intent.getStringExtra("trperson")
                 val driverType = intent.getStringExtra("driv_type")
                 val aminetes = intent.getStringExtra("aminetes")
@@ -61,8 +61,8 @@ class BookingDetail : AppCompatActivity() {
 
                 when (callFrom) {
                     "Translator" -> {
-                        image.visibility=View.GONE
-                        layoutHomeDetial.visibility=View.GONE
+                        image.visibility = View.GONE
+                        layoutHomeDetial.visibility = View.GONE
                         tvName.text = name
                         tvStatues.text = statues
                         tvFromTo.text = trFrom + " To " + trTo
@@ -75,12 +75,12 @@ class BookingDetail : AppCompatActivity() {
                     }
 
                     "car" -> {
-                        layoutProfile.visibility=View.GONE
-                        layoutHomeDetial.visibility=View.GONE
+                        layoutProfile.visibility = View.GONE
+                        layoutHomeDetial.visibility = View.GONE
                         tvDescriptionH.text = "Comment"
                         tvName.text = name
                         tvStatues.text = statues
-                        tvFromTo.text ="No Of Person : $trPerson"
+                        tvFromTo.text = "No Of Person : $trPerson"
                         tvTime.text = startTime + " To " + endTime
                         tvDescription.text = description
                         tvCountry.text = "Country Name : " + country
@@ -91,16 +91,16 @@ class BookingDetail : AppCompatActivity() {
                     }
 
                     else -> {
-                        layoutProfile.visibility=View.GONE
-                        tvFromTo.text ="No Of Family : $trPerson"
-                        tvHomeDetail.text =aminetes
-                        tvDoc.text ="Home Type : $homeType"
+                        layoutProfile.visibility = View.GONE
+                        tvFromTo.text = "No Of Family : $trPerson"
+                        tvHomeDetail.text = aminetes
+                        tvDoc.text = "Home Type : $homeType"
                         tvName.text = name
                         tvStatues.text = statues
-                         tvTime.text = startTime + " To " + endTime
+                        tvTime.text = startTime + " To " + endTime
                         tvDescription.text = description
                         tvCountry.text = "Country Name : " + country
-                         tvDates.text = serviceDate
+                        tvDates.text = serviceDate
                         tvPrice.text = "Price : $" + price
 
 
@@ -111,7 +111,14 @@ class BookingDetail : AppCompatActivity() {
             }
 
             btnAccept.setOnClickListener {
-                apiCallAccept()
+               // apiCallAccept()
+                val i = Intent(context, Payment::class.java)
+                    .putExtra("callFrom", "Booking")
+                    .putExtra("foodId", foodId)
+                    .putExtra("id", id)
+                    .putExtra("serviceDate", serviceDate)
+                    .putExtra("price", price)
+                context.startActivity(i)
             }
 
         }
@@ -139,12 +146,15 @@ class BookingDetail : AppCompatActivity() {
 
                         } else {
                             myToast(context, "Order Accepted")
-                                 val i = Intent(context, Payment::class.java)
-                            .putExtra("callFrom", "Booking")
+                            val i = Intent(context, Payment::class.java)
+                                .putExtra("callFrom", "Booking")
+                                .putExtra("foodId", foodId)
+                                .putExtra("id", id)
+                                .putExtra("serviceDate", serviceDate)
                                 .putExtra("price", price)
                             context.startActivity(i)
                             AppProgressBar.hideLoaderDialog()
-                           // onBackPressed()
+                            // onBackPressed()
                         }
                     } catch (e: Exception) {
                         myToast(context, "Something went wrong")

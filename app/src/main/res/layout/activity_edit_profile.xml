@@ -44,6 +44,79 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        >
+
+        <LinearLayout
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            >
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgProfile"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:background="@drawable/usernew"
+                android:scaleType="centerCrop">
+
+            </de.hdodenhof.circleimageview.CircleImageView>
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="10dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="Maureen Biologist"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    >
+
+                </androidx.appcompat.widget.AppCompatTextView>
+
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="info099@gmail.com"
+                    android:textColor="@color/text_color"
+                    android:textSize="12sp"
+                    android:textStyle="bold">
+
+                </androidx.appcompat.widget.AppCompatTextView>
+
+
+            </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="15dp">
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -68,6 +141,7 @@
         android:layout_marginRight="10dp">
 
         <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edtFirstName"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginEnd="5dp"
@@ -107,6 +181,7 @@
         android:layout_marginRight="10dp">
 
         <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edtLastName"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginEnd="5dp"
@@ -119,7 +194,8 @@
 
         </androidx.appcompat.widget.AppCompatEditText>
 
-    </LinearLayout> <LinearLayout
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp">
@@ -146,13 +222,14 @@
         android:layout_marginRight="10dp">
 
         <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edtEmail"
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
             android:background="@drawable/corner"
             android:hint="Enter Email Address"
-            android:inputType="text"
+            android:inputType="textEmailAddress"
             android:padding="10dp"
             android:textSize="14sp">
 

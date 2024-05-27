@@ -62,7 +62,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="60dp"
                     android:fontFamily="@font/poppins_bold"
-                    android:text="Email Address"
+                    android:text="Mobile Number"
                     android:textColor="@color/black"
                     android:textSize="12sp">
 
@@ -83,9 +83,10 @@
                     android:layout_height="45dp"
                     android:layout_marginEnd="5dp"
                     android:layout_weight="1"
+                    android:maxLength="12"
                     android:background="@drawable/corner"
-                    android:hint="Enter Email Address"
-                    android:inputType="textEmailAddress"
+                    android:hint="Enter Phone Number"
+                    android:inputType="number"
                     android:padding="10dp"
                     android:textSize="14sp">
 

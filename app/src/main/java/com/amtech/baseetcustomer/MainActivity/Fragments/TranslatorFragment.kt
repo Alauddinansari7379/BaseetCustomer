@@ -51,6 +51,8 @@ class TranslatorFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentTranslatorBinding.bind(view)
         sessionManager = SessionManager(requireContext())
+
+        Log.e(" sessionManager.idToken", sessionManager.idToken.toString())
         with(binding) {
             apiCallGetRequest()
 
@@ -159,7 +161,9 @@ class TranslatorFragment : Fragment() {
                                         "home" -> home.add(i)
                                         "translator" -> translator.add(i)
                                     }
-
+                                    car.reverse()
+                                    home.reverse()
+                                    translator.reverse()
                                 }
 
                             }

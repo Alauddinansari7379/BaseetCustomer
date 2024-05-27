@@ -3,7 +3,11 @@ package com.amtech.baseetcustomer.retrofit
 import com.amtech.baseetcustomer.AddService.Model.ModelPlaceOrder
 import com.amtech.baseetcustomer.AddService.Model.ModelRequest
 import com.amtech.baseetcustomer.Login.model.ModelLogin
+import com.amtech.baseetcustomer.MainActivity.Model.ModelAllOrder
+import com.amtech.baseetcustomer.MainActivity.Model.ModelGetProfile
 import com.amtech.baseetcustomer.MainActivity.Model.ModelGetTranslator
+import com.amtech.baseetcustomer.Profile.Model.ModelUpdateProfile
+import com.amtech.baseetcustomer.SignUp.Model.ModelSignUp
 import com.amtech.vendorservices.V.MyTranslotor.Model.ModelMyTra
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -17,6 +21,14 @@ import retrofit2.http.Query
 
 interface ApiInterface {
 
+    @POST("auth/register")
+    fun register(
+        @Query("f_name") f_name: String,
+        @Query("l_name") l_name: String,
+        @Query("email") email: String,
+        @Query("phone") phone: String,
+        @Query("password") password: String,
+    ): Call<ModelSignUp>
 
     @POST("auth/login")
     fun login(
@@ -24,10 +36,20 @@ interface ApiInterface {
         @Query("password") password: String,
     ): Call<ModelLogin>
 
-    @GET("vendor/profile")
+    @GET("customer/info")
     fun getProfile(
         @Header("Authorization") authorization: String
-    ): Call<ModelMyTra>
+    ): Call<ModelGetProfile>
+
+    @Multipart
+    @POST("customer/update-profile")
+    fun updateProfile(
+        @Header("Authorization") authorization: String,
+        @Query("f_name") f_name:String,
+        @Query("l_name") l_name:String,
+        @Query("email") email:String,
+        @Part image: MultipartBody.Part,
+        ): Call<ModelUpdateProfile>
 
     @GET("customer/get_srequsts")
     fun getRequest(
@@ -139,6 +161,13 @@ interface ApiInterface {
         @Query("country") country: String,
         @Query("food_type") food_type: String,
     ): Call<ModelRequest>
+
+    @GET("customer/order/orderlist")
+    fun orderList(
+        @Header("Authorization") authorization: String,
+        @Query("limit") limit: String,
+        @Query("offset") offset: String,
+     ): Call<ModelAllOrder>
 
 
 }

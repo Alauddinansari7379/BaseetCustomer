@@ -1,26 +1,157 @@
 package com.amtech.baseetcustomer.SignUp
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.text.method.PasswordTransformationMethod
-import android.view.View
-import androidx.activity.enableEdgeToEdge
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.amtech.baseetcustomer.Helper.AppProgressBar
+import com.amtech.baseetcustomer.Helper.myToast
 import com.amtech.baseetcustomer.Login.Login
-import com.amtech.baseetcustomer.R
+import com.amtech.baseetcustomer.SignUp.Model.ModelSignUp
+import com.amtech.baseetcustomer.SignUp.Model.handleErrorResponse
 import com.amtech.baseetcustomer.databinding.ActivitySignUpBinding
+import com.amtech.baseetcustomer.retrofit.ApiClient
+import com.amtech.baseetcustomer.sharedpreferences.SessionManager
+import com.google.gson.Gson
+import com.google.gson.annotations.SerializedName
+import org.json.JSONArray
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SignUp : AppCompatActivity() {
     private val binding by lazy {
         ActivitySignUpBinding.inflate(layoutInflater)
     }
+    lateinit var sessionManager: SessionManager
     val context = this@SignUp
+    var count = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        sessionManager = SessionManager(context)
+        with(binding) {
+            btnSignUp.setOnClickListener {
+                if (edtFirstName.text.toString().isEmpty()) {
+                    edtFirstName.error = "Enter First Name"
+                    edtFirstName.requestFocus()
+                    return@setOnClickListener
+                }
+                if (edtLastName.text.toString().isEmpty()) {
+                    edtLastName.error = "Enter Last Name"
+                    edtLastName.requestFocus()
+                    return@setOnClickListener
+                }
+                if (edtEmail.text.toString().isEmpty()) {
+                    edtEmail.error = "Enter Email"
+                    edtEmail.requestFocus()
+                    return@setOnClickListener
+                }
+                if (edtPhone.text.toString().isEmpty()) {
+                    edtPhone.error = "Enter Phone Number"
+                    edtPhone.requestFocus()
+                    return@setOnClickListener
+                }
+                if (edtPhone.text!!.length < 10) {
+                    myToast(context, "Enter valid phone number")
+                    edtPhone.requestFocus()
+                    return@setOnClickListener
+                }
+                if (edtPassword.text.toString().isEmpty()) {
+                    edtPassword.error = "Enter Password"
+                    edtPassword.requestFocus()
+                    return@setOnClickListener
+                }
+                if (edtPassword.text!!.length < 6) {
+                    myToast(context, "password is to short")
+                    edtPassword.requestFocus()
+                    return@setOnClickListener
+                }
+                apiCallSignUp()
+            }
+
+        }
     }
+
+    private fun apiCallSignUp() {
+        AppProgressBar.showLoaderDialog(context)
+        ApiClient.apiService.register(
+            binding.edtFirstName.text.toString().trim(),
+            binding.edtLastName.text.toString().trim(),
+            binding.edtEmail.text.toString().trim(),
+            binding.edtPhone.text.toString().trim(),
+            binding.edtPassword.text.toString().trim(),
+        ).enqueue(object :
+            Callback<ModelSignUp> {
+            @SuppressLint("LogNotTimber", "LongLogTag")
+            override fun onResponse(
+                call: Call<ModelSignUp>,
+                response: Response<ModelSignUp>
+            ) {
+                try {
+                    if (response.code() == 500) {
+                        myToast(context, "Server Error")
+                        AppProgressBar.hideLoaderDialog()
+
+                    } else if (response.code() == 404) {
+                        myToast(context, "Unauthorized")
+                        AppProgressBar.hideLoaderDialog()
+
+                    } else if (response.code() == 403) {
+                        myToast(context,"The email/phone has already been taken.")
+
+                       /* val jsonResponse ="""${response.body()}"""
+                        Log.e("Response",response.body().toString())
+                        // Parse the JSON response
+                        val jsonObject = JSONObject(jsonResponse)
+                        val errorsArray: JSONArray = jsonObject.getJSONArray("errors")
+
+                        // Extract and print the error messages
+                        for (i in 0 until errorsArray.length()) {
+                            val errorObject: JSONObject = errorsArray.getJSONObject(i)
+                            val message: String = errorObject.getString("message")
+                            println(message)
+                            myToast(context, message)
+
+                        }*/
+                        AppProgressBar.hideLoaderDialog()
+
+                    } else {
+                        AppProgressBar.hideLoaderDialog()
+                        myToast(context, "Register Sucessfully")
+                        val intent = Intent(applicationContext, Login::class.java)
+                        intent.flags =
+                            Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        finish()
+                        startActivity(intent)
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    myToast(context, "Try Again")
+                    AppProgressBar.hideLoaderDialog()
+
+                }
+            }
+
+            override fun onFailure(call: Call<ModelSignUp>, t: Throwable) {
+                AppProgressBar.hideLoaderDialog()
+                count++
+                if (count <= 3) {
+                    Log.e("count", count.toString())
+                    apiCallSignUp()
+                } else {
+                    myToast(context, t.message.toString())
+                    AppProgressBar.hideLoaderDialog()
+                }
+                AppProgressBar.hideLoaderDialog()
+            }
+
+        })
+
+    }
+
 }
 
 

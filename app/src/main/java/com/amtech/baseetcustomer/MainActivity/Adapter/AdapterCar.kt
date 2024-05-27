@@ -81,12 +81,15 @@ class AdapterCar(
 
 //
 
-                    itemView.setOnClickListener {
-                        if (serv_id.isNotEmpty()) {
-                            if (serv_id.isNotEmpty()) {
+                    binding.layoutRequested.setOnClickListener {
+                             if (serv_id.isNotEmpty()) {
                                 var foodId = ""
+                                var serviceDate = ""
                                 for (i in serv_id) {
                                     foodId = i.id.toString()
+                                }
+                                if (!serv_date.isNullOrEmpty()){
+                                    serviceDate=serv_date.toString()
                                 }
                                 val i = Intent(context, BookingDetail::class.java)
                                     .putExtra("callFrom", "car")
@@ -103,10 +106,9 @@ class AdapterCar(
                                     .putExtra("type", type)
                                     .putExtra("trperson", trperson)
                                     .putExtra("driv_type", driv_type)
-                                    .putExtra("serv_date", serv_date!!)
+                                    .putExtra("serv_date", serviceDate)
                                     .putExtra("price", price!!)
                                 context.startActivity(i)
-                            }
                         }
                     }
 

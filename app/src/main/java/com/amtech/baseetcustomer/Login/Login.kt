@@ -98,11 +98,12 @@ class Login : AppCompatActivity() {
                         myToast(this@Login, "Server Error")
                         AppProgressBar.hideLoaderDialog()
 
-                    } else if (response.code() == 404) {
-                        myToast(this@Login, "Unauthorized")
+                    } else if (response.code() == 401) {
+                        //myToast(this@Login, "Unauthorized")
+                        myToast(this@Login, "Invalid Phone/Password")
                         AppProgressBar.hideLoaderDialog()
 
-                    } else if (response.code() == 200) {
+                    } else  {
                         sessionManager.isLogin = true
                         sessionManager.idToken = "Bearer " + response.body()!!.token
                         sessionManager.userId = response.body()!!.user_id.toString()
@@ -122,9 +123,6 @@ class Login : AppCompatActivity() {
                             startActivity(intent)
 
                         }, 300)
-                    } else {
-                        myToast(this@Login, "Something went wrong")
-                        AppProgressBar.hideLoaderDialog()
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -144,57 +142,6 @@ class Login : AppCompatActivity() {
                 } else {
                     myToast(this@Login, t.message.toString())
                     AppProgressBar.hideLoaderDialog()
-                }
-                AppProgressBar.hideLoaderDialog()
-            }
-
-        })
-
-    }
-    private fun apiCallGetProfile() {
-
-        ApiClient.apiService.getProfile(
-            sessionManager.idToken.toString()
-        ).enqueue(object :
-            Callback<ModelMyTra> {
-            @SuppressLint("LogNotTimber", "LongLogTag", "SetTextI18n")
-            override fun onResponse(
-                call: Call<ModelMyTra>,
-                response: Response<ModelMyTra>
-            ) {
-                try {
-                    if (response.code() == 500) {
-                        myToast(context, "Server Error")
-                        AppProgressBar.hideLoaderDialog()
-
-                    } else if (response.code() == 200) {
-                        sessionManager.usertype = response.body()!!.type
-                        sessionManager.customerName = response.body()!!.name
-                        sessionManager.phoneNumber = response.body()!!.phone
-                        sessionManager.email = response.body()!!.email
-                        sessionManager.profilePic = response.body()!!.applogo
-                    } else {
-                        myToast(context, "Something went wrong")
-                        AppProgressBar.hideLoaderDialog()
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    myToast(context, "Something went wrong")
-                    AppProgressBar.hideLoaderDialog()
-
-                }
-            }
-
-            override fun onFailure(call: Call<ModelMyTra>, t: Throwable) {
-                AppProgressBar.hideLoaderDialog()
-                count++
-                if (count <= 3) {
-                    Log.e("count", count.toString())
-                    apiCallGetProfile()
-                } else {
-                    myToast(context, t.message.toString())
-                    AppProgressBar.hideLoaderDialog()
-
                 }
                 AppProgressBar.hideLoaderDialog()
             }
