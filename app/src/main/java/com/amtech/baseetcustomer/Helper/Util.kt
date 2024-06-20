@@ -2,6 +2,7 @@ package com.amtech.baseetcustomer.Helper
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.content.res.Configuration
 import com.amtech.baseetcustomer.R
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -45,4 +46,40 @@ object Util {
         }
         return newDate
     }
+
+    object LocaleHelper {
+        private const val SELECTED_LANGUAGE = "Locale.Helper.Selected.Language"
+
+        fun setLocale(context: Context, language: String): Context {
+            persist(context, language)
+            return updateLocale(context, language)
+        }
+
+        fun onAttach(context: Context): Context {
+            val lang = getPersistedData(context, Locale.getDefault().language)
+            return setLocale(context, lang)
+        }
+
+        private fun getPersistedData(context: Context, defaultLanguage: String): String {
+            val preferences = context.getSharedPreferences("locale_prefs", Context.MODE_PRIVATE)
+            return preferences.getString(SELECTED_LANGUAGE, defaultLanguage) ?: defaultLanguage
+        }
+
+        private fun persist(context: Context, language: String) {
+            val preferences = context.getSharedPreferences("locale_prefs", Context.MODE_PRIVATE)
+            val editor = preferences.edit()
+            editor.putString(SELECTED_LANGUAGE, language)
+            editor.apply()
+        }
+
+        private fun updateLocale(context: Context, language: String): Context {
+            val locale = Locale(language)
+            Locale.setDefault(locale)
+
+            val config = Configuration()
+            config.setLocale(locale)
+            return context.createConfigurationContext(config)
+        }
+    }
+
 }

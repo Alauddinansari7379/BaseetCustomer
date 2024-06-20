@@ -13,7 +13,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.amtech.baseetcustomer.Helper.AppProgressBar
 import com.amtech.baseetcustomer.Helper.ImageUploadClass.UploadRequestBody
 import com.amtech.baseetcustomer.Helper.myToast
+import com.amtech.baseetcustomer.MainActivity.MainActivity
 import com.amtech.baseetcustomer.Profile.Model.ModelUpdateProfile
+import com.amtech.baseetcustomer.R
 import com.amtech.baseetcustomer.databinding.ActivityEditProfileBinding
 import com.amtech.baseetcustomer.retrofit.ApiClient
 import com.amtech.baseetcustomer.sharedpreferences.SessionManager
@@ -35,6 +37,7 @@ class EditProfile : AppCompatActivity(), UploadRequestBody.UploadCallback  {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         sessionManager=SessionManager(context)
+        MainActivity().languageSetting(context,sessionManager.selectedLanguage.toString())
 
         with(binding) {
             if (sessionManager.customerName!!.isNotEmpty()){
@@ -49,18 +52,18 @@ class EditProfile : AppCompatActivity(), UploadRequestBody.UploadCallback  {
             }
             btnEdit.setOnClickListener {
                 if (edtFirstName.text!!.isEmpty()) {
-                    edtFirstName.error = "Enter First Name"
-                    edtFirstName.requestFocus()
+                    edtFirstName.error = resources.getString(R.string.Enter_First_Name)
+                     edtFirstName.requestFocus()
                     return@setOnClickListener
                 }
                 if (edtLastName.text!!.isEmpty()) {
-                    edtLastName.error = "Enter Last Name"
+                    edtLastName.error = resources.getString(R.string.Enter_Last_Name)
                     edtLastName.requestFocus()
                     return@setOnClickListener
                 }
 
                 if (edtEmail.text!!.isEmpty()) {
-                    edtEmail.error = "Enter Email"
+                    edtEmail.error = resources.getString(R.string.Enter_Email)
                     edtEmail.requestFocus()
                     return@setOnClickListener
                 }
@@ -73,7 +76,7 @@ class EditProfile : AppCompatActivity(), UploadRequestBody.UploadCallback  {
     }
     private fun apiCallUpdateProfile() {
         if (selectedImageUri == null) {
-            myToast(context, "Select an Image First")
+            myToast(context, resources.getString(R.string.Select_an_Image_First))
             return
         }
         AppProgressBar.showLoaderDialog(context)
@@ -96,11 +99,11 @@ class EditProfile : AppCompatActivity(), UploadRequestBody.UploadCallback  {
             ) {
                 try {
                     if (response.code() == 500) {
-                        myToast(context, "Server Error")
+                        myToast(context, resources.getString(R.string.Server_Error))
                         AppProgressBar.hideLoaderDialog()
 
                     } else if (response.code() == 404) {
-                        myToast(context, "Something went wrong")
+                        myToast(context, resources.getString(R.string.Something_went_wrong))
                         AppProgressBar.hideLoaderDialog()
 
                     } else if (response.code() == 200) {
@@ -115,7 +118,7 @@ class EditProfile : AppCompatActivity(), UploadRequestBody.UploadCallback  {
 
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    myToast(context, "Something went wrong")
+                    myToast(context, resources.getString(R.string.Something_went_wrong))
                     AppProgressBar.hideLoaderDialog()
                 }
             }
@@ -130,7 +133,7 @@ class EditProfile : AppCompatActivity(), UploadRequestBody.UploadCallback  {
                     AppProgressBar.hideLoaderDialog()
 
                 }
-                myToast(context, "Something went wrong")
+                myToast(context, resources.getString(R.string.Something_went_wrong))
                 AppProgressBar.hideLoaderDialog()
             }
 
@@ -181,9 +184,7 @@ class EditProfile : AppCompatActivity(), UploadRequestBody.UploadCallback  {
             returnCursor.moveToFirst()
             name = returnCursor.getString(nameIndex)
             returnCursor.close()
-
         }
-
         return name
     }
 

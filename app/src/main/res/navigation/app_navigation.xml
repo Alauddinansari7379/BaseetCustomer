@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/fragment_Notification"
         tools:layout="@layout/fragment_notification"
-        android:name="com.amtech.baseetcustomer.MainActivity.Fragments.NotificationFragment"
+        android:name="com.amtech.baseetcustomer.MainActivity.Fragments.OrderListFragment"
         android:label="Notification" />
     <fragment
         android:id="@+id/fragment_Profile"

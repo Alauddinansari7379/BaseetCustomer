@@ -35,7 +35,7 @@
             android:layout_gravity="start"
             android:layout_marginStart="25dp"
             android:fontFamily="@font/poppins_bold"
-            android:text="Car Rental"
+            android:text="@string/car_rental"
             android:textColor="@color/white"
             android:textSize="12sp" />
 
@@ -54,6 +54,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -62,11 +64,11 @@
                     android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
+
                         android:fontFamily="@font/poppins_bold"
-                        android:text="Name"
+                        android:text="@string/nameN"
                         android:textColor="@color/black"
                         android:textSize="12sp">
 
@@ -91,7 +93,7 @@
                     android:layout_marginEnd="5dp"
                     android:background="@drawable/corner"
                     android:fontFamily="@font/poppins_regular"
-                    android:hint="Name"
+                    android:hint="@string/nameN"
                     android:inputType="text"
                     android:padding="10dp"
                     android:textSize="12sp">
@@ -104,6 +106,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -112,11 +116,11 @@
                     android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:fontFamily="@font/poppins_bold"
-                        android:text="Country Name"
+                        android:text="@string/country_name"
                         android:textColor="@color/black"
                         android:textSize="12sp">
 
@@ -156,6 +160,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_marginTop="5dp"
                     android:orientation="horizontal">
 
@@ -165,10 +170,10 @@
                         android:layout_weight="1">
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_bold"
-                            android:text="Traveling Person"
+                            android:text="@string/traveling_person"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             >
@@ -211,6 +216,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -219,11 +226,10 @@
                 android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="Comment"
+                     android:fontFamily="@font/poppins_bold"
+                    android:text="@string/comment"
                     android:textColor="@color/black"
                     android:textSize="12sp">
 
@@ -248,7 +254,7 @@
                     android:layout_marginEnd="5dp"
                     android:background="@drawable/corner"
                     android:fontFamily="@font/poppins_regular"
-                    android:hint="Enter Comment"
+                    android:hint="@string/enter_comment"
                     android:inputType="text"
                     android:gravity="start"
                     android:padding="10dp"
@@ -261,6 +267,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal">
 
@@ -271,10 +278,10 @@
                     android:layout_weight="1">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/poppins_bold"
-                        android:text="Car Type"
+                        android:text="@string/car_type"
                         android:textColor="@color/black"
                         android:textSize="12sp"
                         >
@@ -315,14 +322,15 @@
                 android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
-                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_height="0dp"
                 android:layout_weight="1">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_bold"
-                    android:text="Driveing Type"
+                    android:text="@string/driving_type"
                     android:textColor="@color/black"
                     android:textSize="12sp"
                     >
@@ -347,7 +355,7 @@
                     android:buttonTint="@color/main_color"
                     android:checked="true"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="Self-Draving">
+                    android:text="@string/self_draving">
 
                 </androidx.appcompat.widget.AppCompatRadioButton>
 
@@ -358,7 +366,7 @@
                     android:layout_marginEnd="20dp"
                     android:buttonTint="@color/main_color"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="With Driver">
+                    android:text="@string/with_driver">
 
                 </androidx.appcompat.widget.AppCompatRadioButton>
 
@@ -376,19 +384,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_marginTop="5dp"
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_bold"
-                            android:text="Rent Date"
+                            android:text="@string/rent_date"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             >
@@ -422,7 +431,7 @@
                             android:fontFamily="@font/poppins_regular"
                             android:inputType="textEmailAddress"
                             android:padding="10dp"
-                            android:text="Select Rent Date"
+                            android:text="@string/select_rent_date"
                             android:textSize="14sp">
 
                         </androidx.appcompat.widget.AppCompatTextView>
@@ -452,10 +461,10 @@
                         android:layout_weight="1">
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_bold"
-                            android:text="Start time"
+                            android:text="@string/start_time"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             >
@@ -467,15 +476,16 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
+                        android:layout_marginEnd="10dp"
                         android:layout_weight="1"
                         android:weightSum="1">
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/tvHoure"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_bold"
-                            android:text="End time"
+                            android:text="@string/end_time"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             >
@@ -534,6 +544,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -541,11 +553,10 @@
                     android:layout_height="wrap_content">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:fontFamily="@font/poppins_bold"
-                        android:text="Expected Rent"
+                         android:fontFamily="@font/poppins_bold"
+                        android:text="@string/expected_rent"
                         android:textColor="@color/black"
                         android:textSize="12sp">
 
@@ -569,7 +580,7 @@
                     android:layout_marginEnd="5dp"
                     android:background="@drawable/corner"
                     android:fontFamily="@font/poppins_regular"
-                    android:hint="Enter Cost"
+                    android:hint="@string/enter_cost"
                     android:inputType="numberDecimal"
                     android:padding="10dp"
                     android:textSize="12sp">
@@ -599,7 +610,7 @@
                     android:background="@drawable/gradient_button"
                      android:fontFamily="@font/poppins_regular"
                     android:gravity="center"
-                    android:text="Request for Car"
+                    android:text="@string/request_for_car"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="12sp">

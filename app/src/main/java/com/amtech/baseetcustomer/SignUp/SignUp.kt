@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.amtech.baseetcustomer.Helper.AppProgressBar
 import com.amtech.baseetcustomer.Helper.myToast
 import com.amtech.baseetcustomer.Login.Login
+import com.amtech.baseetcustomer.MainActivity.MainActivity
+import com.amtech.baseetcustomer.R
 import com.amtech.baseetcustomer.SignUp.Model.ModelSignUp
 import com.amtech.baseetcustomer.SignUp.Model.handleErrorResponse
 import com.amtech.baseetcustomer.databinding.ActivitySignUpBinding
@@ -32,40 +34,41 @@ class SignUp : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         sessionManager = SessionManager(context)
+         MainActivity().languageSetting(context,sessionManager.selectedLanguage.toString())
         with(binding) {
             btnSignUp.setOnClickListener {
                 if (edtFirstName.text.toString().isEmpty()) {
-                    edtFirstName.error = "Enter First Name"
+                    edtFirstName.error = resources.getString(R.string.Enter_First_Name)
                     edtFirstName.requestFocus()
                     return@setOnClickListener
                 }
                 if (edtLastName.text.toString().isEmpty()) {
-                    edtLastName.error = "Enter Last Name"
+                    edtLastName.error = resources.getString(R.string.Enter_Last_Name)
                     edtLastName.requestFocus()
                     return@setOnClickListener
                 }
                 if (edtEmail.text.toString().isEmpty()) {
-                    edtEmail.error = "Enter Email"
+                    edtEmail.error = resources.getString(R.string.Enter_Email)
                     edtEmail.requestFocus()
                     return@setOnClickListener
                 }
                 if (edtPhone.text.toString().isEmpty()) {
-                    edtPhone.error = "Enter Phone Number"
+                    edtPhone.error =  resources.getString(R.string.enter_phone_number)
                     edtPhone.requestFocus()
                     return@setOnClickListener
                 }
                 if (edtPhone.text!!.length < 10) {
-                    myToast(context, "Enter valid phone number")
+                    myToast(context,  resources.getString(R.string.Enter_valid_phone_number))
                     edtPhone.requestFocus()
                     return@setOnClickListener
                 }
                 if (edtPassword.text.toString().isEmpty()) {
-                    edtPassword.error = "Enter Password"
+                    edtPassword.error =  resources.getString(R.string.Enter_Password)
                     edtPassword.requestFocus()
                     return@setOnClickListener
                 }
                 if (edtPassword.text!!.length < 6) {
-                    myToast(context, "password is to short")
+                    myToast(context,  resources.getString(R.string.password_is_to_short))
                     edtPassword.requestFocus()
                     return@setOnClickListener
                 }
@@ -92,15 +95,15 @@ class SignUp : AppCompatActivity() {
             ) {
                 try {
                     if (response.code() == 500) {
-                        myToast(context, "Server Error")
+                        myToast(context,  resources.getString(R.string.Server_Error))
                         AppProgressBar.hideLoaderDialog()
 
                     } else if (response.code() == 404) {
-                        myToast(context, "Unauthorized")
+                        myToast(context,  resources.getString(R.string.Unauthorized))
                         AppProgressBar.hideLoaderDialog()
 
                     } else if (response.code() == 403) {
-                        myToast(context,"The email/phone has already been taken.")
+                        myToast(context,resources.getString(R.string.The_email_phone_has_already_been_taken))
 
                        /* val jsonResponse ="""${response.body()}"""
                         Log.e("Response",response.body().toString())
@@ -120,7 +123,7 @@ class SignUp : AppCompatActivity() {
 
                     } else {
                         AppProgressBar.hideLoaderDialog()
-                        myToast(context, "Register Sucessfully")
+                        myToast(context, resources.getString(R.string.Register_Sucessfully))
                         val intent = Intent(applicationContext, Login::class.java)
                         intent.flags =
                             Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -129,7 +132,7 @@ class SignUp : AppCompatActivity() {
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    myToast(context, "Try Again")
+                    myToast(context, resources.getString(R.string.Try_Again))
                     AppProgressBar.hideLoaderDialog()
 
                 }

@@ -36,7 +36,7 @@
             android:layout_gravity="start"
             android:layout_marginStart="25dp"
             android:fontFamily="@font/poppins_bold"
-            android:text="Edit Profile"
+            android:text="@string/edit_profile"
             android:textColor="@color/white"
             android:textSize="14sp" />
 
@@ -81,7 +81,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_bold"
-                    android:text="Maureen Biologist"
+                    android:text="@string/maureen_biologist"
                     android:textColor="@color/black"
                     android:textSize="14sp"
                     >
@@ -101,7 +101,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="info099@gmail.com"
+                    android:text="@string/info099_gmail_com"
                     android:textColor="@color/text_color"
                     android:textSize="12sp"
                     android:textStyle="bold">
@@ -125,7 +125,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/poppins_bold"
-            android:text="First Name"
+            android:text="@string/first_name"
             android:textColor="@color/black"
             android:textSize="12sp">
 
@@ -142,12 +142,12 @@
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/edtFirstName"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="45dp"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
             android:background="@drawable/corner"
-            android:hint="Enter Fist Name"
+            android:hint="@string/enter_fist_name"
             android:inputType="text"
             android:padding="10dp"
             android:textSize="14sp">
@@ -162,10 +162,10 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/poppins_bold"
-            android:text="Last Name"
+            android:text="@string/last_name"
             android:textColor="@color/black"
             android:textSize="12sp">
 
@@ -182,12 +182,12 @@
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/edtLastName"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="45dp"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
             android:background="@drawable/corner"
-            android:hint="Enter Last Name"
+            android:hint="@string/enter_last_name"
             android:inputType="text"
             android:padding="10dp"
             android:textSize="14sp">
@@ -203,10 +203,10 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/poppins_bold"
-            android:text="Email Address"
+            android:text="@string/email_address"
             android:textColor="@color/black"
             android:textSize="12sp">
 
@@ -223,12 +223,12 @@
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/edtEmail"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="45dp"
             android:layout_marginEnd="5dp"
             android:layout_weight="1"
             android:background="@drawable/corner"
-            android:hint="Enter Email Address"
+            android:hint="@string/enter_email_address"
             android:inputType="textEmailAddress"
             android:padding="10dp"
             android:textSize="14sp">
@@ -247,7 +247,7 @@
         android:background="@drawable/gradient_button"
         android:fontFamily="@font/poppins_regular"
         android:gravity="center"
-        android:text="Edit"
+        android:text="@string/edit"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="14sp"

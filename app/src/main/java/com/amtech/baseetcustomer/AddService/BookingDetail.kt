@@ -10,7 +10,9 @@ import com.amtech.baseetcustomer.AddService.Model.ModelPlaceOrder
 import com.amtech.baseetcustomer.Helper.AppProgressBar
 import com.amtech.baseetcustomer.Helper.isOnline
 import com.amtech.baseetcustomer.Helper.myToast
+import com.amtech.baseetcustomer.MainActivity.MainActivity
 import com.amtech.baseetcustomer.MainActivity.MainActivity.Companion.back
+import com.amtech.baseetcustomer.R
 import com.amtech.baseetcustomer.databinding.ActivityBookingDetailBinding
 import com.amtech.baseetcustomer.retrofit.ApiClient
 import com.amtech.baseetcustomer.sharedpreferences.SessionManager
@@ -34,7 +36,12 @@ class BookingDetail : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         sessionManager = SessionManager(context)
+        MainActivity().languageSetting(context,sessionManager.selectedLanguage.toString())
 
+        if (MainActivity.refreshLanNew) {
+            MainActivity.refreshLanNew = false
+            refresh()
+        }
         with(binding) {
             imgBack.setOnClickListener {
                 onBackPressed()
@@ -52,7 +59,7 @@ class BookingDetail : AppCompatActivity() {
                 val description = intent.getStringExtra("description")
                 val country = intent.getStringExtra("country")
                 val type = intent.getStringExtra("type")
-                 serviceDate = intent!!.getStringExtra("serv_date").toString()
+                serviceDate = intent!!.getStringExtra("serv_date").toString()
                 price = intent!!.getStringExtra("price").toString()
                 val trPerson = intent.getStringExtra("trperson")
                 val driverType = intent.getStringExtra("driv_type")
@@ -68,40 +75,40 @@ class BookingDetail : AppCompatActivity() {
                         tvFromTo.text = trFrom + " To " + trTo
                         tvTime.text = startTime + " To " + endTime
                         tvDescription.text = description
-                        tvCountry.text = "Country Name : " + country
+                        tvCountry.text = resources.getString(R.string.country_name) + country
                         tvDoc.text = type
                         tvDates.text = serviceDate
-                        tvPrice.text = "Price : $" + price
+                        tvPrice.text = resources.getString(R.string.Price) + price
                     }
 
                     "car" -> {
                         layoutProfile.visibility = View.GONE
                         layoutHomeDetial.visibility = View.GONE
-                        tvDescriptionH.text = "Comment"
+                        tvDescriptionH.text = resources.getString(R.string.comment)
                         tvName.text = name
                         tvStatues.text = statues
-                        tvFromTo.text = "No Of Person : $trPerson"
-                        tvTime.text = startTime + " To " + endTime
+                        tvFromTo.text = resources.getString(R.string.No_Of_Person) + trPerson
+                        tvTime.text = startTime + resources.getString(R.string.to) + endTime
                         tvDescription.text = description
-                        tvCountry.text = "Country Name : " + country
+                        tvCountry.text = resources.getString(R.string.country_name) + country
                         tvDoc.text = driverType
                         tvDates.text = serviceDate
-                        tvPrice.text = "Price : $" + price
+                        tvPrice.text = resources.getString(R.string.Price) + price
 
                     }
 
                     else -> {
                         layoutProfile.visibility = View.GONE
-                        tvFromTo.text = "No Of Family : $trPerson"
+                        tvFromTo.text = resources.getString(R.string.No_Of_Family) + trPerson
                         tvHomeDetail.text = aminetes
-                        tvDoc.text = "Home Type : $homeType"
+                        tvDoc.text = resources.getString(R.string.Home_Type) + homeType
                         tvName.text = name
                         tvStatues.text = statues
-                        tvTime.text = startTime + " To " + endTime
+                        tvTime.text = startTime + resources.getString(R.string.to) + endTime
                         tvDescription.text = description
-                        tvCountry.text = "Country Name : " + country
+                        tvCountry.text = resources.getString(R.string.country_name) + country
                         tvDates.text = serviceDate
-                        tvPrice.text = "Price : $" + price
+                        tvPrice.text = resources.getString(R.string.Price) + price
 
 
                     }
@@ -111,24 +118,31 @@ class BookingDetail : AppCompatActivity() {
             }
 
             btnAccept.setOnClickListener {
-               // apiCallAccept()
+                serviceDate
+                // apiCallAccept()
                 val i = Intent(context, Payment::class.java)
                     .putExtra("callFrom", "Booking")
                     .putExtra("foodId", foodId)
                     .putExtra("id", id)
-                    .putExtra("serviceDate", serviceDate)
+                    .putExtra("serviceDate", serviceDate.toString())
                     .putExtra("price", price)
                 context.startActivity(i)
             }
 
         }
     }
-
+    fun refresh() {
+        overridePendingTransition(0, 0)
+        finish()
+        startActivity(intent)
+        overridePendingTransition(0, 0)
+    }
     private fun apiCallAccept() {
         AppProgressBar.showLoaderDialog(context)
         ApiClient.apiService.makeOrder(
             sessionManager.idToken.toString(),
-            foodId, sessionManager.userId.toString(), id, "cash_on_delivery", "take_away"
+            foodId, sessionManager.userId.toString(), id, "cash_on_delivery",
+            "take_away", "partial", "online", "", ""
         )
             .enqueue(object : Callback<ModelPlaceOrder> {
                 @SuppressLint("LogNotTimber")
@@ -137,15 +151,15 @@ class BookingDetail : AppCompatActivity() {
                 ) {
                     try {
                         if (response.code() == 404) {
-                            myToast(context, "Something went wrong")
+                            myToast(context, resources.getString(R.string.Something_went_wrong))
                             AppProgressBar.hideLoaderDialog()
 
                         } else if (response.code() == 500) {
-                            myToast(context, "Server Error")
+                            myToast(context, resources.getString(R.string.Server_Error))
                             AppProgressBar.hideLoaderDialog()
 
                         } else {
-                            myToast(context, "Order Accepted")
+                            myToast(context,  resources.getString(R.string.Order_Accepted))
                             val i = Intent(context, Payment::class.java)
                                 .putExtra("callFrom", "Booking")
                                 .putExtra("foodId", foodId)
@@ -157,7 +171,7 @@ class BookingDetail : AppCompatActivity() {
                             // onBackPressed()
                         }
                     } catch (e: Exception) {
-                        myToast(context, "Something went wrong")
+                        myToast(context, resources.getString(R.string.Something_went_wrong))
                         e.printStackTrace()
                         AppProgressBar.hideLoaderDialog()
                     }
@@ -187,6 +201,11 @@ class BookingDetail : AppCompatActivity() {
             changeReceiver.build()
 
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        MainActivity.refreshLanNew=true
     }
 
     @Deprecated("Deprecated in Java")

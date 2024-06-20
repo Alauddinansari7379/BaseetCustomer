@@ -45,6 +45,8 @@ class SessionManager(context: Context?) {
         private const val BOOKING_TYPE="bookingType"
         private const val PRICE="pricing"
         private const val SELECTED_DATE="selected_date"
+        private const val SELECTED_LANGUAGE="selected_Language"
+
     }
 
     var isLogin: Boolean
@@ -195,6 +197,12 @@ class SessionManager(context: Context?) {
         get() = prefs.getString(SELECTED_DATE, "")
         set(selectedDate) {
             prefs.edit().putString(SELECTED_DATE, selectedDate).apply()
+        }
+
+    var selectedLanguage: String?
+        get() = prefs.getString(SELECTED_LANGUAGE, "")
+        set(selectedLanguage) {
+            prefs.edit().putString(SELECTED_LANGUAGE, selectedLanguage).apply()
         }
     var profilePic: String?
         get() = prefs.getString(PROFILE_PICTURE, "")

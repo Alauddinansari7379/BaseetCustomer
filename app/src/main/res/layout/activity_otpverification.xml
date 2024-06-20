@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -32,7 +31,7 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/poppins_bold"
-                android:text="OTP Verification"
+                android:text="@string/otp_verification"
                 android:textColor="@color/black"
                 android:textSize="20sp">
 
@@ -42,10 +41,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginLeft="10dp"
                 android:fontFamily="@font/poppins_regular"
-                android:text="Please enter one time password (OTP) that is\n sent to xyz2gmail.com"
-                 android:textColor="@color/black"
+                android:text="@string/please_enter_one_time_password_otp_that_is_n_sent_to_xyz2gmail_com"
+                android:textColor="@color/black"
                 android:textSize="14sp">
 
             </androidx.appcompat.widget.AppCompatTextView>
@@ -54,13 +52,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="30dp"                 android:orientation="horizontal">
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal">
 
                 <EditText
                     android:id="@+id/otpBox1"
                     android:layout_width="45dp"
                     android:layout_height="50dp"
-                     android:background="@drawable/box_round"
+                    android:background="@drawable/box_round"
                     android:gravity="center"
                     android:inputType="number"
                     android:maxLength="1">
@@ -72,7 +71,7 @@
                     android:layout_width="45dp"
                     android:layout_height="50dp"
                     android:layout_marginStart="20dp"
-                     android:background="@drawable/box_round"
+                    android:background="@drawable/box_round"
                     android:gravity="center"
                     android:inputType="number"
                     android:maxLength="1">
@@ -107,36 +106,36 @@
             </LinearLayout>
 
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
-
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_regular"
-                android:text="Resend OTP in"
-                android:textColor="@color/text_color"
-                android:textSize="12sp">
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
 
-            </androidx.appcompat.widget.AppCompatTextView>
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                 android:fontFamily="@font/poppins_bold"
-                android:text="00:24"
-                android:textColor="@color/main_color"
-                android:textSize="12sp">
 
-            </androidx.appcompat.widget.AppCompatTextView>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="@string/resend_otp_in"
+                    android:textColor="@color/text_color"
+                    android:textSize="12sp">
 
-        </LinearLayout>
+                </androidx.appcompat.widget.AppCompatTextView>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="@string/_00_24"
+                    android:textColor="@color/main_color"
+                    android:textSize="12sp">
+
+                </androidx.appcompat.widget.AppCompatTextView>
+
+            </LinearLayout>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnSubmit"
@@ -149,14 +148,13 @@
                 android:background="@drawable/gradient_button"
                 android:fontFamily="@font/poppins_regular"
                 android:gravity="center"
-                android:text="Submit"
+                android:text="@string/submit"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 android:textStyle="bold">
 
             </androidx.appcompat.widget.AppCompatButton>
-
 
 
         </LinearLayout>

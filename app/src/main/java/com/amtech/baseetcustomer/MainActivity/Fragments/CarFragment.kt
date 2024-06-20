@@ -11,17 +11,20 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import com.amtech.baseetcustomer.AddService.CarRental
 import com.amtech.baseetcustomer.MainActivity.Adapter.AdapterCar
+import com.amtech.baseetcustomer.MainActivity.MainActivity
 import com.amtech.baseetcustomer.MainActivity.MainActivity.Companion.car
 import com.amtech.baseetcustomer.MainActivity.MainActivity.Companion.statisticsList
 import com.amtech.baseetcustomer.MainActivity.Model.ModelGetTranslatorItem
 import com.amtech.baseetcustomer.R
 import com.amtech.baseetcustomer.databinding.FragmentCarBinding
+import com.amtech.baseetcustomer.sharedpreferences.SessionManager
 import com.amtech.vendorservices.V.Dashboard.model.ModelSpinner
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 
 class CarFragment : Fragment() {
     private lateinit var binding: FragmentCarBinding
+    lateinit var sessionManager: SessionManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,10 +36,12 @@ class CarFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentCarBinding.bind(view)
+        sessionManager= SessionManager(activity)
+        activity?.let { MainActivity().languageSetting(it,sessionManager.selectedLanguage.toString()) }
 
 
         binding.btnRequest.setOnClickListener {
-            startActivity(Intent(requireContext(),CarRental::class.java))
+            startActivity(Intent(requireActivity(),CarRental::class.java))
         }
         binding.spinnerStatistics.adapter = ArrayAdapter<ModelSpinner>(
             requireContext(), R.layout.spinner_layout, statisticsList
@@ -49,7 +54,7 @@ class CarFragment : Fragment() {
                     p0: AdapterView<*>?, view: View?, i: Int, l: Long
                 ) {
                     if (statisticsList.size > 0) {
-                        val statusChange = statisticsList[i].text
+                        val statusChange = statisticsList[i].value
 
                         val requested = ArrayList<ModelGetTranslatorItem>()
                         val pending = ArrayList<ModelGetTranslatorItem>()
@@ -72,19 +77,19 @@ class CarFragment : Fragment() {
                         when (statusChange) {
                             "All Booking" -> {
                                 binding.recyclerViewCar.apply {
-                                    adapter = AdapterCar(requireContext(), car)
+                                    adapter = AdapterCar(requireActivity(), car)
                                 }
                             }
 
                             "Pending" -> {
                                 binding.recyclerViewCar.apply {
-                                    adapter = AdapterCar(requireContext(), pending)
+                                    adapter = AdapterCar(requireActivity(), pending)
                                 }
                             }
 
                             else -> {
                                 binding.recyclerViewCar.apply {
-                                    adapter = AdapterCar(requireContext(), requested)
+                                    adapter = AdapterCar(requireActivity(), requested)
                                 }
                             }
 

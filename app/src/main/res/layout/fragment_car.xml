@@ -26,10 +26,9 @@
                 android:id="@+id/spinnerStatistics"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:hint="Blood Group"
-                android:inputType="textEmailAddress"
+                 android:inputType="textEmailAddress"
                 android:padding="10dp"
-                android:textSize="15sp">
+                android:textSize="14sp">
 
             </Spinner>
 
@@ -50,7 +49,7 @@
             android:gravity="center"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:text="Service Request"
+            android:text="@string/service_request"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp">

@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -9,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.amtech.baseetcustomer"
-        minSdk = 23
+        minSdk = 24
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -29,6 +30,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -65,6 +67,7 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.swiperefreshlayout)
+    implementation(libs.firebase.messaging)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -158,4 +161,20 @@ dependencies {
     //Multiselection Spinner
     implementation ("com.github.AnuraganuPunalur:Multi-Selection-Spinner-Android:1.0")
     implementation ("com.github.telichada:SearchableMultiSelectSpinner:2.0")
+
+    //firebase
+    implementation ("com.google.firebase:firebase-auth:21.1.0")
+    implementation ("com.google.firebase:firebase-core:21.1.1")
+    implementation ("com.google.android.gms:play-services-auth:20.4.0")
+    implementation ("com.google.firebase:firebase-iid:21.1.0")
+    implementation ("com.google.firebase:firebase-messaging:23.1.2")
+    implementation ("com.google.firebase:firebase-appdistribution-api-ktx:16.0.0-beta05")
+     implementation ("com.google.firebase:firebase-messaging:23.1.1")
+    implementation ("com.google.firebase:firebase-analytics")
+
+    // (Jitsi dependencies)
+    implementation("org.jitsi.react:jitsi-meet-sdk:8.5.0")
+
+    //Langauge Change
+
 }

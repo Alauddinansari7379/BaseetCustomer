@@ -8,7 +8,6 @@ import com.amtech.baseetcustomer.MainActivity.Model.ModelGetProfile
 import com.amtech.baseetcustomer.MainActivity.Model.ModelGetTranslator
 import com.amtech.baseetcustomer.Profile.Model.ModelUpdateProfile
 import com.amtech.baseetcustomer.SignUp.Model.ModelSignUp
-import com.amtech.vendorservices.V.MyTranslotor.Model.ModelMyTra
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.GET
@@ -34,6 +33,8 @@ interface ApiInterface {
     fun login(
         @Query("phone") email: String,
         @Query("password") password: String,
+        @Query("device_token") device_token: String,
+        @Query("device_type") device_type: String,
     ): Call<ModelLogin>
 
     @GET("customer/info")
@@ -64,6 +65,10 @@ interface ApiInterface {
         @Query("request_id") request_id: String,
         @Query("payment_method") payment_method: String,
         @Query("order_type") order_type: String,
+        @Query("order_payment") order_payment: String,
+        @Query("pay_type") pay_type: String,
+        @Query("payment_status") payment_status: String,
+        @Query("order_amount") order_amount: String,
 //        @Query("order_time") order_time: String,
 //        @Query("coupon_discount_amount") coupon_discount_amount: String,
 //        @Query("coupon_discount_title") coupon_discount_title: String,
@@ -83,8 +88,6 @@ interface ApiInterface {
 //        @Query("house") house: String,
 //        @Query("floor") floor: String,
 //        @Query("dm_tips") dm_tips: String,
-
-
     ): Call<ModelPlaceOrder>
 
     //
@@ -154,7 +157,7 @@ interface ApiInterface {
         @Query("child") child: String,
         @Query("hometype") hometype: String,
         @Query("description") description: String,
-        @Query("rent_date") rent_date: String,
+        @Query("serv_date") serv_date: String,
         @Query("price") price: String,
         @Query("start_time") start_time: String,
         @Query("end_time") end_time: String,
@@ -162,7 +165,7 @@ interface ApiInterface {
         @Query("food_type") food_type: String,
     ): Call<ModelRequest>
 
-    @GET("customer/order/orderlist")
+    @GET("customer/order/list")
     fun orderList(
         @Header("Authorization") authorization: String,
         @Query("limit") limit: String,

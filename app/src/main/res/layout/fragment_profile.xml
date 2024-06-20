@@ -104,7 +104,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/poppins_bold"
-                                    android:text="Maureen Biologist"
+                                    android:text="@string/maureen_biologist"
                                     android:textColor="@color/black"
                                     android:textSize="14sp"
                                     >
@@ -151,7 +151,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/poppins_regular"
-                                    android:text="info099@gmail.com"
+                                    android:text="@string/info099_gmail_com"
                                     android:textColor="@color/text_color"
                                     android:textSize="12sp"
                                     android:textStyle="bold">
@@ -220,7 +220,7 @@
                     android:layout_height="20dp"
                     android:layout_marginStart="10dp"
                     android:gravity="center_vertical"
-                    android:text="Change Password"
+                    android:text="@string/change_password"
                     android:textColor="@color/black"
                     android:textSize="12sp"
                     android:textStyle="bold">
@@ -297,7 +297,7 @@
                     android:layout_height="20dp"
                     android:layout_marginStart="10dp"
                     android:gravity="center_vertical"
-                    android:text="Notification Settings"
+                    android:text="@string/notification_settings"
                     android:textColor="@color/black"
                     android:textSize="12sp"
                     android:textStyle="bold">
@@ -374,7 +374,7 @@
                     android:layout_height="20dp"
                     android:layout_marginStart="10dp"
                     android:gravity="center_vertical"
-                    android:text="Abouts Us"
+                    android:text="@string/abouts_us"
                     android:textColor="@color/black"
                     android:textSize="12sp"
                     android:textStyle="bold">
@@ -451,7 +451,7 @@
                     android:layout_height="20dp"
                     android:layout_marginStart="10dp"
                     android:gravity="center_vertical"
-                    android:text="Privacy Policy"
+                    android:text="@string/privacy_policy"
                     android:textColor="@color/black"
                     android:textSize="12sp"
                     android:textStyle="bold">
@@ -529,7 +529,7 @@
                     android:layout_height="20dp"
                     android:layout_marginStart="10dp"
                     android:gravity="center_vertical"
-                    android:text="Log out"
+                    android:text="@string/log_out"
                     android:textColor="@color/black"
                     android:textSize="12sp"
                     android:textStyle="bold">

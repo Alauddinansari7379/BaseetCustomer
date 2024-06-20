@@ -22,6 +22,7 @@ import com.amtech.baseetcustomer.MainActivity.MainActivity
 import com.amtech.baseetcustomer.MainActivity.MainActivity.Companion.statisticsList
 import com.amtech.baseetcustomer.MainActivity.Model.ModelGetTranslatorItem
 import com.amtech.baseetcustomer.databinding.FragmentHomeTabBinding
+import com.amtech.baseetcustomer.sharedpreferences.SessionManager
 import com.amtech.vendorservices.V.Dashboard.model.ModelSpinner
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
@@ -29,6 +30,7 @@ import com.google.gson.JsonObject
 class HomeTabFragment : Fragment() {
     private lateinit var  binding: FragmentHomeTabBinding
     var mainData = ArrayList<ModelGetTranslatorItem>()
+    lateinit var sessionManager: SessionManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,12 +42,15 @@ class HomeTabFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeTabBinding.bind(view)
+        sessionManager=SessionManager(activity)
+        activity?.let { MainActivity().languageSetting(it,sessionManager.selectedLanguage.toString()) }
+
         binding.btnRequest.setOnClickListener {
-            startActivity(Intent(requireContext(), HomeRental::class.java))
+            startActivity(Intent(requireActivity(), HomeRental::class.java))
         }
 
         binding.spinnerStatistics.adapter = ArrayAdapter<ModelSpinner>(
-            requireContext(), R.layout.spinner_layout, statisticsList
+            requireActivity(), R.layout.spinner_layout, statisticsList
         )
         binding.spinnerStatistics.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
@@ -53,7 +58,7 @@ class HomeTabFragment : Fragment() {
                     p0: AdapterView<*>?, view: View?, i: Int, l: Long
                 ) {
                     if (statisticsList.size > 0) {
-                        val statusChange = statisticsList[i].text
+                        val statusChange = statisticsList[i].value
 
                         val requested = ArrayList<ModelGetTranslatorItem>()
                         val pending = ArrayList<ModelGetTranslatorItem>()
@@ -76,19 +81,19 @@ class HomeTabFragment : Fragment() {
                         when (statusChange) {
                             "All Booking" -> {
                                 binding.recyclerView.apply {
-                                    adapter = AdapterHome(requireContext(), MainActivity.home)
+                                    adapter = AdapterHome(requireActivity(), MainActivity.home)
                                 }
                             }
 
                             "Pending" -> {
                                 binding.recyclerView.apply {
-                                    adapter = AdapterHome(requireContext(), pending)
+                                    adapter = AdapterHome(requireActivity(), pending)
                                 }
                             }
 
                             else -> {
                                 binding.recyclerView.apply {
-                                    adapter = AdapterHome(requireContext(), requested)
+                                    adapter = AdapterHome(requireActivity(), requested)
                                 }
                             }
 
@@ -102,4 +107,6 @@ class HomeTabFragment : Fragment() {
 
             }
     }
+
+
 }

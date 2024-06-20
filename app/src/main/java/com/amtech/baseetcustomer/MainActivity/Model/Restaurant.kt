@@ -23,7 +23,7 @@ data class Restaurant(
     val latitude: String,
     val logo: String,
     val longitude: String,
-    val m_choice: String,
+    val m_choice: Any,
     val minimum_order: Int,
     val name: String,
     val non_veg: Int,

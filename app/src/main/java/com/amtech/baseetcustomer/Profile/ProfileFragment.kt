@@ -12,6 +12,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog
 import com.amtech.baseetcustomer.Helper.AppProgressBar
 import com.amtech.baseetcustomer.Helper.myToast
 import com.amtech.baseetcustomer.Login.Login
+import com.amtech.baseetcustomer.MainActivity.MainActivity
 import com.amtech.baseetcustomer.MainActivity.Model.ModelGetProfile
 import com.amtech.baseetcustomer.R
 import com.amtech.baseetcustomer.databinding.FragmentProfileBinding
@@ -37,6 +38,7 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentProfileBinding.bind(view)
         sessionManager = SessionManager(requireContext())
+        activity?.let { MainActivity().languageSetting(it,sessionManager.selectedLanguage.toString()) }
 
         if (!sessionManager.idToken.isNullOrEmpty()){
             apiCallGetProfile()
@@ -65,8 +67,8 @@ class ProfileFragment : Fragment() {
                 SweetAlertDialog(
                     requireContext(),
                     SweetAlertDialog.WARNING_TYPE
-                ).setTitleText("Are you sure want to Logout?").setCancelText("No")
-                    .setConfirmText("Yes").showCancelButton(true)
+                ).setTitleText(resources.getString(R.string.Are_you_sure_want_to_Logout)).setCancelText(resources.getString(R.string.No))
+                    .setConfirmText(resources.getString(R.string.Yes)).showCancelButton(true)
                     .setConfirmClickListener { sDialog ->
                         sDialog.cancel()
                         sessionManager.logout()
@@ -98,17 +100,16 @@ class ProfileFragment : Fragment() {
             ) {
                 try {
                     if (response.code() == 500) {
-                        myToast(requireActivity(), "Server Error")
+                        activity?.let { myToast(it, resources.getString(R.string.Server_Error)) }
                         AppProgressBar.hideLoaderDialog()
 
                     } else if (response.code() == 401) {
-                        myToast(requireActivity(), "Unauthorized")
+                        activity?.let { myToast(it, resources.getString(R.string.Unauthorized))}
                         AppProgressBar.hideLoaderDialog()
 
                     } else {
 
-                        sessionManager.customerName =
-                            response.body()!!.f_name + " " + response.body()!!.l_name
+                        sessionManager.customerName = response.body()!!.f_name + " " + response.body()!!.l_name
                         sessionManager.phoneNumber = response.body()!!.phone
                         sessionManager.email = response.body()!!.email
                         sessionManager.profilePic = response.body()!!.app_image
@@ -127,7 +128,7 @@ class ProfileFragment : Fragment() {
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    myToast(requireActivity(), "Something went wrong")
+                    activity?.let { myToast(it, resources.getString(R.string.Something_went_wrong)) }
                     AppProgressBar.hideLoaderDialog()
 
                 }
@@ -140,7 +141,7 @@ class ProfileFragment : Fragment() {
                     Log.e("count", count.toString())
                     apiCallGetProfile()
                 } else {
-                    myToast(requireActivity(), t.message.toString())
+                    activity?.let { myToast(it, t.message.toString()) }
                     AppProgressBar.hideLoaderDialog()
 
                 }

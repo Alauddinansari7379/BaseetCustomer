@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.amtech.baseetcustomer.AddService.BookingDetail
 import com.amtech.baseetcustomer.MainActivity.Model.ModelGetTranslatorItem
+import com.amtech.baseetcustomer.R
 import com.amtech.baseetcustomer.databinding.SingleRowCarBinding
 import com.amtech.baseetcustomer.sharedpreferences.SessionManager
 import com.google.gson.JsonArray
@@ -42,11 +43,12 @@ class AdapterCar(
         try {
             with(holder) {
                 with(list[position]) {
-                    binding.tvName.text = "Name : $name"
-                    binding.tvTime.text = "Time :  $start_time ${"to"} $end_time"
+                    binding.tvName.text = context.resources.getString(R.string.name) +name
+                    binding.tvTime.text = context.resources.getString(R.string.Time)  +start_time +context.resources.getString(R.string.Time) +end_time
                     binding.tvCountry.text = country
                     binding.tvDates.text = serv_date
-                    binding.tvPriceN.text = "USD $price"
+                    binding.tvHomeType.text = type
+                    binding.tvPriceN.text =context.resources.getString(R.string.USD) +price
                     val jsonArray = JsonArray()
                     jsonArray.add("0")
                     val jsonObject = JsonObject()
@@ -58,7 +60,7 @@ class AdapterCar(
                     Log.e("accept_by", jsonString)
 
                     if (jsonString.contains("0")) {
-                        binding.tvRequested.text = "Requested"
+                        binding.tvRequested.text = context.resources.getString(R.string.Requested)
                         binding.layoutRequested.setBackgroundTintList(
                             ColorStateList.valueOf(
                                 ContextCompat.getColor(
@@ -67,12 +69,16 @@ class AdapterCar(
                                 )
                             )
                         )
-                    } else {
-                        binding.tvRequested.text = "Pending"
+                    }
+//                    else if (jsonString.contains("5")&& status.toString()=="2"){
+//                        binding.tvRequested.text ="Completed"
+//                        binding.layoutRequested.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, com.amtech.baseetcustomer.R.color.green)))
+//                    }
+                    else {
+                        binding.tvRequested.text = context.resources.getString(R.string.pending)
                         binding.layoutRequested.setBackgroundTintList(
-                            ColorStateList.valueOf(
-                                ContextCompat.getColor(
-                                    context,
+                            ColorStateList.valueOf(ContextCompat.getColor(
+                                context,
                                     com.amtech.baseetcustomer.R.color.blue
                                 )
                             )
@@ -82,7 +88,7 @@ class AdapterCar(
 //
 
                     binding.layoutRequested.setOnClickListener {
-                             if (serv_id.isNotEmpty()) {
+                        if (serv_id.isNotEmpty() && binding.tvRequested.text!="Completed") {
                                 var foodId = ""
                                 var serviceDate = ""
                                 for (i in serv_id) {
@@ -94,7 +100,7 @@ class AdapterCar(
                                 val i = Intent(context, BookingDetail::class.java)
                                     .putExtra("callFrom", "car")
                                     .putExtra("statues", binding.tvRequested.text.toString())
-                                    .putExtra("id", id)
+                                    .putExtra("id", id.toString())
                                     .putExtra("name", name)
                                     .putExtra("foodId", foodId)
                                     .putExtra("tr_from", tr_from)

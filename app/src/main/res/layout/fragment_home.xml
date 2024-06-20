@@ -25,7 +25,7 @@
                 android:layout_gravity="start"
                 android:layout_marginStart="25dp"
                 android:fontFamily="@font/poppins_bold"
-                android:text="Welcome On"
+                android:text="@string/welcome_on"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -35,13 +35,23 @@
                 android:layout_gravity="start"
                 android:layout_marginStart="25dp"
                 android:fontFamily="@font/poppins_bold"
-                android:text="Baseet !"
+                android:text="@string/baseet"
                 android:textColor="@color/red"
                 android:textSize="16sp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
-
+        <androidx.appcompat.widget.AppCompatTextView
+             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="25dp"
+            android:fontFamily="@font/poppins_regular"
+            android:text="@string/chose_lanaguge"
+            android:layout_marginEnd="5dp"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgLan"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginTop="10dp"
@@ -64,9 +74,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/corner"
-            android:drawableLeft="@drawable/searchnew"
+            android:drawableStart="@drawable/searchnew"
             android:drawablePadding="5dp"
-            android:hint="Search Here.."
+            android:hint="@string/search_here"
             android:imeOptions="actionDone"
             android:padding="10dp"
             android:textSize="14sp">

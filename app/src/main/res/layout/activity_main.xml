@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
              android:fontFamily="@font/poppins_bold"
             android:gravity="center"
-            android:text="Home"
+            android:text="@string/home"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@+id/toolBar"
             app:layout_constraintEnd_toEndOf="parent"
