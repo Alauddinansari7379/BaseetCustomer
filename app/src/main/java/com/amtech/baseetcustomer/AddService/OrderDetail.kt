@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.amtech.baseetcustomer.MainActivity.MainActivity
 import com.amtech.baseetcustomer.R
 import com.amtech.baseetcustomer.databinding.ActivityOrderDetialBinding
@@ -28,10 +29,34 @@ class OrderDetail : AppCompatActivity() {
             MainActivity.refreshLanNew = false
             refresh()
         }
+        if (sessionManager.selectedLanguage == "en") {
+            binding.imgLan.background = ContextCompat.getDrawable(context, R.drawable.arabic_text)
+        } else {
+            binding.imgLan.background = ContextCompat.getDrawable(context, R.drawable.english_text)
+        }
+
+        binding.imgLan.setOnClickListener {
+            if (sessionManager.selectedLanguage == "en") {
+                sessionManager.selectedLanguage = "ar"
+                MainActivity().languageSetting(context, sessionManager.selectedLanguage.toString())
+                overridePendingTransition(0, 0)
+                finish()
+                startActivity(intent)
+                overridePendingTransition(0, 0)
+            } else {
+                sessionManager.selectedLanguage = "en"
+                MainActivity().languageSetting(context, sessionManager.selectedLanguage.toString())
+                overridePendingTransition(0, 0)
+                finish()
+                startActivity(intent)
+                overridePendingTransition(0, 0)
+            }
+        }
         with(binding) {
             imgBack.setOnClickListener {
                 onBackPressed()
             }
+
             val type = intent.getStringExtra("food_type").toString()
             val orderStatues = intent.getStringExtra("orderStatus").toString()
             val detail = intent.getStringExtra("detail").toString()

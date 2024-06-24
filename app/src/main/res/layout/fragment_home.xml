@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -40,20 +41,24 @@
                 android:textSize="16sp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
         <androidx.appcompat.widget.AppCompatTextView
-             android:layout_width="wrap_content"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="25dp"
+            android:visibility="gone"
+            android:layout_marginEnd="5dp"
             android:fontFamily="@font/poppins_regular"
             android:text="@string/chose_lanaguge"
-            android:layout_marginEnd="5dp"
             android:textColor="@color/black"
             android:textSize="12sp" />
+
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgLan"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:visibility="gone"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
             android:background="@drawable/arabic">
@@ -88,94 +93,278 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="15dp"
             android:layout_weight="1"
-            android:gravity="start">
+            android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imgFood"
-                android:layout_width="180dp"
-                android:layout_height="160dp"
-                android:layout_gravity="center"
-                android:background="@drawable/food"
-                android:orientation="vertical">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardFood"
+                android:layout_width="match_parent"
+                android:layout_height="183dp"
+                android:layout_marginBottom="2dp"
+                android:backgroundTint="#FF4F4F"
+                android:elevation="10dp"
+                app:cardCornerRadius="15dp">
 
-            </androidx.appcompat.widget.AppCompatImageView>
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginStart="15dp"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="@string/food_nservice"
+                            android:textColor="@color/white"
+                            android:textSize="16sp">
+
+                        </androidx.appcompat.widget.AppCompatTextView>
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginStart="50dp"
+                            android:layout_gravity="end"
+                            android:background="@drawable/arrow_food">
+
+                        </androidx.appcompat.widget.AppCompatImageView>
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="170dp"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/food_new">
+
+                    </androidx.appcompat.widget.AppCompatImageView>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            </androidx.cardview.widget.CardView>
+
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="15dp"
             android:layout_weight="1"
-            android:gravity="end">
+            android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imgTranslator"
-                android:layout_width="180dp"
-                android:layout_height="160dp"
-                android:layout_gravity="center"
-                android:background="@drawable/translator"
-                android:orientation="vertical">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardTra"
+                android:layout_width="match_parent"
+                android:layout_height="183dp"
+                android:layout_marginBottom="2dp"
+                android:backgroundTint="#78B8F5"
+                android:elevation="10dp"
+                app:cardCornerRadius="15dp">
 
-            </androidx.appcompat.widget.AppCompatImageView>
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginStart="15dp"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="@string/translator_nservice"
+                            android:textColor="@color/white"
+                            android:textSize="16sp">
+
+                        </androidx.appcompat.widget.AppCompatTextView>
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginStart="30dp"
+                            android:background="@drawable/arrow_tra">
+
+                        </androidx.appcompat.widget.AppCompatImageView>
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="130dp"
+                        android:layout_height="100dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/tra_img">
+
+                    </androidx.appcompat.widget.AppCompatImageView>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            </androidx.cardview.widget.CardView>
+
 
         </androidx.appcompat.widget.LinearLayoutCompat>
-
-
     </androidx.appcompat.widget.LinearLayoutCompat>
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="15dp"
             android:layout_weight="1"
-            android:gravity="start">
+            android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imgCar"
-                android:layout_width="180dp"
-                android:layout_height="160dp"
-                android:layout_gravity="center"
-                android:background="@drawable/car"
-                android:orientation="vertical">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardCar"
+                android:layout_width="match_parent"
+                android:layout_height="183dp"
+                android:layout_marginBottom="2dp"
+                android:backgroundTint="#B57BF4"
+                android:elevation="10dp"
+                app:cardCornerRadius="15dp">
 
-            </androidx.appcompat.widget.AppCompatImageView>
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginStart="15dp"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="@string/car_nrrental"
+                            android:textColor="@color/white"
+                            android:textSize="16sp">
+
+                        </androidx.appcompat.widget.AppCompatTextView>
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginStart="50dp"
+                            android:background="@drawable/arrow_car">
+
+                        </androidx.appcompat.widget.AppCompatImageView>
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="170dp"
+                        android:layout_height="110dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/car_">
+
+                    </androidx.appcompat.widget.AppCompatImageView>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            </androidx.cardview.widget.CardView>
+
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="15dp"
             android:layout_weight="1"
-            android:gravity="end">
+            android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imgHome"
-                android:layout_width="180dp"
-                android:layout_height="160dp"
-                android:layout_gravity="center"
-                android:background="@drawable/homerental"
-                android:orientation="vertical">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardHome"
+                android:layout_width="match_parent"
+                android:layout_height="183dp"
+                android:layout_marginBottom="2dp"
+                android:backgroundTint="#FFB653"
+                android:elevation="10dp"
+                app:cardCornerRadius="15dp">
 
-            </androidx.appcompat.widget.AppCompatImageView>
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start"
+                            android:layout_marginStart="15dp"
+                            android:fontFamily="@font/poppins_bold"
+                            android:text="@string/home_nservice"
+                            android:textColor="@color/white"
+                            android:textSize="16sp">
+
+                        </androidx.appcompat.widget.AppCompatTextView>
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginStart="50dp"
+                            android:background="@drawable/arrow_home">
+
+                        </androidx.appcompat.widget.AppCompatImageView>
+                    </LinearLayout>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="170dp"
+                        android:layout_height="110dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/home">
+
+                    </androidx.appcompat.widget.AppCompatImageView>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            </androidx.cardview.widget.CardView>
+
 
         </androidx.appcompat.widget.LinearLayoutCompat>
-
-
     </androidx.appcompat.widget.LinearLayoutCompat>
+
+
 
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -39,13 +39,13 @@ class HomeFragment : Fragment() {
 
 
         with(binding){
-             imgHome.setOnClickListener {
+             cardHome.setOnClickListener {
                 startActivity(Intent(requireActivity(),HomeRental::class.java))
             }
-            imgTranslator.setOnClickListener {
+            cardTra.setOnClickListener {
                 startActivity(Intent(requireActivity(),Translator::class.java))
             }
-            imgCar.setOnClickListener {
+            cardCar.setOnClickListener {
                 startActivity(Intent(requireActivity(),CarRental::class.java))
             }
             binding.imgLan.setOnClickListener {

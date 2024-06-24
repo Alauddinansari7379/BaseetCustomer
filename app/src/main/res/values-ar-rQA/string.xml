@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">BaseetCustomer</string>
+    <string name="app_name">زبون تطبيق بسيط</string>
      <string name="channel_id" translatable="false">BaseetCustomer-channel</string>
     <string name="channel_name" translatable="false">BaseetCustomer</string>
 
@@ -268,4 +268,9 @@
     <string name="Villa">فيلا</string>
     <string name="Wood_Home">وود هوم</string>
 
+
+    <string name="food_nservice">خدمة\n الطعام</string>
+    <string name="translator_nservice">خدمة\n المترجم</string>
+    <string name="car_nrrental">تاجير\n سيارة</string>
+    <string name="home_nservice">خدمة\n منزلية</string>
 </resources>

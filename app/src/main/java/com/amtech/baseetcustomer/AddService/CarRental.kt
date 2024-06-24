@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.aminography.primecalendar.civil.CivilCalendar
 import com.aminography.primedatepicker.picker.PrimeDatePicker
 import com.aminography.primedatepicker.picker.callback.MultipleDaysPickCallback
@@ -55,6 +56,30 @@ class CarRental : AppCompatActivity() {
         if (MainActivity.refreshLanNew) {
             MainActivity.refreshLanNew = false
             refresh()
+        }
+
+        if (sessionManager.selectedLanguage == "en") {
+            binding.imgLan.background = ContextCompat.getDrawable(context, R.drawable.arabic_text)
+        } else {
+            binding.imgLan.background = ContextCompat.getDrawable(context, R.drawable.english_text)
+        }
+
+        binding.imgLan.setOnClickListener {
+            if (sessionManager.selectedLanguage == "en") {
+                sessionManager.selectedLanguage = "ar"
+                MainActivity().languageSetting(context, sessionManager.selectedLanguage.toString())
+                overridePendingTransition(0, 0)
+                finish()
+                startActivity(intent)
+                overridePendingTransition(0, 0)
+            } else {
+                sessionManager.selectedLanguage = "en"
+                MainActivity().languageSetting(context, sessionManager.selectedLanguage.toString())
+                overridePendingTransition(0, 0)
+                finish()
+                startActivity(intent)
+                overridePendingTransition(0, 0)
+            }
         }
         with(binding) {
             imgBack.setOnClickListener {

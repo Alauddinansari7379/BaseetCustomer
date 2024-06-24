@@ -95,6 +95,27 @@ class MainActivity : AppCompatActivity() {
 
         MainActivity().languageSetting(context, sessionManager.selectedLanguage.toString())
         updateBottomNavigationBar()
+        if (sessionManager.selectedLanguage=="en"){
+            binding.imgLan.background = ContextCompat.getDrawable(context, R.drawable.arabic_text)
+        }else{
+            binding.imgLan.background = ContextCompat.getDrawable(context, R.drawable.english_text)
+        }
+
+        binding.imgLan.setOnClickListener {
+            if (sessionManager.selectedLanguage=="en"){
+                sessionManager.selectedLanguage="ar"
+                MainActivity().languageSetting(context, sessionManager.selectedLanguage.toString())
+                updateBottomNavigationBar()
+                refreshNew()
+            }else{
+                sessionManager.selectedLanguage="en"
+                MainActivity().languageSetting(context, sessionManager.selectedLanguage.toString())
+                updateBottomNavigationBar()
+                refreshNew()
+
+            }
+
+        }
         // languageDialog()
 
         Log.d("userIdnewwww", sessionManager.userId.toString())

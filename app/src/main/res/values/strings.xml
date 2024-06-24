@@ -270,5 +270,9 @@
     <string name="Room_Hall5">5+1(5 Room + Hall)</string>
     <string name="Villa">Villa</string>
     <string name="Wood_Home">Wood Home</string>
+    <string name="food_nservice">Food \nService</string>
+    <string name="translator_nservice">Translator\nService</string>
+    <string name="car_nrrental">Car \nRrental</string>
+    <string name="home_nservice">Home \nService</string>
 
 </resources>

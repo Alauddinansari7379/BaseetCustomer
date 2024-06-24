@@ -10,6 +10,7 @@ import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.amtech.baseetcustomer.Helper.AppProgressBar
 import com.amtech.baseetcustomer.Helper.ImageUploadClass.UploadRequestBody
 import com.amtech.baseetcustomer.Helper.myToast
@@ -38,7 +39,29 @@ class EditProfile : AppCompatActivity(), UploadRequestBody.UploadCallback  {
         setContentView(binding.root)
         sessionManager=SessionManager(context)
         MainActivity().languageSetting(context,sessionManager.selectedLanguage.toString())
+        if (sessionManager.selectedLanguage == "en") {
+            binding.imgLan.background = ContextCompat.getDrawable(context, R.drawable.arabic_text)
+        } else {
+            binding.imgLan.background = ContextCompat.getDrawable(context, R.drawable.english_text)
+        }
 
+        binding.imgLan.setOnClickListener {
+            if (sessionManager.selectedLanguage == "en") {
+                sessionManager.selectedLanguage = "ar"
+                MainActivity().languageSetting(context, sessionManager.selectedLanguage.toString())
+                overridePendingTransition(0, 0)
+                finish()
+                startActivity(intent)
+                overridePendingTransition(0, 0)
+            } else {
+                sessionManager.selectedLanguage = "en"
+                MainActivity().languageSetting(context, sessionManager.selectedLanguage.toString())
+                overridePendingTransition(0, 0)
+                finish()
+                startActivity(intent)
+                overridePendingTransition(0, 0)
+            }
+        }
         with(binding) {
             if (sessionManager.customerName!!.isNotEmpty()){
                 tvName.text=sessionManager.customerName.toString()
