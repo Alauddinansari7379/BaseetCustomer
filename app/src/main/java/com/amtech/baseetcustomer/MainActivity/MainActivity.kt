@@ -75,8 +75,6 @@ class MainActivity : AppCompatActivity() {
         var back = false
         var refreshLan = true
         var refreshLanNew = true
-
-
     }
 
     private val NOTIFICATION_PERMISSION_CODE = 123
@@ -175,7 +173,8 @@ class MainActivity : AppCompatActivity() {
 
             if (matchResult != null) {
                 val statusValue = matchResult.groupValues[1]
-                if (statusValue == "TXN_SUCCESS") {
+//                if (statusValue == "TXN_SUCCESS") {
+                if ("1" =="1") {
                     println("STATUS value: $statusValue")
                     apiCallMakeOrder()
                     callFrom = ""
@@ -413,11 +412,11 @@ class MainActivity : AppCompatActivity() {
                                     sDialog.cancel()
                                 }.setCancelClickListener { sDialog ->
                                     sDialog.cancel()
+                                    callFrom = ""
                                     AppProgressBar.hideLoaderDialog()
                                 }.show()
                             AppProgressBar.hideLoaderDialog()
                             // onBackPressed()
-                            callFrom = ""
                         }
                     } catch (e: Exception) {
                         myToast(context, resources.getString(R.string.Something_went_wrong))

@@ -29,6 +29,7 @@ class BookingDetail : AppCompatActivity() {
     var id = ""
     private var foodId = ""
     private var price = ""
+    private var callFrom = ""
     private var serviceDate = ""
     private lateinit var sessionManager: SessionManager
 
@@ -71,7 +72,7 @@ class BookingDetail : AppCompatActivity() {
                 onBackPressed()
             }
             try {
-                val callFrom = intent.getStringExtra("callFrom")
+                 callFrom = intent.getStringExtra("callFrom").toString()
                 id = intent.getStringExtra("id").toString()
                 foodId = intent.getStringExtra("foodId").toString()
                 val statues = intent.getStringExtra("statues")
@@ -145,7 +146,7 @@ class BookingDetail : AppCompatActivity() {
                 serviceDate
                 // apiCallAccept()
                 val i = Intent(context, Payment::class.java)
-                    .putExtra("callFrom", "Booking")
+                    .putExtra("callFrom", callFrom)
                     .putExtra("foodId", foodId)
                     .putExtra("id", id)
                     .putExtra("serviceDate", serviceDate.toString())

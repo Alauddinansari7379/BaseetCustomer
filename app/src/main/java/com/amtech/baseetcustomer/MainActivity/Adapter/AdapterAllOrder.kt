@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.amtech.baseetcustomer.AddService.OrderDetail
+import com.amtech.baseetcustomer.AddService.Payment
 import com.amtech.baseetcustomer.Helper.pmFormate
 import com.amtech.baseetcustomer.MainActivity.Model.Order
 import com.amtech.baseetcustomer.R
@@ -64,6 +65,10 @@ class AdapterAllOrder(
                     }
                     binding.tvPaymentStatus.text = payment_status
                     binding.tvTotal.text = "$order_amount$"
+//                    for (i in details){
+//                        binding.tvTotal.text = "${i.price}$"
+//                    }
+
                     binding.tvType.text = food_type
 
                     var serviceDate=""
@@ -96,6 +101,25 @@ class AdapterAllOrder(
                         binding.layoutVideoCall.visibility= View.GONE
                     }
 
+                    if (order_payment=="partial"){
+                        binding.layoutRemaning.visibility= View.VISIBLE
+                    }else{
+                        binding.layoutRemaning.visibility= View.GONE
+                    }
+                    binding.btnPayRemaning.setOnClickListener {
+                         var foodId=""
+                        for (i in details){
+                             foodId = i.food_id.toString()
+                        }
+                        val result = order_amount * 70.0 / 100
+                        val i = Intent(context, Payment::class.java)
+                            .putExtra("callFrom", "Remaining")
+                            .putExtra("foodId", foodId.toString())
+                            .putExtra("id", id.toString())
+                            .putExtra("serviceDate", serviceDate.toString())
+                            .putExtra("price", result.toString())
+                        context.startActivity(i)
+                    }
 
                     binding.imgVideoCall.setOnClickListener {
                         videoCall.videoCall("Service$user_id")

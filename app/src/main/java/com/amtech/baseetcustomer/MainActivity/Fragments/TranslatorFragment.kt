@@ -144,8 +144,7 @@ class TranslatorFragment : Fragment() {
 
 
     private fun apiCallGetRequest() {
-        AppProgressBar.showLoaderDialog(requireActivity())
-        AppProgressBar.showLoaderDialog(requireActivity())
+         AppProgressBar.showLoaderDialog(requireActivity())
         ApiClient.apiService.getRequest(
             sessionManager.idToken.toString(),
         )

@@ -273,4 +273,7 @@
     <string name="translator_nservice">خدمة\n المترجم</string>
     <string name="car_nrrental">تاجير\n سيارة</string>
     <string name="home_nservice">خدمة\n منزلية</string>
+    <string name="Pay_Remaining_Payment_USD">سداد المبلغ المتبقي بالدولار الأمريكي: </string>
+    <string name="pay_remaning_amt">سداد المبلغ المتبقي</string>
+
 </resources>

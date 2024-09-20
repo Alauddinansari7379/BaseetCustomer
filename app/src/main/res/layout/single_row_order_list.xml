@@ -459,8 +459,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginEnd="10dp"
+                             android:layout_marginEnd="10dp"
+                            android:gravity="start"
                             android:layout_weight="1">
 
 
@@ -475,6 +475,42 @@
                                 android:padding="5dp">
 
                             </androidx.constraintlayout.utils.widget.ImageFilterButton>
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/layoutRemaning"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:orientation="horizontal">
+
+
+                         <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="10dp"
+                             >
+
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnPayRemaning"
+                                 android:layout_width="wrap_content"
+                                android:layout_height="35dp"
+                                android:layout_gravity="center"
+                                  android:text="@string/pay_remaning_amt"
+                                android:textSize="9sp"
+                                android:textAllCaps="false"
+                                android:backgroundTint="@color/main_color"
+                                >
+
+                            </com.google.android.material.button.MaterialButton>
+
 
 
                         </LinearLayout>

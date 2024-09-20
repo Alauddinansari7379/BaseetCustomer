@@ -205,6 +205,7 @@
     <string name="Please_select_Service_date">Please select Service date</string>
     <string name="Pay_Partia_Payment_USD">Pay Partial Payment USD:</string>
     <string name="Pay_Full_Payment_USD">Pay Full Payment USD: </string>
+    <string name="Pay_Remaining_Payment_USD">Pay Remaining Payment USD: </string>
 
     <string name="Turkish">Turkish</string>
     <string name="Arabic">Arabic</string>
@@ -274,5 +275,6 @@
     <string name="translator_nservice">Translator\nService</string>
     <string name="car_nrrental">Car \nRrental</string>
     <string name="home_nservice">Home \nService</string>
+    <string name="pay_remaning_amt">Pay Remaining Amt</string>
 
 </resources>
