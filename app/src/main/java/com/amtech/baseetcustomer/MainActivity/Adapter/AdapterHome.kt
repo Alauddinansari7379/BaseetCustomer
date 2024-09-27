@@ -104,8 +104,8 @@ class AdapterHome(
                             var serviceDate = "NA"
                             for (i in serv_id) {
                                 foodId = i.id.toString()
-                                aminetes = i.amenities
-                                homeType = i.car_type
+                                aminetes = i.amenities!!
+                                homeType = i.car_type!!
                             }
                             if (!serv_date.isNullOrEmpty()) {
                                 serviceDate = serv_date.toString()

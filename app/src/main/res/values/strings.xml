@@ -276,5 +276,29 @@
     <string name="car_nrrental">Car \nRrental</string>
     <string name="home_nservice">Home \nService</string>
     <string name="pay_remaning_amt">Pay Remaining Amt</string>
+    <string name="related_services_as_per_customer_request">Related Services as Per Customer Request.</string>
+
+
+    <string name="connect_with_the_customer">Connect with the Customer</string>
+    <string name="translation_from_language">Translation from language :</string>
+     <string name="translation_service_type">Translation Service Type :</string>
+    <string name="service_dates">Service dates :</string>
+    <string name="service_hour_">Service hour :</string>
+    <string name="portfolio_video_">Portfolio Video :</string>
+    <string name="view_video">View Video</string>
+    <string name="short_description">Short Description :</string>
+    <string name="update_price">Update Price</string>
+    <string name="send_this_service">Send Service</string>
+    <string name="name_">Name :</string>
+    <string name="description_">Description :</string>
+    <string name="price_">Price :</string>
+    <string name="from_lang">From Lang :</string>
+    <string name="turkish">Turkish</string>
+    <string name="to_lang">To Lang :</string>
+     <string name="waiting_for_customer_confirmation">Waiting For Customer Confirmation</string>
+    <string name="raheem_in_person">Raheem (In Person)</string>
+    <string name="service">Service</string>
+    <string name="s_no_">S.No:</string>
+    <string name="vendor_list">Vendor List</string>
 
 </resources>

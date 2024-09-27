@@ -36,6 +36,7 @@ data class Order(
     val original_delivery_charge: Int,
     val otp: String,
     val pay_type: String,
+    val document: String?,
     val payment_method: String,
     val payment_status: String,
     val pending: String,

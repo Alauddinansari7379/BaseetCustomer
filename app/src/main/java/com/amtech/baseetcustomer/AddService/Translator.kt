@@ -2,7 +2,9 @@ package com.amtech.baseetcustomer.AddService
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Dialog
 import android.content.ContentResolver
+import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
@@ -25,7 +27,6 @@ import com.amtech.baseetcustomer.Helper.ImageUploadClass.UploadRequestBody
 import com.amtech.baseetcustomer.Helper.Util
 import com.amtech.baseetcustomer.Helper.myToast
 import com.amtech.baseetcustomer.MainActivity.MainActivity
-import com.amtech.baseetcustomer.MainActivity.MainActivity.Companion.refreshLan
 import com.amtech.baseetcustomer.MainActivity.MainActivity.Companion.refreshLanNew
 import com.amtech.baseetcustomer.R
 import com.amtech.baseetcustomer.databinding.ActivityTranslatorBinding
@@ -52,17 +53,11 @@ class Translator : AppCompatActivity(), UploadRequestBody.UploadCallback {
     private var startTimeList = ArrayList<ModelSpinner>()
     private var serviceHour = ArrayList<ModelSpinner>()
     private var countryList = ArrayList<ModelSpinner>()
-    private var multipleSelectedDate = StringBuilder()
+    var dialog: Dialog? = null
 
     var count = 0
-    var type = "On Call"
-    var translationFrom = ""
-    var translationTo = ""
-    var serviceHourNew = ""
-    var startTime = ""
-    var endTime = ""
-    var country = ""
-    private var selectedImageUri: Uri? = null
+
+
     val context = this@Translator
     lateinit var sessionManager: SessionManager
 
@@ -359,22 +354,23 @@ class Translator : AppCompatActivity(), UploadRequestBody.UploadCallback {
                     edtDescription.requestFocus()
                     return@setOnClickListener
                 }
-
                 if (edtPrice.text.toString().isEmpty()) {
                     edtPrice.error = resources.getString(R.string.Enter_Price)
                     edtPrice.requestFocus()
                     return@setOnClickListener
                 }
-                if (multipleSelectedDate.isEmpty()) {
-                    myToast(context, resources.getString(R.string.Please_select_Service_date))
-                    return@setOnClickListener
-                }
-                if (selectedImageUri == null) {
-                    requestTraWithoutImage()
-                } else {
-                    apiCallRequestTra()
 
-                }
+//                if (multipleSelectedDate.isNotEmpty()) {
+//                     myToast(context,resources.getString(R.string.select_rent_date))
+//                    return@setOnClickListener
+//                }
+                val i = Intent(context, VendorList::class.java)
+                      .putExtra("name", edtName.text.toString())
+                     .putExtra("Description", edtDescription.text.toString())
+                     .putExtra("price", edtPrice.text.toString())
+                     .putExtra("type", type.toString())
+
+                context.startActivity(i)
 
             }
 
@@ -444,12 +440,13 @@ class Translator : AppCompatActivity(), UploadRequestBody.UploadCallback {
         overridePendingTransition(0, 0)
     }
 
-    private fun apiCallRequestTra() {
+     fun apiCallRequestTra(id: String, whcSerId: String, contextN: Context) {
         if (selectedImageUri == null) {
-            myToast(context, resources.getString(R.string.Please_Select_Payment_Type))
+            myToast(this.context, resources.getString(R.string.Please_Select_Payment_Type))
             return
         }
-        AppProgressBar.showLoaderDialog(context)
+         sessionManager=SessionManager(contextN)
+        AppProgressBar.showLoaderDialog(this.context)
         val parcelFileDescriptor = contentResolver.openFileDescriptor(selectedImageUri!!, "r", null)
 
         val inputStream = FileInputStream(parcelFileDescriptor!!.fileDescriptor)
@@ -458,6 +455,8 @@ class Translator : AppCompatActivity(), UploadRequestBody.UploadCallback {
         inputStream.copyTo(outputStream)
         val body = UploadRequestBody(file, "image", this)
         ApiClient.apiService.requestTra(
+            id,
+            whcSerId,
             sessionManager.idToken.toString(),
             binding.edtName.text.toString().trim(),
             binding.edtDescription.text.toString().trim(),
@@ -479,26 +478,26 @@ class Translator : AppCompatActivity(), UploadRequestBody.UploadCallback {
             ) {
                 try {
                     if (response.code() == 500) {
-                        myToast(context, resources.getString(R.string.Server_Error))
+                        myToast(this@Translator.context, resources.getString(R.string.Server_Error))
                         AppProgressBar.hideLoaderDialog()
 
                     } else if (response.code() == 404) {
-                        myToast(context, resources.getString(R.string.Something_went_wrong))
+                        myToast(this@Translator.context, resources.getString(R.string.Something_went_wrong))
                         AppProgressBar.hideLoaderDialog()
 
                     } else if (response.code() == 200) {
-                        myToast(context, "${response.body()!!.message}")
+                        myToast(this@Translator.context, "${response.body()!!.message}")
                         AppProgressBar.hideLoaderDialog()
                         onBackPressed()
 
                     } else {
-                        myToast(context, "${response.body()!!.message}")
+                        myToast(this@Translator.context, "${response.body()!!.message}")
                         AppProgressBar.hideLoaderDialog()
                     }
 
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    myToast(context, resources.getString(R.string.Something_went_wrong))
+                    myToast(this@Translator.context, resources.getString(R.string.Something_went_wrong))
                     AppProgressBar.hideLoaderDialog()
                 }
             }
@@ -507,13 +506,13 @@ class Translator : AppCompatActivity(), UploadRequestBody.UploadCallback {
                 count++
                 if (count <= 3) {
                     Log.e("count", count.toString())
-                    apiCallRequestTra()
+                    apiCallRequestTra(id, whcSerId, context)
                 } else {
-                    myToast(context, t.message.toString())
+                    myToast(this@Translator.context, t.message.toString())
                     AppProgressBar.hideLoaderDialog()
 
                 }
-                myToast(context, resources.getString(R.string.Something_went_wrong))
+                myToast(this@Translator.context, resources.getString(R.string.Something_went_wrong))
                 AppProgressBar.hideLoaderDialog()
             }
 
@@ -521,9 +520,12 @@ class Translator : AppCompatActivity(), UploadRequestBody.UploadCallback {
 
     }
 
-    private fun requestTraWithoutImage() {
+     fun requestTraWithoutImage(id: String,whcSerId:String,contextN: Context) {
         AppProgressBar.showLoaderDialog(context)
+         sessionManager=SessionManager(contextN)
         ApiClient.apiService.requestTraWithoutImage(
+            id,
+            whcSerId,
             sessionManager.idToken.toString(),
             binding.edtName.text.toString().trim(),
             binding.edtDescription.text.toString().trim(),
@@ -573,7 +575,7 @@ class Translator : AppCompatActivity(), UploadRequestBody.UploadCallback {
                 count++
                 if (count <= 3) {
                     Log.e("count", count.toString())
-                    requestTraWithoutImage()
+                    requestTraWithoutImage(id,whcSerId,context)
                 } else {
                     myToast(context, t.message.toString())
                     AppProgressBar.hideLoaderDialog()
@@ -633,6 +635,17 @@ class Translator : AppCompatActivity(), UploadRequestBody.UploadCallback {
 
     companion object {
         const val REQUEST_CODE_IMAGE = 101
+        var selectedImageUri: Uri? = null
+        var type = "On Call"
+        var translationFrom = ""
+        var translationTo = ""
+        var serviceHourNew = ""
+        var startTime = ""
+        var endTime = ""
+        var country = ""
+        var multipleSelectedDate = StringBuilder()
+
+
     }
 
     private fun ContentResolver.getFileName(selectedImageUri: Uri): String {

@@ -7,12 +7,12 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.amtech.baseetcustomer.AddService.Model.ModelPlaceOrder
 import com.amtech.baseetcustomer.Helper.AppProgressBar
 import com.amtech.baseetcustomer.Helper.isOnline
 import com.amtech.baseetcustomer.Helper.myToast
 import com.amtech.baseetcustomer.MainActivity.MainActivity
 import com.amtech.baseetcustomer.MainActivity.MainActivity.Companion.back
+import com.amtech.baseetcustomer.MainActivity.Model.ModelStatues.ModelStatues
 import com.amtech.baseetcustomer.R
 import com.amtech.baseetcustomer.databinding.ActivityBookingDetailBinding
 import com.amtech.baseetcustomer.retrofit.ApiClient
@@ -31,6 +31,7 @@ class BookingDetail : AppCompatActivity() {
     private var price = ""
     private var callFrom = ""
     private var serviceDate = ""
+    private var restId = ""
     private lateinit var sessionManager: SessionManager
 
     @SuppressLint("SetTextI18n")
@@ -90,6 +91,7 @@ class BookingDetail : AppCompatActivity() {
                 val driverType = intent.getStringExtra("driv_type")
                 val aminetes = intent.getStringExtra("aminetes")
                 val homeType = intent.getStringExtra("homeType")
+                restId = intent.getStringExtra("restId").toString()
 
                 when (callFrom) {
                     "Translator" -> {
@@ -144,14 +146,26 @@ class BookingDetail : AppCompatActivity() {
 
             btnAccept.setOnClickListener {
                 serviceDate
-                // apiCallAccept()
-                val i = Intent(context, Payment::class.java)
-                    .putExtra("callFrom", callFrom)
-                    .putExtra("foodId", foodId)
-                    .putExtra("id", id)
-                    .putExtra("serviceDate", serviceDate.toString())
-                    .putExtra("price", price)
-                context.startActivity(i)
+                apiCallAcceptReject("accept")
+//                val i = Intent(context, Payment::class.java)
+//                    .putExtra("callFrom", callFrom)
+//                    .putExtra("foodId", foodId)
+//                    .putExtra("id", id)
+//                    .putExtra("serviceDate", serviceDate.toString())
+//                    .putExtra("price", price)
+//                context.startActivity(i)
+            }
+
+            btnReject.setOnClickListener {
+                serviceDate
+                apiCallAcceptReject("reject")
+//                val i = Intent(context, Payment::class.java)
+//                    .putExtra("callFrom", callFrom)
+//                    .putExtra("foodId", foodId)
+//                    .putExtra("id", id)
+//                    .putExtra("serviceDate", serviceDate.toString())
+//                    .putExtra("price", price)
+//                context.startActivity(i)
             }
 
         }
@@ -162,17 +176,16 @@ class BookingDetail : AppCompatActivity() {
         startActivity(intent)
         overridePendingTransition(0, 0)
     }
-    private fun apiCallAccept() {
+    private fun apiCallAcceptReject(statues: String) {
         AppProgressBar.showLoaderDialog(context)
-        ApiClient.apiService.makeOrder(
+        ApiClient.apiService.acceptReject(
             sessionManager.idToken.toString(),
-            foodId, sessionManager.userId.toString(), id, "cash_on_delivery",
-            "take_away", "partial", "online", "", ""
+            id, restId, statues,foodId,
         )
-            .enqueue(object : Callback<ModelPlaceOrder> {
+            .enqueue(object : Callback<ModelStatues> {
                 @SuppressLint("LogNotTimber")
                 override fun onResponse(
-                    call: Call<ModelPlaceOrder>, response: Response<ModelPlaceOrder>
+                    call: Call<ModelStatues>, response: Response<ModelStatues>
                 ) {
                     try {
                         if (response.code() == 404) {
@@ -184,14 +197,19 @@ class BookingDetail : AppCompatActivity() {
                             AppProgressBar.hideLoaderDialog()
 
                         } else {
-                            myToast(context,  resources.getString(R.string.Order_Accepted))
-                            val i = Intent(context, Payment::class.java)
-                                .putExtra("callFrom", "Booking")
-                                .putExtra("foodId", foodId)
-                                .putExtra("id", id)
-                                .putExtra("serviceDate", serviceDate)
-                                .putExtra("price", price)
-                            context.startActivity(i)
+                            myToast(context, response.body()!!.msg)
+                            if (statues == "accept") {
+                                val i = Intent(context, Payment::class.java)
+                                    .putExtra("callFrom", "Booking")
+                                    .putExtra("foodId", foodId)
+                                    .putExtra("id", id)
+                                    .putExtra("serviceDate", serviceDate)
+                                    .putExtra("price", price.toString())
+                                context.startActivity(i)
+                            } else {
+                                onBackPressed()
+                            }
+
                             AppProgressBar.hideLoaderDialog()
                             // onBackPressed()
                         }
@@ -202,13 +220,13 @@ class BookingDetail : AppCompatActivity() {
                     }
                 }
 
-                override fun onFailure(call: Call<ModelPlaceOrder>, t: Throwable) {
+                override fun onFailure(call: Call<ModelStatues>, t: Throwable) {
                     myToast(context, t.message.toString())
                     AppProgressBar.hideLoaderDialog()
                     count++
                     if (count <= 3) {
                         Log.e("count", count.toString())
-                        apiCallAccept()
+                        apiCallAcceptReject(statues)
                     } else {
                         myToast(context, t.message.toString())
                         AppProgressBar.hideLoaderDialog()

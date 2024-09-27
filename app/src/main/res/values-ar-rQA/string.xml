@@ -154,8 +154,7 @@
     <string name="doc">وثيقة</string>
     <string name="choose">يختار</string>
     <string name="translation_form_language">لغة نموذج الترجمة</string>
-    <string name="translation_to_language">الترجمة إلى اللغة</string>
-    <string name="service_hours">ساعات الخدمة</string>
+     <string name="service_hours">ساعات الخدمة</string>
     <string name="expected_cost">التكلفة المتوقعة</string>
     <string name="request_for_translator">طلب مترجم</string>
     <string name="select_langauge">اختار اللغة</string>
@@ -275,5 +274,27 @@
     <string name="home_nservice">خدمة\n منزلية</string>
     <string name="Pay_Remaining_Payment_USD">سداد المبلغ المتبقي بالدولار الأمريكي: </string>
     <string name="pay_remaning_amt">سداد المبلغ المتبقي</string>
+    <string name="related_services_as_per_customer_request">الخدمات ذات الصلة حسب طلب العميل.</string>
+    <string name="connect_with_the_customer">تواصل مع العميل</string>
+    <string name="translation_from_language">الترجمة من اللغة :</string>
+    <string name="translation_to_language">الترجمة إلى اللغة :</string>
+    <string name="translation_service_type">نوع خدمة الترجمة :</string>
+    <string name="service_dates">مواعيد الخدمة :</string>
+    <string name="service_hour_">ساعة الخدمة :</string>
+    <string name="portfolio_video_">فيديو المحفظة :</string>
+    <string name="view_video">عرض الفيديو</string>
+    <string name="short_description">وصف قصير :</string>
+    <string name="update_price">تحديث سعر</string>
+    <string name="send_this_service">أرسل هذه الخدمة</string>
+    <string name="name_">اسم :</string>
+    <string name="description_">وصف :</string>
+    <string name="price_">سعر :</string>
+    <string name="from_lang">من لانج :</string>
+    <string name="turkish">اللغة التركية</string>
+    <string name="to_lang">إلى لانج :</string>
+     <string name="waiting_for_customer_confirmation">في انتظار تأكيد العميل</string>
+    <string name="raheem_in_person">رحيم (شخصيا)</string>
+    <string name="service">Service</string>
+    <string name="s_no_">رقم:</string>
 
 </resources>

@@ -69,33 +69,35 @@ class AdapterAllOrder(
 //                        binding.tvTotal.text = "${i.price}$"
 //                    }
 
-                    binding.tvType.text = food_type
+                    binding.tvReqType.text = food_type
 
                     var serviceDate=""
                     var detailsNew=""
-                    var type=""
 
-                    for (i in details){
-                        detailsNew= i.food_details
-                        val jsonString = detailsNew
-                        val jsonObject = JSONObject(jsonString)
-                        serviceDate = jsonObject.getString("dates")
-                        type = jsonObject.getString("drone")
-//                        if (serviceDate=="null"){
-//                            binding.tvServiceDate.text = "NA"
-//
-//                        }else{
-////                            binding.tvServiceDate.text = serviceDate
-//
-//                        }
-                    }
-                    var serDate=""
+//                    for (i in details){
+//                        detailsNew= i.food_details
+//                        val jsonString = detailsNew
+//                        val jsonObject = JSONObject(jsonString)
+//                        serviceDate = jsonObject.getString("dates")
+//                        type = jsonObject.getString("drone")
+////                        if (serviceDate=="null"){
+////                            binding.tvServiceDate.text = "NA"
+////
+////                        }else{
+//////                            binding.tvServiceDate.text = serviceDate
+////
+////                        }
+//                    }
+                     var docType=""
+                    var document=""
                     for (i in servrequests){
-                        serDate = i.serv_date
+                         docType = i.type
+                        document = i.document
+                        serviceDate = i.serv_date
                     }
-                    binding.tvServiceDate.text=serDate
+                    binding.tvServiceDate.text=serviceDate
 
-                    if (type=="On Call" && restaurant.type=="translator" && order_status=="confirmed"){
+                    if (docType=="On Call" && restaurant.type=="translator" && order_status=="confirmed"){
                         binding.layoutVideoCall.visibility= View.VISIBLE
                     }else{
                         binding.layoutVideoCall.visibility= View.GONE
@@ -106,6 +108,17 @@ class AdapterAllOrder(
                     }else{
                         binding.layoutRemaning.visibility= View.GONE
                     }
+
+                    if (docType == "Doc") {
+                        binding.layoutType.visibility = View.VISIBLE
+                        binding.tvType.text=docType
+                    }
+                    binding.tvViewDoc.setOnClickListener {
+                        videoCall.viewDoc(document.toString())
+
+                    }
+
+
                     binding.btnPayRemaning.setOnClickListener {
                          var foodId=""
                         for (i in details){
@@ -136,7 +149,7 @@ class AdapterAllOrder(
                             .putExtra("name", restaurant.name)
                             .putExtra("phone", restaurant.phone)
                             .putExtra("email", restaurant.email)
-                            .putExtra("serviceDate", serDate)
+                            .putExtra("serviceDate", serviceDate)
                             .putExtra("orderStatus", order_status)
                             .putExtra("order_payment", order_payment)
                             .putExtra("pay_type", pay_type)
@@ -166,6 +179,7 @@ class AdapterAllOrder(
 
     interface VideoCall{
         fun videoCall(toString: String)
+        fun viewDoc(url: String?)
     }
 //    interface Cart{
 //        fun addToCart(toString: String)

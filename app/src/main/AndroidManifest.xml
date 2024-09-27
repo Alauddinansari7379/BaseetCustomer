@@ -27,6 +27,10 @@
         <activity
             android:name=".AddService.OrderDetail"
             android:exported="false" />
+
+        <activity
+            android:name=".AddService.VendorList"
+            android:exported="false" />
         <activity
             android:name=".Profile.ChangePassword"
             android:exported="false" />

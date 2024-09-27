@@ -2,10 +2,12 @@ package com.amtech.baseetcustomer.retrofit
 
 import com.amtech.baseetcustomer.AddService.Model.ModelPlaceOrder
 import com.amtech.baseetcustomer.AddService.Model.ModelRequest
+import com.amtech.baseetcustomer.AddService.Model.ModelVendorList
 import com.amtech.baseetcustomer.Login.model.ModelLogin
 import com.amtech.baseetcustomer.MainActivity.Model.ModelAllOrder
 import com.amtech.baseetcustomer.MainActivity.Model.ModelGetProfile
 import com.amtech.baseetcustomer.MainActivity.Model.ModelGetTranslator
+import com.amtech.baseetcustomer.MainActivity.Model.ModelStatues.ModelStatues
 import com.amtech.baseetcustomer.Profile.Model.ModelUpdateProfile
 import com.amtech.baseetcustomer.SignUp.Model.ModelSignUp
 import okhttp3.MultipartBody
@@ -100,6 +102,8 @@ interface ApiInterface {
     @POST("customer/get_translator")
     fun requestTra(
         @Header("Authorization") authorization: String,
+        @Query("venId") venId: String,
+        @Query("whchserv") whchserv: String,
         @Query("name") name: String,
         @Query("description") description: String,
         @Query("type") type: String,
@@ -118,6 +122,8 @@ interface ApiInterface {
     @POST("customer/get_translator")
     fun requestTraWithoutImage(
         @Header("Authorization") authorization: String,
+        @Query("venId") venId: String,
+        @Query("whchserv") whchserv: String,
         @Query("name") name: String,
         @Query("description") description: String,
         @Query("type") type: String,
@@ -171,6 +177,27 @@ interface ApiInterface {
         @Query("limit") limit: String,
         @Query("offset") offset: String,
      ): Call<ModelAllOrder>
+
+    @GET("customer/fetch_service")
+    fun fetchService(
+        @Header("Authorization") authorization: String,
+        @Query("food_type") food_type: String,
+        @Query("price") price: String,
+        @Query("tr_from") tr_from: String,
+        @Query("tr_to") tr_to: String,
+        @Query("dates") dates: String,
+        @Query("set_hour") set_hour: String,
+        @Query("type") type: String,
+     ): Call<ModelVendorList>
+
+    @POST("customer/request_service")
+    fun acceptReject(
+        @Header("Authorization") authorization: String,
+        @Query("id") id: String,
+        @Query("restaurant_id") restaurant_id: String,
+        @Query("status") status: String,
+        @Query("food_id") food_id: String,
+     ): Call<ModelStatues>
 
 
 }

@@ -6,18 +6,14 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.amtech.baseetcustomer.AddService.BookingDetail
-import com.amtech.baseetcustomer.AddService.OrderDetail
-import com.amtech.baseetcustomer.Helper.pmFormate
 import com.amtech.baseetcustomer.MainActivity.Model.ModelGetTranslatorItem
 import com.amtech.baseetcustomer.R
 import com.amtech.baseetcustomer.databinding.SingleRowTranslatorBinding
 import com.amtech.baseetcustomer.sharedpreferences.SessionManager
-import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 
@@ -70,18 +66,26 @@ class AdapterTranslator(
 //                        binding.layoutRequested.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, com.amtech.baseetcustomer.R.color.green)))
 //                    }
                     else{
-                        binding.tvRequested.text =context.resources.getString(R.string.pending)
-                         binding.layoutRequested.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, com.amtech.baseetcustomer.R.color.blue)))
+                        if (status == "reject") {
+                            binding.tvRequested.text = context.resources.getString(R.string.reject)
+                            binding.layoutRequested.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.main_color)))
+                        } else{
+                            binding.tvRequested.text =context.resources.getString(R.string.pending)
+                            binding.layoutRequested.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.blue)))
+                        }
+
                     }
 
 
 
                     binding.layoutRequested.setOnClickListener {
-                        if (serv_id.isNotEmpty() && binding.tvRequested.text!="Completed") {
+                        if (serv_id.isNotEmpty() && binding.tvRequested.text!="Completed" && status != "reject" ) {
                             var foodId = ""
                             var serviceDate = ""
+                            var restId = ""
                             for (i in serv_id) {
                                 foodId = i.id.toString()
+                                restId = i.restaurant_id.toString()
                             }
                             if (!serv_date.isNullOrEmpty()){
                                 serviceDate=serv_date.toString()
@@ -101,6 +105,7 @@ class AdapterTranslator(
                                 .putExtra("type", type)
                                 .putExtra("serv_date", serviceDate)
                                 .putExtra("price", price!!)
+                                .putExtra("restId", restId!!)
                             context.startActivity(i)
                         }
                     }

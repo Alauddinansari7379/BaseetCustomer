@@ -23,7 +23,7 @@ data class Servrequest(
     val serv_hour: String,
     val serv_id: String,
     val start_time: String,
-    val status: Int,
+    val status: String?,
     val tr_from: String,
     val tr_to: String,
     val trperson: Any,

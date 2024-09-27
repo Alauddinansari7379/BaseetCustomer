@@ -1,24 +1,27 @@
 package com.amtech.baseetcustomer.MainActivity.Fragments
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
 import com.amtech.baseetcustomer.Helper.AppProgressBar
 import com.amtech.baseetcustomer.Helper.myToast
 import com.amtech.baseetcustomer.MainActivity.Adapter.AdapterAllOrder
 import com.amtech.baseetcustomer.MainActivity.MainActivity
-
 import com.amtech.baseetcustomer.MainActivity.Model.ModelAllOrder
 import com.amtech.baseetcustomer.MainActivity.Model.Order
 import com.amtech.baseetcustomer.R
 import com.amtech.baseetcustomer.databinding.FragmentNotificationBinding
 import com.amtech.baseetcustomer.retrofit.ApiClient
 import com.amtech.baseetcustomer.sharedpreferences.SessionManager
+import com.squareup.picasso.Picasso
 import org.jitsi.meet.sdk.JitsiMeetActivity
 import org.jitsi.meet.sdk.JitsiMeetConferenceOptions
 import org.jitsi.meet.sdk.JitsiMeetUserInfo
@@ -75,7 +78,8 @@ class OrderListFragment : Fragment(),AdapterAllOrder.VideoCall {
 
                         }
                         else if  (response.code() == 500) {
-                            activity?.let { myToast(it,  resources.getString(R.string.Server_Error)) }
+                            activity?.let { myToast(it,  resources.getString(R.string.Server_Error))
+                            }
                             AppProgressBar.hideLoaderDialog()
 
                         } else if (response.body()!!.orders.isEmpty()) {
@@ -153,6 +157,33 @@ class OrderListFragment : Fragment(),AdapterAllOrder.VideoCall {
         } catch (e: MalformedURLException) {
             e.printStackTrace();
         }
+    }
+
+    override fun viewDoc(url: String?) {
+        val dialogView = LayoutInflater.from(context).inflate(R.layout.popup_document, null)
+        val imgDoc = dialogView.findViewById<ImageView>(R.id.imgDoc)
+        val btnClose = dialogView.findViewById<Button>(R.id.btnClose)
+
+        val close = dialogView.findViewById<ImageView>(R.id.imgClose)
+
+        val dialog = AlertDialog.Builder(context)
+            .setView(dialogView)
+            .create()
+
+        close.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        btnClose.setOnClickListener {
+            dialog.dismiss()
+        }
+        if (url != null) {
+            Picasso.get().load("https://baseet.thedemostore.in/storage/app/public/product/" + url)
+                .error(R.drawable.error_placeholder)
+                .into(imgDoc)
+        }
+        dialog.show()
+
     }
 
 }
