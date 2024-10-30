@@ -64,7 +64,7 @@ class AdapterAllOrder(
                         binding.layoutCom.visibility=View.VISIBLE
                     }
                     binding.tvPaymentStatus.text = payment_status
-                    binding.tvTotal.text = "$order_amount$"
+                    binding.tvTotal.text = "$price$"
 //                    for (i in details){
 //                        binding.tvTotal.text = "${i.price}$"
 //                    }
@@ -121,14 +121,20 @@ class AdapterAllOrder(
 
                     binding.btnPayRemaning.setOnClickListener {
                          var foodId=""
+                         var servID=""
+                         var price=""
                         for (i in details){
                              foodId = i.food_id.toString()
-                        }
-                        val result = order_amount * 70.0 / 100
+                         }
+                        for (i in servrequests){
+                            servID = i.id.toString()
+                            price = i.price.toString()
+                         }
+                        val result = price.toDouble() * 70.0 / 100
                         val i = Intent(context, Payment::class.java)
                             .putExtra("callFrom", "Remaining")
                             .putExtra("foodId", foodId.toString())
-                            .putExtra("id", id.toString())
+                            .putExtra("id", servID.toString())
                             .putExtra("serviceDate", serviceDate.toString())
                             .putExtra("price", result.toString())
                         context.startActivity(i)
@@ -140,10 +146,13 @@ class AdapterAllOrder(
 
                     binding.layoutDetail.setOnClickListener {
                         var detailsNew=""
+                        var price=0.0
                         for (i in details){
                             detailsNew= i.food_details
                         }
-
+                        for (i in servrequests){
+                             price = i.price.toDouble()
+                        }
                         val i = Intent(context, OrderDetail::class.java)
                             .putExtra("orderId", id.toString())
                             .putExtra("name", restaurant.name)
@@ -155,7 +164,7 @@ class AdapterAllOrder(
                             .putExtra("pay_type", pay_type)
                             .putExtra("payment_status", payment_status)
                             .putExtra("detail",detailsNew)
-                            .putExtra("order_amount", order_amount.toString())
+                            .putExtra("order_amount", price.toString())
                             .putExtra("food_type", food_type)
                         context.startActivity(i)
                     }

@@ -23,6 +23,8 @@ import com.amtech.baseetcustomer.MainActivity.MainActivity
 import com.amtech.baseetcustomer.R
 import com.amtech.baseetcustomer.databinding.ActivityPaymentBinding
 import com.amtech.baseetcustomer.sharedpreferences.SessionManager
+import java.math.BigDecimal
+import java.math.RoundingMode
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -37,7 +39,7 @@ class Payment : AppCompatActivity() {
     private val context = this@Payment
     private lateinit var sessionManager: SessionManager
     private val timer = Timer()
-    var price = ""
+    var price = 0.0
     var priceNew = ""
     var callFrom = ""
     var serviceDate = ""
@@ -46,7 +48,7 @@ class Payment : AppCompatActivity() {
     var id = ""
     var paymentType = ""
     var done = false
-
+    var priceNewPar: Double?=null
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetJavaScriptEnabled", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,16 +81,19 @@ class Payment : AppCompatActivity() {
 
 //102035753236
         callFrom = intent!!.getStringExtra("callFrom").toString()
-        price = intent!!.getStringExtra("price").toString()
+        price = intent!!.getStringExtra("price")!!.toFloat().toDouble()
+        price = BigDecimal(price).setScale(2, RoundingMode.HALF_UP).toDouble()
+
         foodId = intent!!.getStringExtra("foodId").toString()
         id = intent!!.getStringExtra("id").toString()
         serviceDate = intent!!.getStringExtra("serviceDate").toString()
      //   price.substringAfter(".")
 
-         val regex = """^\d+""".toRegex()
-        val matchResult = regex.find(price)
-        val integerString = matchResult?.value ?: "0"
-        val integerNumber = integerString.toInt()
+//         val regex = """^\d+""".toRegex()
+//        val matchResult = regex.find(price.toString())
+//        val integerString = matchResult?.value ?: "0"
+      //  val integerNumber = integerString.toDouble()
+        val integerNumber = price
 
         MainActivity().languageSetting(context,sessionManager.selectedLanguage.toString())
 
@@ -96,12 +101,16 @@ class Payment : AppCompatActivity() {
 //            MainActivity.refreshLanNew = false
 //            refresh()
 //        }
+        binding.tvAmount.text =
+            resources.getString(R.string.Pay_Full_Payment_USD) + integerNumber
         try {
             if (callFrom=="Remaining"){
                 priceNew = integerNumber.toString()
                 binding.tvAmount.text =
                     resources.getString(R.string.Pay_Remaining_Payment_USD) + integerNumber
                 paymentType = "full_payment"
+                binding.layoutPar.visibility=View.GONE
+                binding.radioFull.isChecked=true
             }else {
                 if (serviceDate != "NA" && serviceDate != "") {
                     val currentDate: String =
@@ -113,13 +122,17 @@ class Payment : AppCompatActivity() {
                     //  val montCheck=serviceDate.substring(3,5)
                     try {
                         if (hour.toInt() > 48) {
-                            val priceNew: Int = (integerNumber.toInt() * 30) / 100
-                            binding.tvAmount.text =
-                                resources.getString(R.string.Pay_Partia_Payment_USD) + priceNew
+                             priceNewPar=(integerNumber * 30) / 100
+
+                            binding.tvAmountPar.text =
+                                resources.getString(R.string.Pay_Partia_Payment_USD) + priceNewPar
                             paymentType = "partial"
-                            this.priceNew = priceNew.toDouble().toString()
+                            this.priceNew = priceNewPar!!.toDouble().toString()
 
                         } else {
+                            binding.layoutPar.visibility=View.GONE
+                            binding.radioFull.isChecked=true
+
                             priceNew = integerNumber.toString()
                             binding.tvAmount.text =
                                 resources.getString(R.string.Pay_Full_Payment_USD) + integerNumber
@@ -189,7 +202,37 @@ class Payment : AppCompatActivity() {
                     switchBankT.isChecked = false
                 }
             }
+
+
+                radioPar.setOnCheckedChangeListener { buttonView, isChecked ->
+                    if (isChecked) {
+                        radioFull.isChecked=false
+                        paymentType = "partial"
+                        priceNew= priceNewPar.toString()
+
+                    } else {
+                        // Do something when the radio button is deselected (if needed)
+                     }
+                }
+
+            radioFull.setOnCheckedChangeListener { buttonView, isChecked ->
+                    if (isChecked) {
+                        radioPar.isChecked=false
+                        paymentType = "full_payment"
+                        priceNew= price.toString()
+
+                    } else {
+                        // Do something when the radio button is deselected (if needed)
+                     }
+                }
+
+
             btnOrderNow.setOnClickListener {
+                if (!radioPar.isChecked && !radioFull.isChecked){
+                    myToast(context,"Please select type")
+                    return@setOnClickListener
+                }
+
                 if (switchOnline.isChecked) {
                     layoutPayment.visibility = View.GONE
                     webView.visibility = View.VISIBLE
@@ -226,6 +269,15 @@ class Payment : AppCompatActivity() {
 //                }
 //            }
                     webView.addJavascriptInterface(WebAppInterface(this@Payment), "Android")
+                    val i = Intent(context, MainActivity::class.java)
+                        .putExtra("callFrom", "Payment")
+                        .putExtra("id", id)
+                        .putExtra("foodId", foodId)
+                        .putExtra("paymentType", paymentType)
+                        .putExtra("text", "text")
+                        .putExtra("priceNew", priceNew)
+                    context.startActivity(i)
+                    finish()
                     // Load the URL
                     webView.loadUrl("https://baseet.thedemostore.in/sadabpaynew.php?email=abcs@gmail.com&mobile=9981482211&quantity=1&amount=${priceNew}")
                 } else {

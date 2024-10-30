@@ -2,22 +2,14 @@ package com.amtech.baseetcustomer.MainActivity.Adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.amtech.baseetcustomer.AddService.Model.Data
-import com.amtech.baseetcustomer.AddService.OrderDetail
-import com.amtech.baseetcustomer.AddService.Payment
-import com.amtech.baseetcustomer.Helper.currentDate
-import com.amtech.baseetcustomer.Helper.pmFormate
-import com.amtech.baseetcustomer.MainActivity.Model.Order
-import com.amtech.baseetcustomer.R
-import com.amtech.baseetcustomer.databinding.SingleRowOrderListBinding
+import com.amtech.baseetcustomer.AddService.Translator.Companion.bookingType
 import com.amtech.baseetcustomer.databinding.SingleRowVendorListBinding
 import com.amtech.baseetcustomer.sharedpreferences.SessionManager
-import org.json.JSONObject
 
 
 class AdapterVendorList(
@@ -46,16 +38,22 @@ class AdapterVendorList(
         try {
             with(holder) {
                 with(list[position]) {
+                    if (bookingType=="home"|| bookingType=="car"){
+                        binding.layoutTrasanlotor.visibility=View.GONE
+                    }
                     binding.tvName.text = name.toString()
-                    binding.tvDate.text = created_at.substringBefore("T")
+                    binding.tvDate.text = created_at!!.substringBefore("T")
                     binding.tvType.text = food_type
                     binding.tvTraTo.text = tr_to
                     binding.tvTrFrom.text = tr_from
                     binding.tvTotal.text = price.toString()
                     binding.tvType.text = drone.toString()
                     binding.tvDescription.text = description.toString()
+
                     binding.btnSendService.setOnClickListener {
                         sendService.sendService(restaurant_id.toString(),id.toString())
+                        removeItem(position) // Remove the item
+
                     }
 
 //
@@ -73,6 +71,11 @@ class AdapterVendorList(
         } catch (e: Exception) {
             e.printStackTrace()
         }
+
+    }
+    private fun removeItem(position: Int) {
+        list.removeAt(position)
+        notifyItemRemoved(position)
     }
 interface SendService{
     fun sendService(venId:String,whcSerId:String)

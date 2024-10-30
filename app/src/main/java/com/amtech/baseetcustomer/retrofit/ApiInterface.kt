@@ -59,7 +59,7 @@ interface ApiInterface {
         @Header("Authorization") authorization: String
     ): Call<ModelGetTranslator>
 
-    @POST("customer/order/make_order")
+    @POST("customer/order/make1")
     fun makeOrder(
         @Header("Authorization") authorization: String,
         @Query("food_id") food_id: String,

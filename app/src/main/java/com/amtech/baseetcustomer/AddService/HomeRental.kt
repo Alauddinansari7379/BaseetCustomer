@@ -16,6 +16,11 @@ import com.aminography.primecalendar.civil.CivilCalendar
 import com.aminography.primedatepicker.picker.PrimeDatePicker
 import com.aminography.primedatepicker.picker.callback.MultipleDaysPickCallback
 import com.amtech.baseetcustomer.AddService.Model.ModelRequest
+import com.amtech.baseetcustomer.AddService.Translator.Companion.country
+import com.amtech.baseetcustomer.AddService.Translator.Companion.endTime
+import com.amtech.baseetcustomer.AddService.Translator.Companion.multipleSelectedDate
+import com.amtech.baseetcustomer.AddService.Translator.Companion.startTime
+import com.amtech.baseetcustomer.AddService.Translator.Companion.type
 import com.amtech.baseetcustomer.Helper.AppProgressBar
 import com.amtech.baseetcustomer.Helper.Util
 import com.amtech.baseetcustomer.Helper.myToast
@@ -38,15 +43,11 @@ class HomeRental : AppCompatActivity() {
     private var countryList = ArrayList<ModelSpinner>()
     private var homeTypeList = ArrayList<ModelSpinner>()
      private var startTimeList = ArrayList<ModelSpinner>()
-    var country = ""
-    private var adult = 1
+     private var adult = 1
     private var child = 0
     private var homeType = ""
-     var startTime = ""
-    var endTime = ""
-    var count = 0
-    private var multipleSelectedDate = StringBuilder()
-    override fun onCreate(savedInstanceState: Bundle?) {
+     var count = 0
+     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         sessionManager = SessionManager(context)
@@ -244,7 +245,20 @@ class HomeRental : AppCompatActivity() {
                     myToast(context,resources.getString(R.string.Please_select_Service_date))
                     return@setOnClickListener
                 }
-                apiCallRequestCar()
+                val i = Intent(context, VendorList::class.java)
+                    .putExtra("name", edtName.text.toString())
+                    .putExtra("Description", edtDescription.text.toString())
+                    .putExtra("price", edtPrice.text.toString())
+                    .putExtra("type", type.toString())
+                    .putExtra("carType", homeType.toString())
+                    .putExtra("child", child.toString())
+                    .putExtra("adult", adult.toString())
+                    .putExtra("homeDetail", edtDetail.toString())
+                    .putExtra("homeType", homeType.toString())
+                    .putExtra("bookingType", "home")
+
+                context.startActivity(i)
+               // apiCallRequestCar()
 
             }
 

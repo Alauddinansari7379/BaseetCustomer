@@ -109,7 +109,7 @@
     <string name="na">NA</string>
     <string name="Enter_Password">Enter Password</string>
     <string name="order_payment">Order Payment :</string>
-    <string name="Please_Select_Payment_Type">Please Select Payment Type</string>
+    <string name="Please_Select_Payment_Type">Please Select Payment Method</string>
     <string name="pay_type">Pay Type :</string>
     <string name="traveling_persons">Traveling Persons :</string>
     <string name="driving_type_">Driving Type :</string>

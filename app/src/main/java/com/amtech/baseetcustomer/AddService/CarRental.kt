@@ -2,6 +2,7 @@ package com.amtech.baseetcustomer.AddService
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Bundle
@@ -15,6 +16,11 @@ import com.aminography.primecalendar.civil.CivilCalendar
 import com.aminography.primedatepicker.picker.PrimeDatePicker
 import com.aminography.primedatepicker.picker.callback.MultipleDaysPickCallback
 import com.amtech.baseetcustomer.AddService.Model.ModelRequest
+import com.amtech.baseetcustomer.AddService.Translator.Companion.country
+import com.amtech.baseetcustomer.AddService.Translator.Companion.endTime
+import com.amtech.baseetcustomer.AddService.Translator.Companion.multipleSelectedDate
+import com.amtech.baseetcustomer.AddService.Translator.Companion.startTime
+import com.amtech.baseetcustomer.AddService.Translator.Companion.type
 import com.amtech.baseetcustomer.Helper.AppProgressBar
 import com.amtech.baseetcustomer.Helper.myToast
 import com.amtech.baseetcustomer.MainActivity.MainActivity
@@ -37,14 +43,10 @@ class CarRental : AppCompatActivity() {
     private var carTypeList = ArrayList<ModelSpinner>()
     private var travellingList = ArrayList<ModelSpinner>()
     private var startTimeList = ArrayList<ModelSpinner>()
-    var country = ""
-    var cartype = ""
+     var cartype = ""
     private var drivingType = "Self-Driving"
     var travelPerson = ""
-    var startTime = ""
-    var endTime = ""
     var count=0
-    private var multipleSelectedDate = StringBuilder()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -257,7 +259,17 @@ class CarRental : AppCompatActivity() {
                   myToast(context,resources.getString(R.string.Please_select_Service_date))
                     return@setOnClickListener
                 }
-                apiCallRequestCar()
+                val i = Intent(context, VendorList::class.java)
+                    .putExtra("name", edtName.text.toString())
+                    .putExtra("Description", edtComment.text.toString())
+                    .putExtra("price", edtPrice.text.toString())
+                    .putExtra("type", type.toString())
+                    .putExtra("carType", cartype.toString())
+                    .putExtra("travelPerson", travelPerson.toString())
+                    .putExtra("bookingType", "car")
+
+                context.startActivity(i)
+               // apiCallRequestCar()
 
             }
 

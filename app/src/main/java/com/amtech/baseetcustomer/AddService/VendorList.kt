@@ -10,11 +10,13 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.amtech.baseetcustomer.AddService.Model.ModelRequest
 import com.amtech.baseetcustomer.AddService.Model.ModelVendorList
 import com.amtech.baseetcustomer.AddService.Translator.Companion
+import com.amtech.baseetcustomer.AddService.Translator.Companion.bookingType
 import com.amtech.baseetcustomer.AddService.Translator.Companion.country
 import com.amtech.baseetcustomer.AddService.Translator.Companion.endTime
 import com.amtech.baseetcustomer.AddService.Translator.Companion.multipleSelectedDate
@@ -54,6 +56,13 @@ class VendorList : AppCompatActivity(), AdapterVendorList.SendService,
      var price = ""
     var description = ""
      var name = ""
+     var adult = ""
+     var child = ""
+     var homeDetail = ""
+     private var carType = ""
+     private var homeType = ""
+     private var travelPerson = ""
+     private var  serviceDate = ""
     val context = this@VendorList
     lateinit var sessionManager: SessionManager
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,6 +74,14 @@ class VendorList : AppCompatActivity(), AdapterVendorList.SendService,
         name = intent.getStringExtra("name").toString()
         price = intent.getStringExtra("price").toString()
         type = intent.getStringExtra("type").toString()
+        carType = intent.getStringExtra("carType").toString()
+        travelPerson = intent.getStringExtra("travelPerson").toString()
+        bookingType = intent.getStringExtra("bookingType").toString()
+        child = intent.getStringExtra("child").toString()
+        adult = intent.getStringExtra("adult").toString()
+        homeDetail = intent.getStringExtra("homeDetail").toString()
+        homeType = intent.getStringExtra("homeType").toString()
+
 
         with(binding){
             tvName.text=name
@@ -74,6 +91,41 @@ class VendorList : AppCompatActivity(), AdapterVendorList.SendService,
             tvTime.text= startTime+" to "+ endTime
             tvType.text= type
             tvDates.text= multipleSelectedDate
+
+            serviceDate=multipleSelectedDate.toString()
+            if (bookingType=="car"){
+
+                layoutTraveling.visibility=View.VISIBLE
+                tvLangauge.visibility=View.GONE
+                layoutType.visibility=View.GONE
+                tvTravlingPer.text=travelPerson
+                tvCarType.text=carType
+
+                translationFrom=""
+                translationTo=""
+                serviceHourNew=""
+                type=""
+                serviceDate= ""
+
+            }
+
+
+            if (bookingType=="home"){
+                serviceDate= ""
+                layoutFamilyPer.visibility=View.VISIBLE
+                tvLangauge.visibility=View.GONE
+                layoutType.visibility=View.GONE
+                tvTravlingPer.text=travelPerson
+                tvCarType.text=carType
+                tvCountChild.text=child
+                tvCountAdult.text=adult
+                tvHomeDetail.text=homeDetail
+                tvHomeType.text=homeType
+                translationFrom=""
+                translationTo=""
+                serviceHourNew=""
+                type=""
+            }
         }
         MainActivity().languageSetting(context, sessionManager.selectedLanguage.toString())
         if (MainActivity.refreshLanNew) {
@@ -85,7 +137,6 @@ class VendorList : AppCompatActivity(), AdapterVendorList.SendService,
         } else {
             binding.imgLan.background = ContextCompat.getDrawable(context, R.drawable.english_text)
         }
-        apiCallVendorList()
         binding.imgLan.setOnClickListener {
             if (sessionManager.selectedLanguage == "en") {
                 sessionManager.selectedLanguage = "ar"
@@ -112,6 +163,7 @@ class VendorList : AppCompatActivity(), AdapterVendorList.SendService,
             }
 
         }
+        apiCallVendorList()
 
 
     }
@@ -147,8 +199,9 @@ class VendorList : AppCompatActivity(), AdapterVendorList.SendService,
     private fun apiCallVendorList() {
         AppProgressBar.showLoaderDialog(context)
         ApiClient.apiService.fetchService(
-            sessionManager.idToken.toString(), "Translator", price, translationFrom,
-            translationTo, multipleSelectedDate.toString(),serviceHourNew,type
+            sessionManager.idToken.toString(), bookingType, price, "",
+            "", "","",type
+
         )
             .enqueue(object : Callback<ModelVendorList> {
                 @SuppressLint("LogNotTimber")
@@ -266,7 +319,7 @@ class VendorList : AppCompatActivity(), AdapterVendorList.SendService,
                     } else if (response.code() == 200) {
                         myToast(context, "${response.body()!!.message}")
                         AppProgressBar.hideLoaderDialog()
-                        onBackPressed()
+                      //  onBackPressed()
 
                     } else {
                         myToast(context, "${response.body()!!.message}")
@@ -315,7 +368,7 @@ class VendorList : AppCompatActivity(), AdapterVendorList.SendService,
             startTime,
             endTime,
             country,
-            "translator"
+            bookingType
         ).enqueue(object : Callback<ModelRequest> {
             @SuppressLint("LogNotTimber")
             override fun onResponse(
@@ -334,7 +387,7 @@ class VendorList : AppCompatActivity(), AdapterVendorList.SendService,
                         myToast(context, "${response.body()!!.message}")
                         Log.d("response", response.body()!!.toString())
                         AppProgressBar.hideLoaderDialog()
-                        onBackPressed()
+                      //  onBackPressed()
 
                     } else {
                         myToast(context, "${response.body()!!.message}")

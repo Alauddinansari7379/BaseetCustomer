@@ -360,16 +360,16 @@ class Translator : AppCompatActivity(), UploadRequestBody.UploadCallback {
                     return@setOnClickListener
                 }
 
-//                if (multipleSelectedDate.isNotEmpty()) {
-//                     myToast(context,resources.getString(R.string.select_rent_date))
-//                    return@setOnClickListener
-//                }
+                if (multipleSelectedDate.isEmpty()) {
+                    myToast(context,resources.getString(R.string.Please_select_Service_date))
+                    return@setOnClickListener
+                }
                 val i = Intent(context, VendorList::class.java)
                       .putExtra("name", edtName.text.toString())
                      .putExtra("Description", edtDescription.text.toString())
                      .putExtra("price", edtPrice.text.toString())
                      .putExtra("type", type.toString())
-
+                    .putExtra("bookingType", "translator")
                 context.startActivity(i)
 
             }
@@ -644,6 +644,7 @@ class Translator : AppCompatActivity(), UploadRequestBody.UploadCallback {
         var endTime = ""
         var country = ""
         var multipleSelectedDate = StringBuilder()
+         var bookingType = ""
 
 
     }

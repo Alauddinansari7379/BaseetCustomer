@@ -59,7 +59,7 @@ class AdapterHome(
                     println(jsonString)
                     Log.e("accept_by", jsonString)
 
-                    if (jsonString.contains("0")) {
+                    if (from_ven_stts != "accept") {
                         binding.tvRequested.text = context.resources.getString(R.string.Requested)
                         binding.layoutRequested.setBackgroundTintList(
                             ColorStateList.valueOf(
@@ -84,20 +84,19 @@ class AdapterHome(
 //                    }
 
                     else {
-                        binding.tvRequested.text = context.resources.getString(R.string.pending)
-                        binding.layoutRequested.setBackgroundTintList(
-                            ColorStateList.valueOf(
-                                ContextCompat.getColor(
-                                    context,
-                                    com.amtech.baseetcustomer.R.color.blue
-                                )
-                            )
-                        )
+                        if (stts == "reject") {
+                            binding.tvRequested.text = context.resources.getString(R.string.reject)
+                            binding.layoutRequested.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.main_color)))
+                        } else{
+                            binding.tvRequested.text =context.resources.getString(R.string.pending)
+                            binding.layoutRequested.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(context, R.color.blue)))
+                        }
+
                     }
 
 
                     binding.layoutRequested.setOnClickListener {
-                        if (serv_id.isNotEmpty() && binding.tvRequested.text != "Completed") {
+                        if (from_ven_stts == "accept" && serv_id.isNotEmpty() && binding.tvRequested.text != "Completed") {
                             var foodId = ""
                             var aminetes = ""
                             var homeType = ""

@@ -17,7 +17,7 @@ data class Servrequest(
     val order_id: String,
     val pay_remain: Any,
     val pay_type: Any,
-    val price: String,
+    val price: Double,
     val res_id: String,
     val serv_date: String,
     val serv_hour: String,
