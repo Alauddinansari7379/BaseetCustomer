@@ -3,6 +3,7 @@ package com.amtech.baseetcustomer.retrofit
 import com.amtech.baseetcustomer.AddService.Model.ModelPlaceOrder
 import com.amtech.baseetcustomer.AddService.Model.ModelRequest
 import com.amtech.baseetcustomer.AddService.Model.ModelVendorList
+import com.amtech.baseetcustomer.AddService.modeldetails.ModelDetails
 import com.amtech.baseetcustomer.Login.model.ModelLogin
 import com.amtech.baseetcustomer.MainActivity.Model.ModelAllOrder
 import com.amtech.baseetcustomer.MainActivity.Model.ModelGetProfile
@@ -48,11 +49,11 @@ interface ApiInterface {
     @POST("customer/update-profile")
     fun updateProfile(
         @Header("Authorization") authorization: String,
-        @Query("f_name") f_name:String,
-        @Query("l_name") l_name:String,
-        @Query("email") email:String,
+        @Query("f_name") f_name: String,
+        @Query("l_name") l_name: String,
+        @Query("email") email: String,
         @Part image: MultipartBody.Part,
-        ): Call<ModelUpdateProfile>
+    ): Call<ModelUpdateProfile>
 
     @GET("customer/get_srequsts")
     fun getRequest(
@@ -176,7 +177,7 @@ interface ApiInterface {
         @Header("Authorization") authorization: String,
         @Query("limit") limit: String,
         @Query("offset") offset: String,
-     ): Call<ModelAllOrder>
+    ): Call<ModelAllOrder>
 
     @GET("customer/fetch_service")
     fun fetchService(
@@ -188,7 +189,7 @@ interface ApiInterface {
         @Query("dates") dates: String,
         @Query("set_hour") set_hour: String,
         @Query("type") type: String,
-     ): Call<ModelVendorList>
+    ): Call<ModelVendorList>
 
     @POST("customer/request_service")
     fun acceptReject(
@@ -197,7 +198,19 @@ interface ApiInterface {
         @Query("restaurant_id") restaurant_id: String,
         @Query("status") status: String,
         @Query("food_id") food_id: String,
-     ): Call<ModelStatues>
+    ): Call<ModelStatues>
 
+    @GET("customer/service_details")
+    fun getDetails(
+        @Header("Authorization") authorization: String,
+        @Query("id") id: String
+    ): Call<ModelDetails>
 
+    @GET("customer/fetch_service")
+    fun fetchService1(
+        @Header("Authorization") authorization: String,
+        @Query("food_type") food_type: String,
+        @Query("price") price: String,
+        @Query("drone") drone: String
+    ): Call<ModelVendorList>
 }

@@ -1,6 +1,7 @@
 package com.amtech.baseetcustomer.AddService
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.ContentResolver
 import android.content.Intent
@@ -10,7 +11,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.amtech.baseetcustomer.AddService.Model.ModelRequest
@@ -25,6 +30,8 @@ import com.amtech.baseetcustomer.AddService.Translator.Companion.serviceHourNew
 import com.amtech.baseetcustomer.AddService.Translator.Companion.startTime
 import com.amtech.baseetcustomer.AddService.Translator.Companion.translationFrom
 import com.amtech.baseetcustomer.AddService.Translator.Companion.translationTo
+import com.amtech.baseetcustomer.AddService.modeldetails.Data
+import com.amtech.baseetcustomer.AddService.modeldetails.ModelDetails
 import com.amtech.baseetcustomer.Helper.AppProgressBar
 import com.amtech.baseetcustomer.Helper.ImageUploadClass.UploadRequestBody
 import com.amtech.baseetcustomer.Helper.Util
@@ -34,8 +41,11 @@ import com.amtech.baseetcustomer.MainActivity.MainActivity
 import com.amtech.baseetcustomer.MainActivity.MainActivity.Companion.refreshLanNew
 import com.amtech.baseetcustomer.R
 import com.amtech.baseetcustomer.databinding.AcitvityVendorListBinding
+import com.amtech.baseetcustomer.databinding.PopupServicDetailsBinding
 import com.amtech.baseetcustomer.retrofit.ApiClient
 import com.amtech.baseetcustomer.sharedpreferences.SessionManager
+import com.bumptech.glide.Glide
+import com.squareup.picasso.Picasso
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -50,19 +60,21 @@ class VendorList : AppCompatActivity(), AdapterVendorList.SendService,
     private val binding by lazy {
         AcitvityVendorListBinding.inflate(layoutInflater)
     }
-     var dialog: Dialog? = null
+    var dialog: Dialog? = null
     var count = 0
     var type = ""
-     var price = ""
+    var price = ""
     var description = ""
-     var name = ""
-     var adult = ""
-     var child = ""
-     var homeDetail = ""
-     private var carType = ""
-     private var homeType = ""
-     private var travelPerson = ""
-     private var  serviceDate = ""
+    var name = ""
+    var adult = ""
+    var child = ""
+    private var allServiceDetails: Data? = null
+    var names = ""
+    var homeDetail = ""
+    private var carType = ""
+    private var homeType = ""
+    private var travelPerson = ""
+    private var serviceDate = ""
     val context = this@VendorList
     lateinit var sessionManager: SessionManager
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,49 +94,48 @@ class VendorList : AppCompatActivity(), AdapterVendorList.SendService,
         homeDetail = intent.getStringExtra("homeDetail").toString()
         homeType = intent.getStringExtra("homeType").toString()
 
+        with(binding) {
+            tvName.text = name
+            tvPrice.text = price
+            tvLangauge.text = translationFrom + " to " + translationTo
+            tvCountry.text = "Country :" + country
+            tvTime.text = startTime + " to " + endTime
+            tvType.text = type
+            tvDates.text = multipleSelectedDate
 
-        with(binding){
-            tvName.text=name
-            tvPrice.text=price
-            tvLangauge.text=translationFrom+" to " + translationTo
-            tvCountry.text="Country :"+country
-            tvTime.text= startTime+" to "+ endTime
-            tvType.text= type
-            tvDates.text= multipleSelectedDate
+            serviceDate = multipleSelectedDate.toString()
+            if (bookingType == "car") {
 
-            serviceDate=multipleSelectedDate.toString()
-            if (bookingType=="car"){
+                layoutTraveling.visibility = View.VISIBLE
+                tvLangauge.visibility = View.GONE
+                layoutType.visibility = View.GONE
+                tvTravlingPer.text = travelPerson
+                tvCarType.text = carType
 
-                layoutTraveling.visibility=View.VISIBLE
-                tvLangauge.visibility=View.GONE
-                layoutType.visibility=View.GONE
-                tvTravlingPer.text=travelPerson
-                tvCarType.text=carType
-
-                translationFrom=""
-                translationTo=""
-                serviceHourNew=""
-                type=""
-                serviceDate= ""
+                translationFrom = ""
+                translationTo = ""
+                serviceHourNew = ""
+                type = ""
+                serviceDate = ""
 
             }
 
 
-            if (bookingType=="home"){
-                serviceDate= ""
-                layoutFamilyPer.visibility=View.VISIBLE
-                tvLangauge.visibility=View.GONE
-                layoutType.visibility=View.GONE
-                tvTravlingPer.text=travelPerson
-                tvCarType.text=carType
-                tvCountChild.text=child
-                tvCountAdult.text=adult
-                tvHomeDetail.text=homeDetail
-                tvHomeType.text=homeType
-                translationFrom=""
-                translationTo=""
-                serviceHourNew=""
-                type=""
+            if (bookingType == "home") {
+                serviceDate = ""
+                layoutFamilyPer.visibility = View.VISIBLE
+                tvLangauge.visibility = View.GONE
+                layoutType.visibility = View.GONE
+                tvTravlingPer.text = travelPerson
+                tvCarType.text = carType
+                tvCountChild.text = child
+                tvCountAdult.text = adult
+                tvHomeDetail.text = homeDetail
+                tvHomeType.text = homeType
+                translationFrom = ""
+                translationTo = ""
+                serviceHourNew = ""
+                type = ""
             }
         }
         MainActivity().languageSetting(context, sessionManager.selectedLanguage.toString())
@@ -200,7 +211,7 @@ class VendorList : AppCompatActivity(), AdapterVendorList.SendService,
         AppProgressBar.showLoaderDialog(context)
         ApiClient.apiService.fetchService(
             sessionManager.idToken.toString(), bookingType, price, "",
-            "", "","",type
+            "", "", "", type
 
         )
             .enqueue(object : Callback<ModelVendorList> {
@@ -258,6 +269,107 @@ class VendorList : AppCompatActivity(), AdapterVendorList.SendService,
             })
 
     }
+
+    fun apiCallGetDetails(typeFood: String, id: String) {
+        AppProgressBar.showLoaderDialog(context)
+        ApiClient.apiService.getDetails(sessionManager.idToken.toString(), id)
+            .enqueue(object : Callback<ModelDetails> {
+
+                override fun onResponse(
+                    call: Call<ModelDetails>,
+                    response: Response<ModelDetails>
+                ) {
+                    try {
+                        when (response.code()) {
+                            404 -> myToast(context, resources.getString(R.string.Something_went_wrong))
+                            500 -> myToast(context, resources.getString(R.string.Server_Error))
+                            else -> {
+                                count = 0
+                                allServiceDetails = response.body()?.data
+
+                                val binding = PopupServicDetailsBinding.inflate(LayoutInflater.from(context))
+
+                                allServiceDetails?.let { details ->
+                                    with(binding) {
+                                        tvName.text = details.name
+                                        tvPrice.text = details.price.toString()
+
+                                        if (typeFood == "translator") {
+                                            tvFrom.text = "Tr from : ${details.tr_from}"
+                                            tvTo.text = "Tr to : ${details.tr_to}"
+                                        } else {
+                                            tvFrom.visibility = View.GONE
+                                            tvTo.visibility = View.GONE
+                                        }
+
+                                        tvType.text = "Type : ${details.food_type}"
+                                        tvDescription.text = details.description
+                                        tvTax.text = "Tax : ${details.tax}"
+                                        tvStatus.text = "Status : ${details.status}"
+                                        tvOrderCount.text = "Order count : ${details.order_count}"
+                                        tvAvgRating.text = "Avg rating : ${details.avg_rating}"
+                                        tvRatingCount.text = "Rating count : ${details.rating_count}"
+                                        tvQty.text = "Qty : ${details.qty}"
+
+                                        if (typeFood == "car") {
+                                            tvCarType.text = details.car_type.toString()
+                                            tvTravlingPer.text = details.trperson.toString()
+                                            tvDatesN.text = "Dates : ${details.dates}"
+                                            tvHomeDays.text = "Home days : ${details.home_days}"
+                                        } else {
+                                            tvCarType.visibility = View.GONE
+                                            tvTravlingPer.visibility = View.GONE
+                                            tvDatesN.visibility = View.GONE
+                                            tvHomeDays.visibility = View.GONE
+                                            tvTravalPerson.visibility = View.GONE
+                                            tvCartypeHN.visibility = View.GONE
+                                        }
+
+                                        if (typeFood == "home") {
+                                            tvHomeDetail.text = "Home details : ${details.amenities}"
+                                            tvHomeType.text = "Home type : ${details.car_type}"
+                                        } else {
+                                            tvHomeDetail.visibility = View.GONE
+                                            tvHomeType.visibility = View.GONE
+                                        }
+
+                                        Glide.with(context)
+                                            .load(details.appimage)
+                                            .into(ivImage)
+
+                                        val dialog = AlertDialog.Builder(context)
+                                            .setView(root)
+                                            .create()
+
+                                        imgClose.setOnClickListener { dialog.dismiss() }
+                                        btnClose.setOnClickListener { dialog.dismiss() }
+
+                                        dialog.show()
+                                    }
+                                }
+                            }
+                        }
+                    } catch (e: Exception) {
+                        myToast(context, resources.getString(R.string.Something_went_wrong))
+                        e.printStackTrace()
+                    } finally {
+                        AppProgressBar.hideLoaderDialog()
+                    }
+                }
+
+                override fun onFailure(call: Call<ModelDetails>, t: Throwable) {
+                    myToast(context, t.message.toString())
+                    AppProgressBar.hideLoaderDialog()
+                    count++
+                    if (count <= 3) {
+                        apiCallGetDetails(typeFood, id)
+                    } else {
+                        myToast(context, t.message.toString())
+                    }
+                }
+            })
+    }
+
 
     fun languageSetting(languageCode: String) {
         val locale = Locale(languageCode)
@@ -319,7 +431,7 @@ class VendorList : AppCompatActivity(), AdapterVendorList.SendService,
                     } else if (response.code() == 200) {
                         myToast(context, "${response.body()!!.message}")
                         AppProgressBar.hideLoaderDialog()
-                      //  onBackPressed()
+                        //  onBackPressed()
 
                     } else {
                         myToast(context, "${response.body()!!.message}")
@@ -387,7 +499,7 @@ class VendorList : AppCompatActivity(), AdapterVendorList.SendService,
                         myToast(context, "${response.body()!!.message}")
                         Log.d("response", response.body()!!.toString())
                         AppProgressBar.hideLoaderDialog()
-                      //  onBackPressed()
+                        //  onBackPressed()
 
                     } else {
                         myToast(context, "${response.body()!!.message}")
@@ -440,6 +552,12 @@ class VendorList : AppCompatActivity(), AdapterVendorList.SendService,
         } else {
             requestTraWithoutImage(id, whcSerId)
         }
+    }
+
+    @SuppressLint("SetTextI18n")
+    override fun showDetailsPopup(venId: String, whcSerId: String) {
+        apiCallGetDetails(venId, whcSerId)
+
     }
 
     override fun onProgressUpdate(percentage: Int) {

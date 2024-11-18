@@ -22,10 +22,12 @@ import com.aminography.primecalendar.civil.CivilCalendar
 import com.aminography.primedatepicker.picker.PrimeDatePicker
 import com.aminography.primedatepicker.picker.callback.MultipleDaysPickCallback
 import com.amtech.baseetcustomer.AddService.Model.ModelRequest
+import com.amtech.baseetcustomer.AddService.Model.ModelVendorList
 import com.amtech.baseetcustomer.Helper.AppProgressBar
 import com.amtech.baseetcustomer.Helper.ImageUploadClass.UploadRequestBody
 import com.amtech.baseetcustomer.Helper.Util
 import com.amtech.baseetcustomer.Helper.myToast
+import com.amtech.baseetcustomer.MainActivity.Adapter.AdapterVendorList
 import com.amtech.baseetcustomer.MainActivity.MainActivity
 import com.amtech.baseetcustomer.MainActivity.MainActivity.Companion.refreshLanNew
 import com.amtech.baseetcustomer.R
@@ -371,6 +373,8 @@ class Translator : AppCompatActivity(), UploadRequestBody.UploadCallback {
                      .putExtra("type", type.toString())
                     .putExtra("bookingType", "translator")
                 context.startActivity(i)
+                if (bookingType != "car" || bookingType != "home")
+                apiCallgetDron(edtPrice.text.toString())
 
             }
 
@@ -431,6 +435,60 @@ class Translator : AppCompatActivity(), UploadRequestBody.UploadCallback {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
         finish()
+    }
+    private fun apiCallgetDron(price : String) {
+        AppProgressBar.showLoaderDialog(context)
+        ApiClient.apiService.fetchService1(
+            sessionManager.idToken.toString(), "translator", price, type
+
+        )
+            .enqueue(object : Callback<ModelVendorList> {
+                @SuppressLint("LogNotTimber")
+                override fun onResponse(
+                    call: Call<ModelVendorList>, response: Response<ModelVendorList>
+                ) {
+                    try {
+                        if (response.code() == 404) {
+                            myToast(context, resources.getString(R.string.Something_went_wrong))
+                            AppProgressBar.hideLoaderDialog()
+
+                        } else if (response.code() == 500) {
+                            myToast(context, resources.getString(R.string.Server_Error))
+                            AppProgressBar.hideLoaderDialog()
+
+                        } else if (response.body()!!.data.isEmpty()) {
+                            myToast(context, resources.getString(R.string.No_Data_Found))
+                            AppProgressBar.hideLoaderDialog()
+
+                        } else {
+
+                            AppProgressBar.hideLoaderDialog()
+                        }
+                    } catch (e: Exception) {
+                        myToast(context, resources.getString(R.string.Something_went_wrong))
+                        e.printStackTrace()
+                        AppProgressBar.hideLoaderDialog()
+
+                    }
+                }
+
+                override fun onFailure(call: Call<ModelVendorList>, t: Throwable) {
+                    myToast(context, t.message.toString())
+                    AppProgressBar.hideLoaderDialog()
+                    count++
+                    if (count <= 3) {
+                        Log.e("count", count.toString())
+                        apiCallgetDron(price)
+                    } else {
+                        myToast(context, t.message.toString())
+                        AppProgressBar.hideLoaderDialog()
+
+                    }
+                    AppProgressBar.hideLoaderDialog()
+                }
+
+            })
+
     }
 
     fun refresh() {

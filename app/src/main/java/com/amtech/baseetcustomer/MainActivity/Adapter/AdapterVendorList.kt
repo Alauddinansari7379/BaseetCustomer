@@ -1,20 +1,25 @@
 package com.amtech.baseetcustomer.MainActivity.Adapter
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.amtech.baseetcustomer.AddService.Model.Data
 import com.amtech.baseetcustomer.AddService.Translator.Companion.bookingType
+import com.amtech.baseetcustomer.R
 import com.amtech.baseetcustomer.databinding.SingleRowVendorListBinding
 import com.amtech.baseetcustomer.sharedpreferences.SessionManager
+import com.squareup.picasso.Picasso
 
 
 class AdapterVendorList(
     val context: Context,
-    var list: ArrayList<Data>,val sendService: SendService
+    var list: ArrayList<Data>, val sendService: SendService
 ) : RecyclerView.Adapter<AdapterVendorList.ViewHolder>() {
     lateinit var sessionManager: SessionManager
 
@@ -38,8 +43,8 @@ class AdapterVendorList(
         try {
             with(holder) {
                 with(list[position]) {
-                    if (bookingType=="home"|| bookingType=="car"){
-                        binding.layoutTrasanlotor.visibility=View.GONE
+                    if (bookingType == "home" || bookingType == "car") {
+                        binding.layoutTrasanlotor.visibility = View.GONE
                     }
                     binding.tvName.text = name.toString()
                     binding.tvDate.text = created_at!!.substringBefore("T")
@@ -51,9 +56,12 @@ class AdapterVendorList(
                     binding.tvDescription.text = description.toString()
 
                     binding.btnSendService.setOnClickListener {
-                        sendService.sendService(restaurant_id.toString(),id.toString())
+                        sendService.sendService(restaurant_id.toString(), id.toString())
                         removeItem(position) // Remove the item
 
+                    }
+                    binding.layoutDetail.setOnClickListener {
+                        sendService.showDetailsPopup(food_type.toString(), id.toString())
                     }
 
 //
@@ -73,11 +81,15 @@ class AdapterVendorList(
         }
 
     }
+
     private fun removeItem(position: Int) {
         list.removeAt(position)
         notifyItemRemoved(position)
     }
-interface SendService{
-    fun sendService(venId:String,whcSerId:String)
-}
+
+    interface SendService {
+        fun sendService(venId: String, whcSerId: String)
+        fun showDetailsPopup(venId: String, whcSerId: String)
+    }
+
 }
