@@ -121,10 +121,12 @@ class AdapterAllOrder(
 
                     binding.btnPayRemaning.setOnClickListener {
                          var foodId=""
+                         var orderid=""
                          var servID=""
                          var price=""
                         for (i in details){
                              foodId = i.food_id.toString()
+                             orderid = i.order_id.toString()
                          }
                         for (i in servrequests){
                             servID = i.id.toString()
@@ -134,6 +136,7 @@ class AdapterAllOrder(
                         val i = Intent(context, Payment::class.java)
                             .putExtra("callFrom", "Remaining")
                             .putExtra("foodId", foodId.toString())
+                            .putExtra("orderid", orderid.toString())
                             .putExtra("id", servID.toString())
                             .putExtra("serviceDate", serviceDate.toString())
                             .putExtra("price", result.toString())

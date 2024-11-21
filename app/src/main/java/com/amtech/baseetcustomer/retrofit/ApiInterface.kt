@@ -3,6 +3,7 @@ package com.amtech.baseetcustomer.retrofit
 import com.amtech.baseetcustomer.AddService.Model.ModelPlaceOrder
 import com.amtech.baseetcustomer.AddService.Model.ModelRequest
 import com.amtech.baseetcustomer.AddService.Model.ModelVendorList
+import com.amtech.baseetcustomer.AddService.modelcurrency.ModelConvertCurrency
 import com.amtech.baseetcustomer.AddService.modeldetails.ModelDetails
 import com.amtech.baseetcustomer.Login.model.ModelLogin
 import com.amtech.baseetcustomer.MainActivity.Model.ModelAllOrder
@@ -11,6 +12,7 @@ import com.amtech.baseetcustomer.MainActivity.Model.ModelGetTranslator
 import com.amtech.baseetcustomer.MainActivity.Model.ModelStatues.ModelStatues
 import com.amtech.baseetcustomer.Profile.Model.ModelUpdateProfile
 import com.amtech.baseetcustomer.SignUp.Model.ModelSignUp
+import okhttp3.Callback
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.GET
@@ -213,4 +215,11 @@ interface ApiInterface {
         @Query("price") price: String,
         @Query("drone") drone: String
     ): Call<ModelVendorList>
+
+    @GET("customer/currency")
+    fun getCurrencyConversion(
+        @Header("Authorization") authorization: String,
+        @Query("order_id") order_id : String,
+        @Query("price") price: String
+    ): Call<ModelConvertCurrency>
 }

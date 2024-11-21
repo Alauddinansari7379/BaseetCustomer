@@ -18,11 +18,17 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.amtech.baseetcustomer.AddService.modelcurrency.ModelConvertCurrency
+import com.amtech.baseetcustomer.Helper.AppProgressBar
 import com.amtech.baseetcustomer.Helper.myToast
 import com.amtech.baseetcustomer.MainActivity.MainActivity
 import com.amtech.baseetcustomer.R
 import com.amtech.baseetcustomer.databinding.ActivityPaymentBinding
+import com.amtech.baseetcustomer.retrofit.ApiClient
 import com.amtech.baseetcustomer.sharedpreferences.SessionManager
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.text.SimpleDateFormat
@@ -41,14 +47,17 @@ class Payment : AppCompatActivity() {
     private val timer = Timer()
     var price = 0.0
     var priceNew = ""
+    var count = 0
     var callFrom = ""
     var serviceDate = ""
     var hour = ""
     var foodId = ""
+    var orderid = ""
     var id = ""
     var paymentType = ""
     var done = false
-    var priceNewPar: Double?=null
+    var priceNewPar: Double? = null
+
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetJavaScriptEnabled", "SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,17 +94,19 @@ class Payment : AppCompatActivity() {
         price = BigDecimal(price).setScale(2, RoundingMode.HALF_UP).toDouble()
 
         foodId = intent!!.getStringExtra("foodId").toString()
+        orderid = intent!!.getStringExtra("orderid").toString()
         id = intent!!.getStringExtra("id").toString()
         serviceDate = intent!!.getStringExtra("serviceDate").toString()
-     //   price.substringAfter(".")
+        //   price.substringAfter(".")
 
 //         val regex = """^\d+""".toRegex()
 //        val matchResult = regex.find(price.toString())
 //        val integerString = matchResult?.value ?: "0"
-      //  val integerNumber = integerString.toDouble()
+        //  val integerNumber = integerString.toDouble()
+        apiCallGetCurrencyConvertion()
         val integerNumber = price
 
-        MainActivity().languageSetting(context,sessionManager.selectedLanguage.toString())
+        MainActivity().languageSetting(context, sessionManager.selectedLanguage.toString())
 
 //        if (MainActivity.refreshLanNew) {
 //            MainActivity.refreshLanNew = false
@@ -104,25 +115,25 @@ class Payment : AppCompatActivity() {
         binding.tvAmount.text =
             resources.getString(R.string.Pay_Full_Payment_USD) + integerNumber
         try {
-            if (callFrom=="Remaining"){
+            if (callFrom == "Remaining") {
                 priceNew = integerNumber.toString()
                 binding.tvAmount.text =
                     resources.getString(R.string.Pay_Remaining_Payment_USD) + integerNumber
                 paymentType = "full_payment"
-                binding.layoutPar.visibility=View.GONE
-                binding.radioFull.isChecked=true
-            }else {
+                binding.layoutPar.visibility = View.GONE
+                binding.radioFull.isChecked = true
+            } else {
                 if (serviceDate != "NA" && serviceDate != "") {
                     val currentDate: String =
                         SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).format(Date())
                     val serviceDateNew = serviceDate.substringBefore(",").replace(",", "")
-    //05-14-2024
+                    //05-14-2024
                     calculateHours(currentDate, serviceDateNew)
 
                     //  val montCheck=serviceDate.substring(3,5)
                     try {
                         if (hour.toInt() > 48) {
-                             priceNewPar=(integerNumber * 30) / 100
+                            priceNewPar = (integerNumber * 30) / 100
 
                             binding.tvAmountPar.text =
                                 resources.getString(R.string.Pay_Partia_Payment_USD) + priceNewPar
@@ -130,8 +141,8 @@ class Payment : AppCompatActivity() {
                             this.priceNew = priceNewPar!!.toDouble().toString()
 
                         } else {
-                            binding.layoutPar.visibility=View.GONE
-                            binding.radioFull.isChecked=true
+                            binding.layoutPar.visibility = View.GONE
+                            binding.radioFull.isChecked = true
 
                             priceNew = integerNumber.toString()
                             binding.tvAmount.text =
@@ -204,32 +215,32 @@ class Payment : AppCompatActivity() {
             }
 
 
-                radioPar.setOnCheckedChangeListener { buttonView, isChecked ->
-                    if (isChecked) {
-                        radioFull.isChecked=false
-                        paymentType = "partial"
-                        priceNew= priceNewPar.toString()
+            radioPar.setOnCheckedChangeListener { buttonView, isChecked ->
+                if (isChecked) {
+                    radioFull.isChecked = false
+                    paymentType = "partial"
+                    priceNew = priceNewPar.toString()
 
-                    } else {
-                        // Do something when the radio button is deselected (if needed)
-                     }
+                } else {
+                    // Do something when the radio button is deselected (if needed)
                 }
+            }
 
             radioFull.setOnCheckedChangeListener { buttonView, isChecked ->
-                    if (isChecked) {
-                        radioPar.isChecked=false
-                        paymentType = "full_payment"
-                        priceNew= price.toString()
+                if (isChecked) {
+                    radioPar.isChecked = false
+                    paymentType = "full_payment"
+                    priceNew = price.toString()
 
-                    } else {
-                        // Do something when the radio button is deselected (if needed)
-                     }
+                } else {
+                    // Do something when the radio button is deselected (if needed)
                 }
+            }
 
 
             btnOrderNow.setOnClickListener {
-                if (!radioPar.isChecked && !radioFull.isChecked){
-                    myToast(context,"Please select type")
+                if (!radioPar.isChecked && !radioFull.isChecked) {
+                    myToast(context, "Please select type")
                     return@setOnClickListener
                 }
 
@@ -245,7 +256,8 @@ class Payment : AppCompatActivity() {
                     webView.clearHistory()
 
 
-                    val URL = "https://baseet.thedemostore.in/sadabpaynew.php?email=abcs@gmail.com&mobile=9981482211&quantity=1&amount=${10}"
+                    val URL =
+                        "https://baseet.thedemostore.in/sadabpaynew.php?email=abcs@gmail.com&mobile=9981482211&quantity=1&amount=${10}"
 
                     // Load a URL
                     // webView.loadUrl("https://baseet.thedemostore.in/sadabpaynew.php?email=abcs@gmail.com&mobile=9981482211&quantity=1&amount=10")
@@ -379,9 +391,10 @@ class Payment : AppCompatActivity() {
         startActivity(intent)
         overridePendingTransition(0, 0)
     }
+
     override fun onDestroy() {
         super.onDestroy()
-        MainActivity.refreshLanNew=true
+        MainActivity.refreshLanNew = true
         timer.cancel()
 
     }
@@ -390,6 +403,51 @@ class Payment : AppCompatActivity() {
         val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip = ClipData.newPlainText("webview_text", text)
         clipboard.setPrimaryClip(clip)
+    }
+
+    fun apiCallGetCurrencyConvertion() {
+        AppProgressBar.showLoaderDialog(context)
+        ApiClient.apiService.getCurrencyConversion(sessionManager.idToken.toString(), orderid, price.toString())
+            .enqueue(object : Callback<ModelConvertCurrency> {
+                override fun onResponse(
+                    call: Call<ModelConvertCurrency>,
+                    response: Response<ModelConvertCurrency>
+                ) {
+                    try {
+                        if (response.code() == 404) {
+                            myToast(context, resources.getString(R.string.Something_went_wrong))
+                            AppProgressBar.hideLoaderDialog()
+                        } else if (response.code() == 500) {
+                            myToast(context, resources.getString(R.string.Server_Error))
+                            AppProgressBar.hideLoaderDialog()
+                        } else {
+                            count = 0
+                            priceNew = response.body()!!.converted_price.toString()
+                            AppProgressBar.hideLoaderDialog()
+                        }
+
+                    } catch (e: Exception) {
+                        myToast(context, resources.getString(R.string.Something_went_wrong))
+                        e.printStackTrace()
+                        AppProgressBar.hideLoaderDialog()
+                    }
+                }
+
+                override fun onFailure(call: Call<ModelConvertCurrency>, t: Throwable) {
+                    myToast(context, t.message.toString())
+                    AppProgressBar.hideLoaderDialog()
+                    count++
+                    if (count <= 3) {
+                        apiCallGetCurrencyConvertion()
+                    } else {
+                        myToast(context, t.message.toString())
+                        AppProgressBar.hideLoaderDialog()
+
+                    }
+
+                }
+
+            })
     }
 }
 

@@ -96,39 +96,43 @@ class AdapterHome(
 
 
                     binding.layoutRequested.setOnClickListener {
-                        if (from_ven_stts == "accept" && serv_id.isNotEmpty() && binding.tvRequested.text != "Completed") {
-                            var foodId = ""
-                            var aminetes = ""
-                            var homeType = ""
-                            var serviceDate = "NA"
-                            for (i in serv_id) {
-                                foodId = i.id.toString()
-                                aminetes = i.amenities!!
-                                homeType = i.car_type!!
+                        try {
+                            if (from_ven_stts == "accept" && serv_id.isNotEmpty() && binding.tvRequested.text != "Completed") {
+                                var foodId = ""
+                                var aminetes = ""
+                                var homeType = ""
+                                var serviceDate = "NA"
+                                for (i in serv_id) {
+                                    foodId = i.id.toString()
+                                    aminetes = i.amenities!!
+                                    homeType = i.car_type!!
+                                }
+                                if (!serv_date.isNullOrEmpty()) {
+                                    serviceDate = serv_date.toString()
+                                }
+                                val i = Intent(context, BookingDetail::class.java)
+                                    .putExtra("callFrom", "Home")
+                                    .putExtra("statues", binding.tvRequested.text.toString())
+                                    .putExtra("id", id.toString())
+                                    .putExtra("foodId", foodId)
+                                    .putExtra("name", name)
+                                    .putExtra("tr_from", tr_from)
+                                    .putExtra("tr_to", tr_to)
+                                    .putExtra("start_time", start_time)
+                                    .putExtra("end_time", end_time)
+                                    .putExtra("description", description)
+                                    .putExtra("country", country)
+                                    .putExtra("type", type)
+                                    .putExtra("trperson", trperson)
+                                    .putExtra("driv_type", driv_type)
+                                    .putExtra("serv_date", serviceDate)
+                                    .putExtra("aminetes", aminetes)
+                                    .putExtra("price", price!!)
+                                    .putExtra("homeType", homeType)
+                                context.startActivity(i)
                             }
-                            if (!serv_date.isNullOrEmpty()) {
-                                serviceDate = serv_date.toString()
-                            }
-                            val i = Intent(context, BookingDetail::class.java)
-                                .putExtra("callFrom", "Home")
-                                .putExtra("statues", binding.tvRequested.text.toString())
-                                .putExtra("id", id.toString())
-                                .putExtra("foodId", foodId)
-                                .putExtra("name", name)
-                                .putExtra("tr_from", tr_from)
-                                .putExtra("tr_to", tr_to)
-                                .putExtra("start_time", start_time)
-                                .putExtra("end_time", end_time)
-                                .putExtra("description", description)
-                                .putExtra("country", country)
-                                .putExtra("type", type)
-                                .putExtra("trperson", trperson)
-                                .putExtra("driv_type", driv_type)
-                                .putExtra("serv_date", serviceDate)
-                                .putExtra("aminetes", aminetes)
-                                .putExtra("price", price!!)
-                                .putExtra("homeType", homeType)
-                            context.startActivity(i)
+                        } catch (e: Exception) {
+                            e.printStackTrace()
                         }
 
                     }

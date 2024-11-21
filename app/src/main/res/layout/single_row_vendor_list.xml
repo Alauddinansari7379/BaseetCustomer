@@ -314,7 +314,7 @@
 
 
                     </LinearLayout>
-                    <LinearLayout
+                    <!--<LinearLayout
                         android:id="@+id/layoutDetail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -328,7 +328,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_bold"
-                            android:text="@string/view_detial_"
+                            android:text="@string/view"
                             android:textColor="@color/black"
                             android:textSize="12sp"
                             android:textStyle="bold">
@@ -338,11 +338,21 @@
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:layout_marginStart="5dp"
-                            android:background="@drawable/baseline_arrow_circle_right_24">
+                            android:background="@drawable/baseline_remove_red_eye_24">
 
                         </androidx.appcompat.widget.AppCompatImageView>
 
-                    </LinearLayout>
+                    </LinearLayout>-->
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/layoutDetail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:text="@string/view"
+                        android:textAllCaps="false"
+                        android:padding="3dp"
+                        android:background="@drawable/view_background_round"
+                        android:drawableEnd="@drawable/baseline_remove_red_eye_24"/>
+
 
                 </LinearLayout>
             </LinearLayout>
