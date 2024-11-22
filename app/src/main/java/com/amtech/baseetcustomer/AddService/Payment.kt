@@ -65,6 +65,7 @@ class Payment : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         sessionManager = SessionManager(context)
+        apiCallGetCurrencyConvertion()
         if (sessionManager.selectedLanguage == "en") {
             binding.imgLan.background = ContextCompat.getDrawable(context, R.drawable.arabic_text)
         } else {
@@ -98,13 +99,14 @@ class Payment : AppCompatActivity() {
         orderid = intent!!.getStringExtra("order_id").toString()
         id = intent!!.getStringExtra("id").toString()
         serviceDate = intent!!.getStringExtra("serviceDate").toString()
+        currency = intent!!.getStringExtra("currency").toString()
         //   price.substringAfter(".")
 
 //         val regex = """^\d+""".toRegex()
 //        val matchResult = regex.find(price.toString())
 //        val integerString = matchResult?.value ?: "0"
         //  val integerNumber = integerString.toDouble()
-        apiCallGetCurrencyConvertion()
+
         val integerNumber = price
 
         MainActivity().languageSetting(context, sessionManager.selectedLanguage.toString())
@@ -119,7 +121,7 @@ class Payment : AppCompatActivity() {
             if (callFrom == "Remaining") {
                 priceNew = integerNumber.toString()
                 binding.tvAmount.text =
-                    resources.getString(R.string.Pay_Remaining_Payment_USD) + integerNumber
+                    resources.getString(R.string.Pay_Remaining_Payment_USD)+" "+currency + " "+ + integerNumber
                 paymentType = "full_payment"
                 binding.layoutPar.visibility = View.GONE
                 binding.radioFull.isChecked = true
@@ -136,8 +138,7 @@ class Payment : AppCompatActivity() {
                         if (hour.toInt() > 48) {
                             priceNewPar = (integerNumber * 30) / 100
 
-                            binding.tvAmountPar.text =
-                                resources.getString(R.string.Pay_Partia_Payment_USD) + priceNewPar
+                            binding.tvAmountPar.text = resources.getString(R.string.Pay_Partia_Payment_USD)+" "+currency +" "+ priceNewPar
                             paymentType = "partial"
                             this.priceNew = priceNewPar!!.toDouble().toString()
 
@@ -147,7 +148,7 @@ class Payment : AppCompatActivity() {
 
                             priceNew = integerNumber.toString()
                             binding.tvAmount.text =
-                                resources.getString(R.string.Pay_Full_Payment_USD) + integerNumber
+                                resources.getString(R.string.Pay_Full_Payment_USD) +" "+currency + " "+ integerNumber
                             paymentType = "full_payment"
                         }
                     } catch (e: Exception) {
@@ -282,16 +283,16 @@ class Payment : AppCompatActivity() {
 //                }
 //            }
                     webView.addJavascriptInterface(WebAppInterface(this@Payment), "Android")
-                    val i = Intent(context, MainActivity::class.java)
-                        .putExtra("callFrom", "Payment")
-                        .putExtra("id", id)
-                        .putExtra("foodId", foodId)
-                        .putExtra("currency", currency)
-                        .putExtra("paymentType", paymentType)
-                        .putExtra("text", "text")
-                        .putExtra("priceNew", priceNew)
-                    context.startActivity(i)
-                    finish()
+//                    val i = Intent(context, MainActivity::class.java)
+//                        .putExtra("callFrom", "Payment")
+//                        .putExtra("id", id)
+//                        .putExtra("foodId", foodId)
+//                        .putExtra("currency", currency)
+//                        .putExtra("paymentType", paymentType)
+//                        .putExtra("text", "text")
+//                        .putExtra("priceNew", priceNew)
+//                    context.startActivity(i)
+//                    finish()
                     // Load the URL
                     webView.loadUrl("https://baseet.thedemostore.in/sadabpaynew.php?email=abcs@gmail.com&mobile=9981482211&quantity=1&amount=${priceNew}")
                 } else {
@@ -319,6 +320,7 @@ class Payment : AppCompatActivity() {
                                             .putExtra("foodId", foodId)
                                             .putExtra("paymentType", paymentType)
                                             .putExtra("text", text)
+                                            .putExtra("currency", currency)
                                             .putExtra("priceNew", priceNew)
                                         context.startActivity(i)
                                         finish()
@@ -426,6 +428,10 @@ class Payment : AppCompatActivity() {
                             count = 0
                             priceNew = response.body()!!.converted_price.toString()
                             currency = response.body()!!.currency.toString()
+                            if (priceNew.contentEquals(".")){
+                                priceNew = BigDecimal(priceNew).setScale(2, RoundingMode.HALF_UP).toDouble().toString()
+
+                            }
                             AppProgressBar.hideLoaderDialog()
                         }
 

@@ -203,9 +203,9 @@
 
     <string name="Order_Accepted">Order Accepted</string>
     <string name="Please_select_Service_date">Please select Service date</string>
-    <string name="Pay_Partia_Payment_USD">Pay Partial Payment USD:</string>
-    <string name="Pay_Full_Payment_USD">Pay Full Payment USD: </string>
-    <string name="Pay_Remaining_Payment_USD">Pay Remaining Payment USD: </string>
+    <string name="Pay_Partia_Payment_USD">Pay Partial Payment :</string>
+    <string name="Pay_Full_Payment_USD">Pay Full Payment : </string>
+    <string name="Pay_Remaining_Payment_USD">Pay Remaining Payment : </string>
 
     <string name="Turkish">Turkish</string>
     <string name="Arabic">Arabic</string>

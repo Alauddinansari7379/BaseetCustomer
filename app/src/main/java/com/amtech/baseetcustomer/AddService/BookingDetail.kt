@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.amtech.baseetcustomer.AddService.modelcurrency.ModelConvertCurrency
 import com.amtech.baseetcustomer.Helper.AppProgressBar
 import com.amtech.baseetcustomer.Helper.isOnline
 import com.amtech.baseetcustomer.Helper.myToast
@@ -26,6 +27,7 @@ class BookingDetail : AppCompatActivity() {
     private val binding by lazy { ActivityBookingDetailBinding.inflate(layoutInflater) }
     private val context = this@BookingDetail
     var count = 0
+    var countC = 0
     var id = ""
     private var foodId = ""
     private var price = ""
@@ -33,6 +35,7 @@ class BookingDetail : AppCompatActivity() {
     private var serviceDate = ""
     private var restId = ""
     private var order_id = ""
+    private var currency = ""
     private lateinit var sessionManager: SessionManager
 
     @SuppressLint("SetTextI18n")
@@ -42,6 +45,8 @@ class BookingDetail : AppCompatActivity() {
         sessionManager = SessionManager(context)
         MainActivity().languageSetting(context,sessionManager.selectedLanguage.toString())
 
+
+        apiCallGetCurrencyConvertion()
         if (MainActivity.refreshLanNew) {
             MainActivity.refreshLanNew = false
             refresh()
@@ -208,6 +213,7 @@ class BookingDetail : AppCompatActivity() {
                                     .putExtra("order_id", order_id)
                                     .putExtra("serviceDate", serviceDate)
                                     .putExtra("price", price.toString())
+                                    .putExtra("currency", currency.toString())
                                 context.startActivity(i)
                             } else {
                                 onBackPressed()
@@ -259,4 +265,50 @@ class BookingDetail : AppCompatActivity() {
         super.onBackPressed()
         back = true
     }
+    fun apiCallGetCurrencyConvertion() {
+        AppProgressBar.showLoaderDialog(context)
+        ApiClient.apiService.getCurrencyConversion(sessionManager.idToken.toString(), "1".toString())
+
+            .enqueue(object : Callback<ModelConvertCurrency> {
+                override fun onResponse(
+                    call: Call<ModelConvertCurrency>,
+                    response: Response<ModelConvertCurrency>
+                ) {
+                    try {
+                        if (response.code() == 404) {
+                            myToast(context, resources.getString(R.string.Something_went_wrong))
+                            AppProgressBar.hideLoaderDialog()
+                        } else if (response.code() == 500) {
+                            myToast(context, resources.getString(R.string.Server_Error))
+                            AppProgressBar.hideLoaderDialog()
+                        } else {
+                            count = 0
+                             currency = response.body()!!.currency.toString()
+                            AppProgressBar.hideLoaderDialog()
+                        }
+
+                    } catch (e: Exception) {
+                        myToast(context, resources.getString(R.string.Something_went_wrong))
+                        e.printStackTrace()
+                        AppProgressBar.hideLoaderDialog()
+                    }
+                }
+
+                override fun onFailure(call: Call<ModelConvertCurrency>, t: Throwable) {
+                    myToast(context, t.message.toString())
+                    AppProgressBar.hideLoaderDialog()
+                    countC++
+                    if (countC <= 3) {
+                        apiCallGetCurrencyConvertion()
+                    } else {
+                        myToast(context, t.message.toString())
+                        AppProgressBar.hideLoaderDialog()
+
+                    }
+
+                }
+
+            })
+    }
+
 }

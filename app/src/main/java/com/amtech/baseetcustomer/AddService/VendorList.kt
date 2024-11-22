@@ -38,6 +38,7 @@ import com.amtech.baseetcustomer.Helper.Util
 import com.amtech.baseetcustomer.Helper.myToast
 import com.amtech.baseetcustomer.MainActivity.Adapter.AdapterVendorList
 import com.amtech.baseetcustomer.MainActivity.MainActivity
+import com.amtech.baseetcustomer.MainActivity.MainActivity.Companion.back
 import com.amtech.baseetcustomer.MainActivity.MainActivity.Companion.refreshLanNew
 import com.amtech.baseetcustomer.R
 import com.amtech.baseetcustomer.databinding.AcitvityVendorListBinding
@@ -169,9 +170,9 @@ class VendorList : AppCompatActivity(), AdapterVendorList.SendService,
 
 
         with(binding) {
-            imgBack.setOnClickListener {
-                onBackPressed()
-            }
+//            imgBack.setOnClickListener {
+//                onBackPressed()
+//            }
 
         }
         apiCallVendorList()
@@ -201,11 +202,7 @@ class VendorList : AppCompatActivity(), AdapterVendorList.SendService,
     }
 
 
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        super.onBackPressed()
-        MainActivity.back = true
-    }
+
 
     private fun apiCallVendorList() {
         AppProgressBar.showLoaderDialog(context)
@@ -562,6 +559,14 @@ class VendorList : AppCompatActivity(), AdapterVendorList.SendService,
 
     override fun onProgressUpdate(percentage: Int) {
         TODO("Not yet implemented")
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val i = Intent(context, MainActivity::class.java)
+        context.startActivity(i)
+        finish()
     }
 
 }
