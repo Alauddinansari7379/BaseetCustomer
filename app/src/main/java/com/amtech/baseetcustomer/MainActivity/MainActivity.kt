@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity() {
     private var paymentResponse = ""
     private var callFrom = ""
     private var foodId = ""
+    private var currency = ""
     private var paymentType = ""
     private var id = ""
     private var priceNew = ""
@@ -128,6 +129,7 @@ class MainActivity : AppCompatActivity() {
         paymentResponse = intent.getStringExtra("text").toString()
         callFrom = intent!!.getStringExtra("callFrom").toString()
         foodId = intent!!.getStringExtra("foodId").toString()
+        currency = intent!!.getStringExtra("currency").toString()
         paymentType = intent!!.getStringExtra("paymentType").toString()
         id = intent!!.getStringExtra("id").toString()
         priceNew = intent!!.getStringExtra("priceNew").toString()
@@ -389,7 +391,8 @@ class MainActivity : AppCompatActivity() {
             paymentType,
             "online",
             "paid",
-            priceNew
+            priceNew,
+            currency
         )
             .enqueue(object : Callback<ModelPlaceOrder> {
                 @SuppressLint("LogNotTimber")

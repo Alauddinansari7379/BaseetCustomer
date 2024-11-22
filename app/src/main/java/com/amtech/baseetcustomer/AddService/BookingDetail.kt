@@ -32,6 +32,7 @@ class BookingDetail : AppCompatActivity() {
     private var callFrom = ""
     private var serviceDate = ""
     private var restId = ""
+    private var order_id = ""
     private lateinit var sessionManager: SessionManager
 
     @SuppressLint("SetTextI18n")
@@ -82,6 +83,7 @@ class BookingDetail : AppCompatActivity() {
                 val trTo = intent.getStringExtra("tr_to")
                 val startTime = intent.getStringExtra("start_time")
                 val endTime = intent.getStringExtra("end_time")
+                 order_id = intent.getStringExtra("order_id").toString()
                 val description = intent.getStringExtra("description")
                 val country = intent.getStringExtra("country")
                 val type = intent.getStringExtra("type")
@@ -203,6 +205,7 @@ class BookingDetail : AppCompatActivity() {
                                     .putExtra("callFrom", "Booking")
                                     .putExtra("foodId", foodId)
                                     .putExtra("id", id)
+                                    .putExtra("order_id", order_id)
                                     .putExtra("serviceDate", serviceDate)
                                     .putExtra("price", price.toString())
                                 context.startActivity(i)

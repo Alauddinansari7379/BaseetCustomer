@@ -47,6 +47,7 @@ class Payment : AppCompatActivity() {
     private val timer = Timer()
     var price = 0.0
     var priceNew = ""
+    var currency = ""
     var count = 0
     var callFrom = ""
     var serviceDate = ""
@@ -94,7 +95,7 @@ class Payment : AppCompatActivity() {
         price = BigDecimal(price).setScale(2, RoundingMode.HALF_UP).toDouble()
 
         foodId = intent!!.getStringExtra("foodId").toString()
-        orderid = intent!!.getStringExtra("orderid").toString()
+        orderid = intent!!.getStringExtra("order_id").toString()
         id = intent!!.getStringExtra("id").toString()
         serviceDate = intent!!.getStringExtra("serviceDate").toString()
         //   price.substringAfter(".")
@@ -285,6 +286,7 @@ class Payment : AppCompatActivity() {
                         .putExtra("callFrom", "Payment")
                         .putExtra("id", id)
                         .putExtra("foodId", foodId)
+                        .putExtra("currency", currency)
                         .putExtra("paymentType", paymentType)
                         .putExtra("text", "text")
                         .putExtra("priceNew", priceNew)
@@ -407,7 +409,7 @@ class Payment : AppCompatActivity() {
 
     fun apiCallGetCurrencyConvertion() {
         AppProgressBar.showLoaderDialog(context)
-        ApiClient.apiService.getCurrencyConversion(sessionManager.idToken.toString(), orderid, price.toString())
+        ApiClient.apiService.getCurrencyConversion(sessionManager.idToken.toString(), price.toString())
             .enqueue(object : Callback<ModelConvertCurrency> {
                 override fun onResponse(
                     call: Call<ModelConvertCurrency>,
@@ -423,6 +425,7 @@ class Payment : AppCompatActivity() {
                         } else {
                             count = 0
                             priceNew = response.body()!!.converted_price.toString()
+                            currency = response.body()!!.currency.toString()
                             AppProgressBar.hideLoaderDialog()
                         }
 

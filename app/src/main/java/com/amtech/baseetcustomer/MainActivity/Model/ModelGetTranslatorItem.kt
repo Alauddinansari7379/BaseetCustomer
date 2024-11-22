@@ -23,6 +23,7 @@ data class ModelGetTranslatorItem(
     val start_time: String?,
     val status: String?,
     val tr_from: String?,
+    val order_id: String?,
     val tr_to: String?,
     val trperson: String?,
     val type: String?,

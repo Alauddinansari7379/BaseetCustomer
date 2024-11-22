@@ -136,7 +136,7 @@ class AdapterAllOrder(
                         val i = Intent(context, Payment::class.java)
                             .putExtra("callFrom", "Remaining")
                             .putExtra("foodId", foodId.toString())
-                            .putExtra("orderid", orderid.toString())
+                            .putExtra("order_id", orderid.toString())
                             .putExtra("id", servID.toString())
                             .putExtra("serviceDate", serviceDate.toString())
                             .putExtra("price", result.toString())

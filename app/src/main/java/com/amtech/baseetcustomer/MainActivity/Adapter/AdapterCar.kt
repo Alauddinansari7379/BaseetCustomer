@@ -104,6 +104,7 @@ class AdapterCar(
                                     .putExtra("foodId", foodId)
                                     .putExtra("tr_from", tr_from)
                                     .putExtra("tr_to", tr_to)
+                                    .putExtra("order_id", order_id)
                                     .putExtra("start_time", start_time)
                                     .putExtra("end_time", end_time)
                                     .putExtra("description", description)

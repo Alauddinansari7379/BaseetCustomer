@@ -74,6 +74,7 @@ interface ApiInterface {
         @Query("pay_type") pay_type: String,
         @Query("payment_status") payment_status: String,
         @Query("order_amount") order_amount: String,
+        @Query("currency") currency: String,
 //        @Query("order_time") order_time: String,
 //        @Query("coupon_discount_amount") coupon_discount_amount: String,
 //        @Query("coupon_discount_title") coupon_discount_title: String,
@@ -219,7 +220,6 @@ interface ApiInterface {
     @GET("customer/currency")
     fun getCurrencyConversion(
         @Header("Authorization") authorization: String,
-        @Query("order_id") order_id : String,
         @Query("price") price: String
     ): Call<ModelConvertCurrency>
 }

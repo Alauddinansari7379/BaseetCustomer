@@ -97,6 +97,7 @@ class AdapterTranslator(
                                 .putExtra("foodId", foodId)
                                 .putExtra("name", name)
                                 .putExtra("tr_from", tr_from)
+                                .putExtra("order_id", order_id)
                                 .putExtra("tr_to", tr_to)
                                 .putExtra("start_time", start_time)
                                 .putExtra("end_time", end_time)
