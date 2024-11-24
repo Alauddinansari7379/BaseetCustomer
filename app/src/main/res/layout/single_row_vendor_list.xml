@@ -252,6 +252,79 @@
 
 
                     </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/layoutCarType"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:visibility="gone"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_regular"
+                                android:text="@string/car_type"
+                                android:textColor="@color/text_color"
+                                android:textSize="12sp"
+                                android:textStyle="bold">
+
+                            </androidx.appcompat.widget.AppCompatTextView>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvCarType"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_regular"
+                                android:text=""
+                                android:textColor="@color/text_color"
+                                android:textSize="12sp"
+                                android:textStyle="bold">
+
+                            </androidx.appcompat.widget.AppCompatTextView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_weight="1">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_regular"
+                                android:text="@string/driving_type"
+                                android:textColor="@color/text_color"
+                                android:textSize="12sp"
+                                android:textStyle="bold">
+
+                            </androidx.appcompat.widget.AppCompatTextView>
+
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tvDriveType"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_regular"
+                                android:text=""
+                                android:textColor="@color/text_color"
+                                android:textSize="12sp"
+                                android:textStyle="bold">
+
+                            </androidx.appcompat.widget.AppCompatTextView>
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/layoutRemaning"
@@ -259,6 +332,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="end"
+                        android:layout_marginTop="5dp"
                         android:orientation="horizontal">
 
                         <LinearLayout
@@ -343,15 +417,18 @@
                         </androidx.appcompat.widget.AppCompatImageView>
 
                     </LinearLayout>-->
-                    <androidx.appcompat.widget.AppCompatButton
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/layoutDetail"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:text="@string/view"
                         android:textAllCaps="false"
                         android:padding="3dp"
-                        android:background="@drawable/view_background_round"
-                        android:drawableEnd="@drawable/baseline_remove_red_eye_24"/>
+                        android:textSize="12sp"
+                        android:drawableTint="@color/white"
+                         android:drawableEnd="@drawable/baseline_remove_red_eye_24">
+
+                    </com.google.android.material.button.MaterialButton>
 
 
                 </LinearLayout>

@@ -212,6 +212,7 @@
     <string name="USD">USD</string>
     <string name="Requested">مطلوب</string>
     <string name="Language">لغة :</string>
+    <string name="Translator_Language">لغة يترجم : </string>
     <string name="Translator">يترجم</string>
     <string name="Car">سيارة</string>
     <string name="No">لا</string>

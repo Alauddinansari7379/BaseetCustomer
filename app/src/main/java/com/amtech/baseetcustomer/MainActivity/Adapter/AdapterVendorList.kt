@@ -45,12 +45,15 @@ class AdapterVendorList(
                 with(list[position]) {
                     if (bookingType == "home" || bookingType == "car") {
                         binding.layoutTrasanlotor.visibility = View.GONE
+                        binding.layoutCarType.visibility = View.VISIBLE
                     }
                     binding.tvName.text = name.toString()
                     binding.tvDate.text = created_at!!.substringBefore("T")
                     binding.tvType.text = food_type
                     binding.tvTraTo.text = tr_to
                     binding.tvTrFrom.text = tr_from
+                    binding.tvCarType.text = ": $car_type"
+                    binding.tvDriveType.text = ": $driv_type"
                     binding.tvTotal.text = price.toString()
                     binding.tvType.text = drone.toString()
                     binding.tvDescription.text = description.toString()

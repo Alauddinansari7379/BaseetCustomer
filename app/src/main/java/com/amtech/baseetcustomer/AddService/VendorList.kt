@@ -13,14 +13,10 @@ import android.provider.OpenableColumns
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.amtech.baseetcustomer.AddService.Model.ModelRequest
 import com.amtech.baseetcustomer.AddService.Model.ModelVendorList
-import com.amtech.baseetcustomer.AddService.Translator.Companion
 import com.amtech.baseetcustomer.AddService.Translator.Companion.bookingType
 import com.amtech.baseetcustomer.AddService.Translator.Companion.country
 import com.amtech.baseetcustomer.AddService.Translator.Companion.endTime
@@ -38,7 +34,6 @@ import com.amtech.baseetcustomer.Helper.Util
 import com.amtech.baseetcustomer.Helper.myToast
 import com.amtech.baseetcustomer.MainActivity.Adapter.AdapterVendorList
 import com.amtech.baseetcustomer.MainActivity.MainActivity
-import com.amtech.baseetcustomer.MainActivity.MainActivity.Companion.back
 import com.amtech.baseetcustomer.MainActivity.MainActivity.Companion.refreshLanNew
 import com.amtech.baseetcustomer.R
 import com.amtech.baseetcustomer.databinding.AcitvityVendorListBinding
@@ -46,7 +41,6 @@ import com.amtech.baseetcustomer.databinding.PopupServicDetailsBinding
 import com.amtech.baseetcustomer.retrofit.ApiClient
 import com.amtech.baseetcustomer.sharedpreferences.SessionManager
 import com.bumptech.glide.Glide
-import com.squareup.picasso.Picasso
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -77,6 +71,7 @@ class VendorList : AppCompatActivity(), AdapterVendorList.SendService,
     private var travelPerson = ""
     private var serviceDate = ""
     val context = this@VendorList
+    var data = 0
     lateinit var sessionManager: SessionManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -230,6 +225,7 @@ class VendorList : AppCompatActivity(), AdapterVendorList.SendService,
                             AppProgressBar.hideLoaderDialog()
 
                         } else {
+                            data = response.body()!!.data.size
                             binding.recyclerView.apply {
                                 adapter = AdapterVendorList(
                                     context,
@@ -312,7 +308,7 @@ class VendorList : AppCompatActivity(), AdapterVendorList.SendService,
                                             tvCarType.text = details.car_type.toString()
                                             tvTravlingPer.text = details.trperson.toString()
                                             tvDatesN.text = "Dates : ${details.dates}"
-                                            tvHomeDays.text = "Home days : ${details.home_days}"
+                                            tvHomeDays.text = "Days : ${details.home_days}"
                                         } else {
                                             tvCarType.visibility = View.GONE
                                             tvTravlingPer.visibility = View.GONE
@@ -564,9 +560,12 @@ class VendorList : AppCompatActivity(), AdapterVendorList.SendService,
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         super.onBackPressed()
-        val i = Intent(context, MainActivity::class.java)
-        context.startActivity(i)
-        finish()
+        if (data != 0) {
+            val i = Intent(context, MainActivity::class.java)
+            context.startActivity(i)
+            finish()
+        }
+
     }
 
 }

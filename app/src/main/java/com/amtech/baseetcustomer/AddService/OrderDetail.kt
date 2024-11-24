@@ -81,12 +81,15 @@ class OrderDetail : AppCompatActivity() {
                     layoutDrivingType.visibility = View.GONE
                     layoutRentType.visibility = View.GONE
                     layoutAminites.visibility = View.GONE
+                    layoutCar.visibility = View.GONE
                 }
 
                 "home" -> {
                     layoutTravling.visibility = View.GONE
                     layoutDrivingType.visibility = View.GONE
                     layoutTraTo.visibility = View.GONE
+                    layoutCar.visibility = View.GONE
+
 
                 }
 

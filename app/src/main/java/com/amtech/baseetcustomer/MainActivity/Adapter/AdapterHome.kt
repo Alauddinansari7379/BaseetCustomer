@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +17,7 @@ import com.amtech.baseetcustomer.databinding.SingleRowCarBinding
 import com.amtech.baseetcustomer.sharedpreferences.SessionManager
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import com.squareup.picasso.Picasso
 
 
 class AdapterHome(
@@ -47,8 +49,11 @@ class AdapterHome(
                     binding.tvTime.text = context.resources.getString(R.string.Time)  +start_time +context.resources.getString(R.string.to) +end_time
                     binding.tvCountry.text = country
                     binding.tvDates.text = serv_date
-                    binding.tvHomeType.text = type
-                    binding.tvPriceN.text = context.resources.getString(R.string.USD) +price
+                    binding.layoutType.text = "Type: "
+                    binding.tvCarType.text = type
+                    binding.tvPriceN.text = context.resources.getString(R.string.USD) +" "+price
+                    binding.layoutDrivingType.visibility=View.GONE
+                    binding.layoutTraveling.visibility=View.GONE
                     val jsonArray = JsonArray()
                     jsonArray.add("0")
                     val jsonObject = JsonObject()
@@ -139,13 +144,16 @@ class AdapterHome(
                     }
 
 //
-//                if (list[position].serv_id.appimage != null) {
-//                    Picasso.get().load("https:"+list[position].serv_id.appimage)
-//                        .placeholder(R.drawable.usernew)
-//                        .error(R.drawable.usernew)
-//                        .into(binding.image)
-//
-//                }
+                    for (i in serv_id) {
+                        if (i.image != null) {
+                            Picasso.get().load("https://baseet.thedemostore.in/storage/app/public/product/"+i.image )
+                                .placeholder(R.drawable.image)
+                                .error(R.drawable.no_image_available)
+                                .into(binding.image)
+
+                        }
+                    }
+
 
 
                 }

@@ -16,6 +16,7 @@ import com.amtech.baseetcustomer.databinding.SingleRowCarBinding
 import com.amtech.baseetcustomer.sharedpreferences.SessionManager
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import com.squareup.picasso.Picasso
 
 
 class AdapterCar(
@@ -45,10 +46,9 @@ class AdapterCar(
                 with(list[position]) {
                     binding.tvName.text = context.resources.getString(R.string.name) +name
                     binding.tvTime.text = context.resources.getString(R.string.Time)  +start_time +context.resources.getString(R.string.Time) +end_time
-                    binding.tvCountry.text = country
+                    binding.tvCountry.text = "Country : $country"
                     binding.tvDates.text = serv_date
-                    binding.tvHomeType.text = type
-                    binding.tvPriceN.text =context.resources.getString(R.string.USD) +price
+                      binding.tvPriceN.text =context.resources.getString(R.string.USD)+" " +price
                     val jsonArray = JsonArray()
                     jsonArray.add("0")
                     val jsonObject = JsonObject()
@@ -118,14 +118,19 @@ class AdapterCar(
                         }
                     }
 
-//
-//                if (list[position].serv_id.appimage != null) {
-//                    Picasso.get().load("https:"+list[position].serv_id.appimage)
-//                        .placeholder(R.drawable.usernew)
-//                        .error(R.drawable.usernew)
-//                        .into(binding.image)
-//
-//                }
+                    for (i in serv_id) {
+                        if (i.image != null) {
+                            Picasso.get().load("https://baseet.thedemostore.in/storage/app/public/product/"+i.image )
+                                .placeholder(R.drawable.image)
+                                .error(R.drawable.no_image_available)
+                                .into(binding.image)
+
+                        }
+                        binding.tvCarType.text = i.car_type
+                        binding.tvDrivingType.text = i.driv_type
+                        binding.tvTravelling.text = i.trperson
+
+                    }
 
 
                 }

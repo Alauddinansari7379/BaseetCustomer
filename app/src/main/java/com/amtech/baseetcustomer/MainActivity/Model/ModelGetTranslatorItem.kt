@@ -19,6 +19,7 @@ data class ModelGetTranslatorItem(
     val res_id: String?,
     val serv_date: String?,
     val serv_hour: String?,
+    val applogo: String?,
     val serv_id: ArrayList<ServId>,
     val start_time: String?,
     val status: String?,

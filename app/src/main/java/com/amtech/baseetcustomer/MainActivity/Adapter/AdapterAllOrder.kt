@@ -14,6 +14,7 @@ import com.amtech.baseetcustomer.MainActivity.Model.Order
 import com.amtech.baseetcustomer.R
 import com.amtech.baseetcustomer.databinding.SingleRowOrderListBinding
 import com.amtech.baseetcustomer.sharedpreferences.SessionManager
+import com.squareup.picasso.Picasso
 import org.json.JSONObject
 
 
@@ -46,7 +47,7 @@ class AdapterAllOrder(
                     binding.tvSrn.text = id.toString()
                     //  binding.tvName.text = delivery_address.contact_person_name
                     binding.tvName.text = restaurant.name
-                    binding.tvDate.text = created_at.subSequence(0, 11)
+                    binding.tvpaymentReceived.text = order_payment
                     if (order_status == "delivered") {
                         binding.tvOrderStatus.text = context.resources.getString(R.string.Completed)
                     }else if (order_status == "pending"){
@@ -173,10 +174,10 @@ class AdapterAllOrder(
                     }
 
 
-//                if (list[position].preview != null) {
-//                    Picasso.get().load("https:"+list[position].preview)
-//                        .placeholder(R.drawable.placeholder_n)
-//                        .error(R.drawable.error_placeholder)
+//                if (list[position].restaurant.applogo != null) {
+//                    Picasso.get().load(list[position].restaurant.applogo)
+//                        .placeholder(R.drawable.image)
+//                        .error(R.drawable.no_image_available)
 //                        .into(binding.image)
 //
 //                }

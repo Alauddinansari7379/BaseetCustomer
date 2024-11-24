@@ -102,9 +102,9 @@
     <string name="_00_00_0000">00 00 0000</string>
     <string name="processing">Processing</string>
     <string name="order_details">Order Details:</string>
-    <string name="from">From :</string>
-    <string name="to">To :</string>
-    <string name="type">Type :</string>
+    <string name="from">From Language :</string>
+    <string name="to">To Language :</string>
+    <string name="type">Translator Type :</string>
     <string name="Select_an_Image_First">Select an Image First</string>
     <string name="na">NA</string>
     <string name="Enter_Password">Enter Password</string>
@@ -219,6 +219,7 @@
     <string name="USD">USD</string>
     <string name="Requested">Requested</string>
     <string name="Language">Language</string>
+    <string name="Translator_Language">Translator Language</string>
     <string name="Translator">Translator</string>
     <string name="Car">Car</string>
     <string name="No">No</string>
@@ -301,5 +302,10 @@
     <string name="s_no_">S.No:</string>
     <string name="vendor_list">Vendor List</string>
     <string name="view">View</string>
+    <string name="country">"country : "</string>
+    <string name="travelling_persons">Travelling Persons :</string>
+    <string name="driving_typen">Driving Type :</string>
+    <string name="no_of_persons">No of Persons</string>
+    <string name="payment_received">Amt received: </string>
 
 </resources>

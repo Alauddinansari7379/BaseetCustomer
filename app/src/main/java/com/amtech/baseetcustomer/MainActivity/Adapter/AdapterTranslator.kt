@@ -16,6 +16,7 @@ import com.amtech.baseetcustomer.databinding.SingleRowTranslatorBinding
 import com.amtech.baseetcustomer.sharedpreferences.SessionManager
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import com.squareup.picasso.Picasso
 
 
 class AdapterTranslator(
@@ -41,10 +42,11 @@ class AdapterTranslator(
             with(holder) {
                 with(list[position]) {
                      binding.tvName.text = context.resources.getString(R.string.name) +name
-                     binding.tvLangauge.text = context.resources.getString(R.string.Language)+ tr_from +context.resources.getString(R.string.to)+tr_to
+                     binding.tvLangauge.text = context.resources.getString(R.string.Translator_Language)+": "+ tr_from +context.resources.getString(R.string.to)+tr_to
                       binding.tvTime.text = context.resources.getString(R.string.Time)+ start_time+context.resources.getString(R.string.to)+end_time
                     binding.tvType.text = type
                     binding.tvDates.text = serv_date
+                    binding.tvServiceH.text = serv_hour
                     binding.tvPrice.text = price
                     binding.tvPriceN.text = "USD $price"
                      val jsonArray = JsonArray()
@@ -122,13 +124,18 @@ class AdapterTranslator(
 //                        videoCall.videoCall("Service$customer_id")
 //                    }
 //
-//                if (list[position].serv_id.appimage != null) {
-//                    Picasso.get().load("https:"+list[position].serv_id.appimage)
-//                        .placeholder(R.drawable.usernew)
-//                        .error(R.drawable.usernew)
-//                        .into(binding.image)
-//
-//                }
+
+
+                    for (i in serv_id) {
+                        if (i.image != null) {
+                            Picasso.get().load("https://baseet.thedemostore.in/storage/app/public/product/"+i.image )
+                                .placeholder(R.drawable.image)
+                                .error(R.drawable.no_image_available)
+                                .into(binding.image)
+
+                        }
+                    }
+
 
 
                 }

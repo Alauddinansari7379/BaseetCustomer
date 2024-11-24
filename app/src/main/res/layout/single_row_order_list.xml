@@ -152,13 +152,13 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1">
+                             android:layout_weight="1">
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_regular"
-                                android:text="@string/date"
+                                android:text="@string/payment_received"
                                 android:textColor="@color/text_color"
                                 android:textSize="12sp"
                                 android:textStyle="bold">
@@ -166,7 +166,7 @@
                             </androidx.appcompat.widget.AppCompatTextView>
 
                             <androidx.appcompat.widget.AppCompatTextView
-                                android:id="@+id/tvDate"
+                                android:id="@+id/tvpaymentReceived"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_regular"

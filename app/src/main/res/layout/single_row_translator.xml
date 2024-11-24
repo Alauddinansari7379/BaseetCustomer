@@ -82,7 +82,7 @@
                                 android:id="@+id/image"
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
-                                android:background="@drawable/usernew"
+                                android:background="@drawable/no_image_available"
                                 android:scaleType="centerCrop">
 
                             </de.hdodenhof.circleimageview.CircleImageView>
@@ -358,6 +358,44 @@
 
                                 <androidx.appcompat.widget.AppCompatTextView
                                     android:id="@+id/tvPrice"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_regular"
+                                    android:text="@string/_00"
+                                    android:textColor="@color/text_color"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold">
+
+                                </androidx.appcompat.widget.AppCompatTextView>
+
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_regular"
+                                android:text="@string/service_hour_"
+                                android:textColor="@color/text_color"
+                                android:textSize="12sp"
+                                android:textStyle="bold">
+
+                            </androidx.appcompat.widget.AppCompatTextView>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center">
+
+
+                                <androidx.appcompat.widget.AppCompatTextView
+                                    android:id="@+id/tvServiceH"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/poppins_regular"
