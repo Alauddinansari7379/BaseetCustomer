@@ -168,7 +168,7 @@ class MainActivity : AppCompatActivity() {
         //  binding.tvTitle.setOnClickListener {
 
         if (callFrom == "Payment") {
-            apiCallMakeOrder()
+//            apiCallMakeOrder()
 
             //   val data = "\"Array ( [website_ref_no] => 664ecf0ac305b [transaction_status] => 3 [transaction_number] => SD2623091450784 [MID] => 8962763 [RESPCODE] => 1 [RESPMSG] => Txn Success [ORDERID] => 664ecf0ac305b [STATUS] => TXN_SUCCESS [TXNAMOUNT] => 10 [issandboxmode] => 1 [checksumhash] => Nkxpg5/zh65zMj1m575AOq93WmLekli6cKattW5FJhWbhj+nO+VvSXSwZHgClxbaNkM5u92f7fyFScK0IFpJFy7Rak+BClxqjLP+vGR8sAM= ) 9H4ljR8UgNZ%2BKnHE8962763@@@@&&&&####\$\$\$\$\""
 

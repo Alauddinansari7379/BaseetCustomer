@@ -426,9 +426,10 @@ class Payment : AppCompatActivity() {
                             AppProgressBar.hideLoaderDialog()
                         } else {
                             count = 0
-                            priceNew = response.body()!!.converted_price.toString()
-                            currency = response.body()!!.currency.toString()
+
                             if (callFrom == "Remaining") {
+                                priceNew = response.body()!!.converted_price.toString()
+                                currency = response.body()!!.currency.toString()
                                 priceNew = priceNew.toString()
                                 binding.tvAmount.text =
                                     resources.getString(R.string.Pay_Remaining_Payment_USD) + " " + currency + " " + priceNew
