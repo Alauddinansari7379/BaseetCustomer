@@ -22,6 +22,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import rezwan.pstu.cse12.youtubeonlinestatus.recievers.NetworkChangeReceiver
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 class BookingDetail : AppCompatActivity() {
     private val binding by lazy { ActivityBookingDetailBinding.inflate(layoutInflater) }
@@ -46,7 +48,7 @@ class BookingDetail : AppCompatActivity() {
         MainActivity().languageSetting(context,sessionManager.selectedLanguage.toString())
 
 
-        apiCallGetCurrencyConvertion()
+//        apiCallGetCurrencyConvertion()
         if (MainActivity.refreshLanNew) {
             MainActivity.refreshLanNew = false
             refresh()
@@ -99,7 +101,7 @@ class BookingDetail : AppCompatActivity() {
                 val aminetes = intent.getStringExtra("aminetes")
                 val homeType = intent.getStringExtra("homeType")
                 restId = intent.getStringExtra("restId").toString()
-
+                apiCallGetCurrencyConvertion()
                 when (callFrom) {
                     "Translator" -> {
                         image.visibility = View.GONE
@@ -267,7 +269,7 @@ class BookingDetail : AppCompatActivity() {
     }
     fun apiCallGetCurrencyConvertion() {
         AppProgressBar.showLoaderDialog(context)
-        ApiClient.apiService.getCurrencyConversion(sessionManager.idToken.toString(), "1".toString())
+        ApiClient.apiService.getCurrencyConversion(sessionManager.idToken.toString(), price.toString())
 
             .enqueue(object : Callback<ModelConvertCurrency> {
                 override fun onResponse(
@@ -284,6 +286,8 @@ class BookingDetail : AppCompatActivity() {
                         } else {
                             count = 0
                              currency = response.body()!!.currency.toString()
+                            price = response.body()!!.converted_price.toString()
+                            price = BigDecimal(price).setScale(2, RoundingMode.HALF_UP).toDouble().toString()
                             AppProgressBar.hideLoaderDialog()
                         }
 

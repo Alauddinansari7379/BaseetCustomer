@@ -65,7 +65,7 @@ class Payment : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         sessionManager = SessionManager(context)
-        apiCallGetCurrencyConvertion()
+
         if (sessionManager.selectedLanguage == "en") {
             binding.imgLan.background = ContextCompat.getDrawable(context, R.drawable.arabic_text)
         } else {
@@ -108,7 +108,7 @@ class Payment : AppCompatActivity() {
         //  val integerNumber = integerString.toDouble()
 
         val integerNumber = price
-
+        apiCallGetCurrencyConvertion()
         MainActivity().languageSetting(context, sessionManager.selectedLanguage.toString())
 
 //        if (MainActivity.refreshLanNew) {
@@ -137,7 +137,7 @@ class Payment : AppCompatActivity() {
                     try {
                         if (hour.toInt() > 48) {
                             priceNewPar = (integerNumber * 30) / 100
-
+                            priceNewPar = BigDecimal(priceNewPar!!).setScale(2, RoundingMode.HALF_UP).toDouble()
                             binding.tvAmountPar.text = resources.getString(R.string.Pay_Partia_Payment_USD)+" "+currency +" "+ priceNewPar
                             paymentType = "partial"
                             this.priceNew = priceNewPar!!.toDouble().toString()
@@ -428,10 +428,15 @@ class Payment : AppCompatActivity() {
                             count = 0
                             priceNew = response.body()!!.converted_price.toString()
                             currency = response.body()!!.currency.toString()
-                            if (priceNew.contentEquals(".")){
-                                priceNew = BigDecimal(priceNew).setScale(2, RoundingMode.HALF_UP).toDouble().toString()
-
+                            if (callFrom == "Remaining") {
+                                priceNew = priceNew.toString()
+                                binding.tvAmount.text =
+                                    resources.getString(R.string.Pay_Remaining_Payment_USD) + " " + currency + " " + priceNew
+                                paymentType = "full_payment"
+                                binding.layoutPar.visibility = View.GONE
+                                binding.radioFull.isChecked = true
                             }
+                            priceNew = BigDecimal(priceNew).setScale(2, RoundingMode.HALF_UP).toDouble().toString()
                             AppProgressBar.hideLoaderDialog()
                         }
 
