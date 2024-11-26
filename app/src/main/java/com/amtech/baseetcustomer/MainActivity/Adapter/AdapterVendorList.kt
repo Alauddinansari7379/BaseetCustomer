@@ -1,20 +1,15 @@
 package com.amtech.baseetcustomer.MainActivity.Adapter
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.amtech.baseetcustomer.AddService.Model.Data
 import com.amtech.baseetcustomer.AddService.Translator.Companion.bookingType
-import com.amtech.baseetcustomer.R
 import com.amtech.baseetcustomer.databinding.SingleRowVendorListBinding
 import com.amtech.baseetcustomer.sharedpreferences.SessionManager
-import com.squareup.picasso.Picasso
 
 
 class AdapterVendorList(
