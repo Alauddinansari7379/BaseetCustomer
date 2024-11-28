@@ -5,9 +5,13 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.StyleSpan
 import android.util.Log
 import android.view.View
 import android.webkit.CookieManager
@@ -115,16 +119,28 @@ class Payment : AppCompatActivity() {
 //            MainActivity.refreshLanNew = false
 //            refresh()
 //        }
-        binding.tvAmount.text =
-            resources.getString(R.string.Pay_Full_Payment_USD) + integerNumber
+        var fullText =
+            resources.getString(R.string.Pay_Full_Payment_USD) + " "+currency +" "+integerNumber
+        val spannableString = SpannableString(fullText)
+        val startIndex = fullText.indexOf(currency)
+        val endIndex = startIndex + currency.length
+        spannableString.setSpan(StyleSpan(Typeface.BOLD), startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        binding.tvAmount.text = spannableString
+
         try {
             if (callFrom == "Remaining") {
                 priceNew = integerNumber.toString()
-                binding.tvAmount.text =
-                    resources.getString(R.string.Pay_Remaining_Payment_USD)+" "+currency + " "+ + integerNumber
+                fullText =
+                    resources.getString(R.string.Pay_Remaining_Payment_USD)+" "+currency + " "+integerNumber
                 paymentType = "full_payment"
                 binding.layoutPar.visibility = View.GONE
                 binding.radioFull.isChecked = true
+                val spannableString = SpannableString(fullText)
+                val startIndex = fullText.indexOf(currency)
+                val endIndex = startIndex + currency.length
+                spannableString.setSpan(StyleSpan(Typeface.BOLD), startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                binding.tvAmount.text = spannableString
+
             } else {
                 if (serviceDate != "NA" && serviceDate != "") {
                     val currentDate: String =
@@ -138,18 +154,28 @@ class Payment : AppCompatActivity() {
                         if (hour.toInt() > 48) {
                             priceNewPar = (integerNumber * 30) / 100
                             priceNewPar = BigDecimal(priceNewPar!!).setScale(2, RoundingMode.HALF_UP).toDouble()
-                            binding.tvAmountPar.text = resources.getString(R.string.Pay_Partia_Payment_USD)+" "+currency +" "+ priceNewPar
+                            fullText = resources.getString(R.string.Pay_Partia_Payment_USD)+" "+currency +" "+ priceNewPar
                             paymentType = "partial"
                             this.priceNew = priceNewPar!!.toDouble().toString()
+                            val spannableString = SpannableString(fullText)
+                            val startIndex = fullText.indexOf(currency)
+                            val endIndex = startIndex + currency.length
+                            spannableString.setSpan(StyleSpan(Typeface.BOLD), startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                            binding.tvAmountPar.text = spannableString
 
                         } else {
                             binding.layoutPar.visibility = View.GONE
                             binding.radioFull.isChecked = true
 
                             priceNew = integerNumber.toString()
-                            binding.tvAmount.text =
+                            fullText =
                                 resources.getString(R.string.Pay_Full_Payment_USD) +" "+currency + " "+ integerNumber
                             paymentType = "full_payment"
+                            val spannableString = SpannableString(fullText)
+                            val startIndex = fullText.indexOf(currency)
+                            val endIndex = startIndex + currency.length
+                            spannableString.setSpan(StyleSpan(Typeface.BOLD), startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                            binding.tvAmount.text = spannableString
                         }
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -431,11 +457,16 @@ class Payment : AppCompatActivity() {
                                 priceNew = response.body()!!.converted_price.toString()
                                 currency = response.body()!!.currency.toString()
                                 priceNew = priceNew.toString()
-                                binding.tvAmount.text =
+                                var fullText=
                                     resources.getString(R.string.Pay_Remaining_Payment_USD) + " " + currency + " " + priceNew
                                 paymentType = "full_payment"
                                 binding.layoutPar.visibility = View.GONE
                                 binding.radioFull.isChecked = true
+                                val spannableString = SpannableString(fullText)
+                                val startIndex = fullText.indexOf(currency)
+                                val endIndex = startIndex + currency.length
+                                spannableString.setSpan(StyleSpan(Typeface.BOLD), startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                                binding.tvAmount.text = spannableString
                             }
                             priceNew = BigDecimal(priceNew).setScale(2, RoundingMode.HALF_UP).toDouble().toString()
                             AppProgressBar.hideLoaderDialog()

@@ -652,6 +652,7 @@
                         <ImageView
                             android:id="@+id/ivImage"
                             android:layout_width="100dp"
+                            android:scaleType="fitCenter"
                             android:layout_height="100dp"/>
                         <LinearLayout
                             android:id="@+id/layoutVideoCall"

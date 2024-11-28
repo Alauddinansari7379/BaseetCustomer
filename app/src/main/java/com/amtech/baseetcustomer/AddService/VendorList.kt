@@ -7,6 +7,8 @@ import android.content.ContentResolver
 import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
@@ -41,6 +43,8 @@ import com.amtech.baseetcustomer.databinding.PopupServicDetailsBinding
 import com.amtech.baseetcustomer.retrofit.ApiClient
 import com.amtech.baseetcustomer.sharedpreferences.SessionManager
 import com.bumptech.glide.Glide
+import com.squareup.picasso.OkHttp3Downloader
+import com.squareup.picasso.Picasso
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -49,6 +53,10 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.util.Locale
+import com.squareup.picasso.Target
+import okhttp3.OkHttpClient
+import java.util.concurrent.TimeUnit
+
 
 class VendorList : AppCompatActivity(), AdapterVendorList.SendService,
     UploadRequestBody.UploadCallback {
@@ -89,6 +97,21 @@ class VendorList : AppCompatActivity(), AdapterVendorList.SendService,
         adult = intent.getStringExtra("adult").toString()
         homeDetail = intent.getStringExtra("homeDetail").toString()
         homeType = intent.getStringExtra("homeType").toString()
+
+
+        if (Picasso.get() == null) {
+            val okHttpClient = OkHttpClient.Builder()
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .build()
+
+            val picassoInstance = Picasso.Builder(this)
+                .downloader(OkHttp3Downloader(okHttpClient))
+                .build()
+
+            Picasso.setSingletonInstance(picassoInstance)
+        }
+
 
         with(binding) {
             tvName.text = name
@@ -268,6 +291,7 @@ class VendorList : AppCompatActivity(), AdapterVendorList.SendService,
         ApiClient.apiService.getDetails(sessionManager.idToken.toString(), id)
             .enqueue(object : Callback<ModelDetails> {
 
+                @SuppressLint("SuspiciousIndentation")
                 override fun onResponse(
                     call: Call<ModelDetails>,
                     response: Response<ModelDetails>
@@ -326,9 +350,47 @@ class VendorList : AppCompatActivity(), AdapterVendorList.SendService,
                                             tvHomeType.visibility = View.GONE
                                         }
 
-                                        Glide.with(context)
-                                            .load(details.appimage)
-                                            .into(ivImage)
+//                                        Glide.with(context)
+//                                            .load(details.appimage)
+//                                            .into(ivImage)
+
+//                                        Picasso.get().load(details.appimage )
+//                                            .placeholder(R.drawable.image)
+//                                            .error(R.drawable.no_image_available)
+//                                            .into(binding.ivImage)
+                                      val appimage = details.appimage.replace("http","https")
+                                        Picasso.get()
+                                            .load(appimage)
+                                            .placeholder(R.drawable.image) // This is the placeholder that will be set in onPrepareLoad
+                                            .error(R.drawable.no_image_available)
+                                            .resize(500, 500) // Resize dimensions as needed
+                                            .centerCrop()
+                                            .into(object : Target {
+                                                override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
+                                                    Log.d("Picasso", "Bitmap loaded successfully")
+                                                    binding.ivImage.setImageBitmap(bitmap)
+                                                }
+
+                                                override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
+                                                    Log.e("Picasso", "Bitmap load failed", e)
+                                                    binding.ivImage.setImageDrawable(errorDrawable)
+                                                }
+
+                                                override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
+                                                    Log.d("Picasso", "Preparing to load bitmap")
+                                                    if (placeHolderDrawable != null) {
+                                                        binding.ivImage.setImageDrawable(placeHolderDrawable)
+                                                    } else {
+                                                        Log.d("Picasso", "Placeholder drawable is null")
+                                                    }
+                                                }
+                                            })
+
+
+
+
+
+
 
                                         val dialog = AlertDialog.Builder(context)
                                             .setView(root)
