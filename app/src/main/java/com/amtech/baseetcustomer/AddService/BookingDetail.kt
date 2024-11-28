@@ -33,6 +33,7 @@ class BookingDetail : AppCompatActivity() {
     var id = ""
     private var foodId = ""
     private var price = ""
+    private var usdPrice = ""
     private var callFrom = ""
     private var serviceDate = ""
     private var restId = ""
@@ -96,6 +97,7 @@ class BookingDetail : AppCompatActivity() {
                 val type = intent.getStringExtra("type")
                 serviceDate = intent!!.getStringExtra("serv_date").toString()
                 price = intent!!.getStringExtra("price").toString()
+                usdPrice = price
                 val trPerson = intent.getStringExtra("trperson")
                 val driverType = intent.getStringExtra("driv_type")
                 val aminetes = intent.getStringExtra("aminetes")
@@ -215,6 +217,7 @@ class BookingDetail : AppCompatActivity() {
                                     .putExtra("order_id", order_id)
                                     .putExtra("serviceDate", serviceDate)
                                     .putExtra("price", price.toString())
+                                    .putExtra("usdPrice", usdPrice.toString())
                                     .putExtra("currency", currency.toString())
                                 context.startActivity(i)
                             } else {

@@ -117,17 +117,36 @@
                     android:layout_weight="3">
 
                 </androidx.appcompat.widget.AppCompatRadioButton>
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvAmount"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
                     android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="@string/full_amount_00_usd"
-                    android:textColor="@color/black">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvAmount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="@string/full_amount_00_usd"
+                        android:textColor="@color/black">
 
-                </androidx.appcompat.widget.AppCompatTextView>
+                    </androidx.appcompat.widget.AppCompatTextView>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvAmountQAR"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
+                        android:textSize="11sp"
+                        android:gravity="end"
+                        android:text="@string/full_amount_00_usd"
+                        android:textColor="@color/black">
+
+                    </androidx.appcompat.widget.AppCompatTextView>
+                </LinearLayout>
+
 
             </androidx.appcompat.widget.LinearLayoutCompat>
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -142,17 +161,36 @@
                     android:layout_weight="3">
 
                 </androidx.appcompat.widget.AppCompatRadioButton>
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvAmountPar"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
                     android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="@string/Pay_Partia_Payment_USD"
-                    android:textColor="@color/black">
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvAmountPar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
+                        android:gravity="end"
+                        android:text="@string/Pay_Partia_Payment_USD"
+                        android:textColor="@color/black">
 
-                </androidx.appcompat.widget.AppCompatTextView>
+                    </androidx.appcompat.widget.AppCompatTextView>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvAmountParQAR"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_weight="1"
+                        android:textSize="11sp"
+                        android:gravity="end"
+                        android:text="@string/Pay_Partia_Payment_USD"
+                        android:textColor="@color/black">
+
+                    </androidx.appcompat.widget.AppCompatTextView>
+                </LinearLayout>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
