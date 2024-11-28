@@ -100,6 +100,7 @@ class Payment : AppCompatActivity() {
         price = intent!!.getStringExtra("price")!!.toFloat().toDouble()
         usdPrice = intent!!.getStringExtra("usdPrice")!!.toFloat().toDouble()
         price = BigDecimal(price).setScale(2, RoundingMode.HALF_UP).toDouble()
+        usdPrice = BigDecimal(usdPrice).setScale(2, RoundingMode.HALF_UP).toDouble()
 
         foodId = intent!!.getStringExtra("foodId").toString()
         orderid = intent!!.getStringExtra("order_id").toString()
@@ -466,6 +467,7 @@ class Payment : AppCompatActivity() {
                                 priceNew = response.body()!!.converted_price.toString()
                                 currency = response.body()!!.currency.toString()
                                 priceNew = priceNew.toString()
+                                priceNew = BigDecimal(priceNew).setScale(2, RoundingMode.HALF_UP).toDouble().toString()
                                 var fullText=
                                     resources.getString(R.string.Pay_Remaining_Payment_USD) + " USD "+  usdPrice
                                    binding.tvAmountQAR.text = resources.getString(R.string.Pay_Remaining_Payment_USD) + " " + currency + " " +priceNew

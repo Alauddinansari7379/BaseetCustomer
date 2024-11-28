@@ -9,13 +9,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.amtech.baseetcustomer.AddService.OrderDetail
 import com.amtech.baseetcustomer.AddService.Payment
-import com.amtech.baseetcustomer.Helper.pmFormate
 import com.amtech.baseetcustomer.MainActivity.Model.Order
 import com.amtech.baseetcustomer.R
 import com.amtech.baseetcustomer.databinding.SingleRowOrderListBinding
 import com.amtech.baseetcustomer.sharedpreferences.SessionManager
-import com.squareup.picasso.Picasso
-import org.json.JSONObject
 
 
 class AdapterAllOrder(
@@ -141,6 +138,7 @@ class AdapterAllOrder(
                             .putExtra("id", servID.toString())
                             .putExtra("serviceDate", serviceDate.toString())
                             .putExtra("price", result.toString())
+                            .putExtra("usdPrice", result.toString())
                         context.startActivity(i)
                     }
 
