@@ -123,28 +123,40 @@ class Payment : AppCompatActivity() {
 //            MainActivity.refreshLanNew = false
 //            refresh()
 //        }
-       var fullText =
-            resources.getString(R.string.Pay_Full_Payment_USD) + " USD " +usdPrice
-        binding.tvAmountQAR.text  = resources.getString(R.string.Pay_Full_Payment_USD) + " "+currency +" "+integerNumber
+        var fullText =
+            resources.getString(R.string.Pay_Full_Payment_USD) + " USD " + usdPrice
+        binding.tvAmountQAR.text =
+            resources.getString(R.string.Pay_Full_Payment_USD) + " " + currency + " " + integerNumber
         val spannableString = SpannableString(fullText)
         val startIndex = fullText.indexOf("USD")
         val endIndex = startIndex + "USD".length
-        spannableString.setSpan(StyleSpan(Typeface.BOLD), startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        binding.tvAmount.text= spannableString
+        spannableString.setSpan(
+            StyleSpan(Typeface.BOLD),
+            startIndex,
+            endIndex,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        binding.tvAmount.text = spannableString
 
         try {
             if (callFrom == "Remaining") {
                 priceNew = integerNumber.toString()
                 fullText =
-                    resources.getString(R.string.Pay_Remaining_Payment_USD)+" USD "+usdPrice
-                 binding.tvAmountQAR.text = resources.getString(R.string.Pay_Remaining_Payment_USD)+" "+currency + " "+integerNumber
+                    resources.getString(R.string.Pay_Remaining_Payment_USD) + " USD " + usdPrice
+                binding.tvAmountQAR.text =
+                    resources.getString(R.string.Pay_Remaining_Payment_USD) + " " + currency + " " + integerNumber
                 paymentType = "full_payment"
                 binding.layoutPar.visibility = View.GONE
                 binding.radioFull.isChecked = true
                 val spannableString = SpannableString(fullText)
                 val startIndex = fullText.indexOf("USD")
                 val endIndex = startIndex + "USD".length
-                spannableString.setSpan(StyleSpan(Typeface.BOLD), startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                spannableString.setSpan(
+                    StyleSpan(Typeface.BOLD),
+                    startIndex,
+                    endIndex,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
                 binding.tvAmount.text = spannableString
 
             } else {
@@ -159,17 +171,25 @@ class Payment : AppCompatActivity() {
                     try {
                         if (hour.toInt() > 48) {
                             priceNewPar = (integerNumber * 30) / 100
-                           val usdPricePar = (usdPrice * 30) / 100
-                            priceNewPar = BigDecimal(priceNewPar!!).setScale(2, RoundingMode.HALF_UP).toDouble()
+                            val usdPricePar = (usdPrice * 30) / 100
+                            priceNewPar =
+                                BigDecimal(priceNewPar!!).setScale(2, RoundingMode.HALF_UP)
+                                    .toDouble()
                             fullText =
-                                resources.getString(R.string.Pay_Partia_Payment_USD)+" USD "+ usdPricePar
-                               binding.tvAmountParQAR.text = resources.getString(R.string.Pay_Partia_Payment_USD)+" "+currency +" "+  priceNewPar
+                                resources.getString(R.string.Pay_Partia_Payment_USD) + " USD " + usdPricePar
+                            binding.tvAmountParQAR.text =
+                                resources.getString(R.string.Pay_Partia_Payment_USD) + " " + currency + " " + priceNewPar
                             paymentType = "partial"
                             this.priceNew = priceNewPar!!.toDouble().toString()
                             val spannableString = SpannableString(fullText)
                             val startIndex = fullText.indexOf("USD")
                             val endIndex = startIndex + "USD".length
-                            spannableString.setSpan(StyleSpan(Typeface.BOLD), startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                            spannableString.setSpan(
+                                StyleSpan(Typeface.BOLD),
+                                startIndex,
+                                endIndex,
+                                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                            )
                             binding.tvAmountPar.text = spannableString
 
                         } else {
@@ -178,13 +198,19 @@ class Payment : AppCompatActivity() {
 
                             priceNew = integerNumber.toString()
                             fullText =
-                                resources.getString(R.string.Pay_Full_Payment_USD) +" USD "+  usdPrice
-                                binding.tvAmountQAR.text = resources.getString(R.string.Pay_Full_Payment_USD) +" "+currency + " "+ integerNumber
+                                resources.getString(R.string.Pay_Full_Payment_USD) + " USD " + usdPrice
+                            binding.tvAmountQAR.text =
+                                resources.getString(R.string.Pay_Full_Payment_USD) + " " + currency + " " + integerNumber
                             paymentType = "full_payment"
                             val spannableString = SpannableString(fullText)
                             val startIndex = fullText.indexOf("USD")
                             val endIndex = startIndex + "USD".length
-                            spannableString.setSpan(StyleSpan(Typeface.BOLD), startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                            spannableString.setSpan(
+                                StyleSpan(Typeface.BOLD),
+                                startIndex,
+                                endIndex,
+                                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                            )
                             binding.tvAmount.text = spannableString
                         }
                     } catch (e: Exception) {
@@ -447,7 +473,10 @@ class Payment : AppCompatActivity() {
 
     fun apiCallGetCurrencyConvertion() {
         AppProgressBar.showLoaderDialog(context)
-        ApiClient.apiService.getCurrencyConversion(sessionManager.idToken.toString(), price.toString())
+        ApiClient.apiService.getCurrencyConversion(
+            sessionManager.idToken.toString(),
+            price.toString()
+        )
             .enqueue(object : Callback<ModelConvertCurrency> {
                 override fun onResponse(
                     call: Call<ModelConvertCurrency>,
@@ -462,25 +491,33 @@ class Payment : AppCompatActivity() {
                             AppProgressBar.hideLoaderDialog()
                         } else {
                             count = 0
-
                             if (callFrom == "Remaining") {
                                 priceNew = response.body()!!.converted_price.toString()
                                 currency = response.body()!!.currency.toString()
                                 priceNew = priceNew.toString()
-                                priceNew = BigDecimal(priceNew).setScale(2, RoundingMode.HALF_UP).toDouble().toString()
-                                var fullText=
-                                    resources.getString(R.string.Pay_Remaining_Payment_USD) + " USD "+  usdPrice
-                                   binding.tvAmountQAR.text = resources.getString(R.string.Pay_Remaining_Payment_USD) + " " + currency + " " +priceNew
+                                priceNew = BigDecimal(priceNew).setScale(2, RoundingMode.HALF_UP)
+                                    .toDouble().toString()
+                                var fullText =
+                                    resources.getString(R.string.Pay_Remaining_Payment_USD) + " USD " + usdPrice
+                                binding.tvAmountQAR.text =
+                                    resources.getString(R.string.Pay_Remaining_Payment_USD) + " " + currency + " " + priceNew
                                 paymentType = "full_payment"
                                 binding.layoutPar.visibility = View.GONE
                                 binding.radioFull.isChecked = true
                                 val spannableString = SpannableString(fullText)
                                 val startIndex = fullText.indexOf("USD")
                                 val endIndex = startIndex + "USD".length
-                                spannableString.setSpan(StyleSpan(Typeface.BOLD), startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                                spannableString.setSpan(
+                                    StyleSpan(Typeface.BOLD),
+                                    startIndex,
+                                    endIndex,
+                                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                                )
                                 binding.tvAmount.text = spannableString
                             }
-                            priceNew = BigDecimal(priceNew).setScale(2, RoundingMode.HALF_UP).toDouble().toString()
+                            priceNew =
+                                BigDecimal(priceNew).setScale(2, RoundingMode.HALF_UP).toDouble()
+                                    .toString()
                             AppProgressBar.hideLoaderDialog()
                         }
 
