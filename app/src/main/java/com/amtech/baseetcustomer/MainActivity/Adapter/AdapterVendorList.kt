@@ -44,13 +44,31 @@ class AdapterVendorList(
                     }
                     binding.tvName.text = name.toString()
                     binding.tvDate.text = created_at!!.substringBefore("T")
-                    binding.tvType.text = food_type
+                    when (bookingType) {
+                        "home" -> {
+                            binding.tvType.text = "Home"
+
+                        }
+
+                        "car" -> {
+                            binding.tvType.text = "Car"
+
+                        }
+
+                        else -> {
+                            binding.tvType.text = "Translator"
+
+                        }
+                    }
                     binding.tvTraTo.text = tr_to
                     binding.tvTrFrom.text = tr_from
                     binding.tvCarType.text = ": $car_type"
+                    if (bookingType == "home") {
+                        binding.tvCarTypeHN.text = "Home Type"
+                    }
                     binding.tvDriveType.text = ": $driv_type"
                     binding.tvTotal.text = price.toString()
-                    binding.tvType.text = drone.toString()
+                    //  binding.tvType.text = drone.toString()
                     binding.tvDescription.text = description.toString()
 
                     binding.btnSendService.setOnClickListener {

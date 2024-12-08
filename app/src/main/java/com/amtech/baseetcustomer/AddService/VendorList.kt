@@ -42,10 +42,11 @@ import com.amtech.baseetcustomer.databinding.AcitvityVendorListBinding
 import com.amtech.baseetcustomer.databinding.PopupServicDetailsBinding
 import com.amtech.baseetcustomer.retrofit.ApiClient
 import com.amtech.baseetcustomer.sharedpreferences.SessionManager
-import com.bumptech.glide.Glide
 import com.squareup.picasso.OkHttp3Downloader
 import com.squareup.picasso.Picasso
+import com.squareup.picasso.Target
 import okhttp3.MultipartBody
+import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -53,8 +54,6 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.util.Locale
-import com.squareup.picasso.Target
-import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
 
 
@@ -358,34 +357,50 @@ class VendorList : AppCompatActivity(), AdapterVendorList.SendService,
 //                                            .placeholder(R.drawable.image)
 //                                            .error(R.drawable.no_image_available)
 //                                            .into(binding.ivImage)
-                                      val appimage = details.appimage.replace("http","https")
-                                        Picasso.get()
-                                            .load(appimage)
-                                            .placeholder(R.drawable.image) // This is the placeholder that will be set in onPrepareLoad
-                                            .error(R.drawable.no_image_available)
-                                            .resize(500, 500) // Resize dimensions as needed
-                                            .centerCrop()
-                                            .into(object : Target {
-                                                override fun onBitmapLoaded(bitmap: Bitmap?, from: Picasso.LoadedFrom?) {
-                                                    Log.d("Picasso", "Bitmap loaded successfully")
-                                                    binding.ivImage.setImageBitmap(bitmap)
-                                                }
+                                        var appimage=""
+                                        if (!appimage.isNullOrEmpty()) {
+                                         appimage = details.appimage!!.replace("http", "https")
 
-                                                override fun onBitmapFailed(e: Exception?, errorDrawable: Drawable?) {
-                                                    Log.e("Picasso", "Bitmap load failed", e)
-                                                    binding.ivImage.setImageDrawable(errorDrawable)
-                                                }
-
-                                                override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
-                                                    Log.d("Picasso", "Preparing to load bitmap")
-                                                    if (placeHolderDrawable != null) {
-                                                        binding.ivImage.setImageDrawable(placeHolderDrawable)
-                                                    } else {
-                                                        Log.d("Picasso", "Placeholder drawable is null")
+                                            Picasso.get()
+                                                .load(appimage)
+                                                .placeholder(R.drawable.image) // This is the placeholder that will be set in onPrepareLoad
+                                                .error(R.drawable.no_image_available)
+                                                .resize(500, 500) // Resize dimensions as needed
+                                                .centerCrop()
+                                                .into(object : Target {
+                                                    override fun onBitmapLoaded(
+                                                        bitmap: Bitmap?,
+                                                        from: Picasso.LoadedFrom?
+                                                    ) {
+                                                        Log.d(
+                                                            "Picasso",
+                                                            "Bitmap loaded successfully"
+                                                        )
+                                                        binding.ivImage.setImageBitmap(bitmap)
                                                     }
-                                                }
-                                            })
 
+                                                    override fun onBitmapFailed(
+                                                        e: Exception?,
+                                                        errorDrawable: Drawable?
+                                                    ) {
+                                                        Log.e("Picasso", "Bitmap load failed", e)
+                                                        binding.ivImage.setImageDrawable(
+                                                            errorDrawable
+                                                        )
+                                                    }
+
+                                                    override fun onPrepareLoad(placeHolderDrawable: Drawable?) {
+                                                        Log.d("Picasso", "Preparing to load bitmap")
+                                                        if (placeHolderDrawable != null) {
+                                                            binding.ivImage.setImageDrawable(
+                                                                placeHolderDrawable
+                                                            )
+                                                        } else {
+                                                            Log.d("Picasso", "Placeholder drawable is null")
+                                                        }
+                                                    }
+                                                })
+                                        }
 
 
 

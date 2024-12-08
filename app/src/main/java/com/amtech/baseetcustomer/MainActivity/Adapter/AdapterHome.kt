@@ -49,7 +49,7 @@ class AdapterHome(
                     binding.tvTime.text = context.resources.getString(R.string.Time)  +start_time +context.resources.getString(R.string.to) +end_time
                     binding.tvCountry.text = country
                     binding.tvDates.text = serv_date
-                    binding.layoutType.text = "Type: "
+                    binding.layoutType.text = "Type: Home"
                     binding.tvCarType.text = type
                     binding.tvPriceN.text = context.resources.getString(R.string.USD) +" "+price
                     binding.layoutDrivingType.visibility=View.GONE
@@ -102,15 +102,25 @@ class AdapterHome(
 
                     binding.layoutRequested.setOnClickListener {
                         try {
-                            if (from_ven_stts == "accept" && serv_id.isNotEmpty() && binding.tvRequested.text != "Completed") {
+                            if (from_ven_stts == "accept" && serv_id.isNotEmpty() && binding.tvRequested.text!="Completed" && stts != "reject" ) {
                                 var foodId = ""
                                 var aminetes = ""
                                 var homeType = ""
                                 var serviceDate = "NA"
+                                var restId = ""
+                                for (i in serv_id) {
+                                     restId = i.restaurant_id.toString()
+                                }
                                 for (i in serv_id) {
                                     foodId = i.id.toString()
-                                    aminetes = i.amenities!!
-                                    homeType = i.car_type!!
+                                    if (i.amenities!=null){
+                                        aminetes = i.amenities!!
+
+                                    }
+                                    if (i.car_type!=null) {
+                                        homeType = i.car_type!!
+
+                                    }
                                 }
                                 if (!serv_date.isNullOrEmpty()) {
                                     serviceDate = serv_date.toString()
@@ -135,6 +145,7 @@ class AdapterHome(
                                     .putExtra("aminetes", aminetes)
                                     .putExtra("price", price!!)
                                     .putExtra("homeType", homeType)
+                                    .putExtra("restId", restId)
                                 context.startActivity(i)
                             }
                         } catch (e: Exception) {

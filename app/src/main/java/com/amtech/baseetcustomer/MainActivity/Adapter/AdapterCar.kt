@@ -90,6 +90,10 @@ class AdapterCar(
                         if (from_ven_stts == "accept" && serv_id.isNotEmpty() && binding.tvRequested.text != "Completed") {
                                 var foodId = ""
                                 var serviceDate = ""
+                            var restId = ""
+                            for (i in serv_id) {
+                                restId = i.restaurant_id.toString()
+                            }
                                 for (i in serv_id) {
                                     foodId = i.id.toString()
                                 }
@@ -114,6 +118,7 @@ class AdapterCar(
                                     .putExtra("driv_type", driv_type)
                                     .putExtra("serv_date", serviceDate)
                                     .putExtra("price", price!!)
+                                    .putExtra("restId", restId!!)
                                 context.startActivity(i)
                         }
                     }
