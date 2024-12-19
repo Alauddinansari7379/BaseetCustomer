@@ -30,8 +30,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
                 android:fontFamily="@font/poppins_bold"
                 android:text="@string/login_in"
                 android:textColor="@color/black"
@@ -55,14 +55,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp">
+                android:layout_marginTop="15dp"
+                android:visibility="gone">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
                     android:layout_marginTop="60dp"
+                    android:layout_marginEnd="10dp"
                     android:fontFamily="@font/poppins_bold"
                     android:text="@string/mobile_number"
                     android:textColor="@color/black"
@@ -84,6 +85,7 @@
                     android:layout_width="0dp"
                     android:layout_height="45dp"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     android:background="@drawable/corner"
                     android:hint="@string/enter_phone_number"
                     android:inputType="number"
@@ -98,14 +100,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp">
+                android:layout_marginTop="15dp"
+                android:visibility="gone">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
                     android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
                     android:fontFamily="@font/poppins_bold"
                     android:text="@string/password"
                     android:textColor="@color/black"
@@ -122,13 +125,14 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/corner"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/edtPassword"
                     android:layout_width="0dp"
                     android:layout_height="45dp"
-                     android:layout_weight="1"
+                    android:layout_weight="1"
                     android:background="@null"
                     android:hint="@string/enter_your_password"
                     android:inputType="textPassword"
@@ -177,7 +181,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="15dp">
+                android:layout_marginEnd="15dp"
+                android:visibility="gone">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="match_parent"
@@ -219,8 +224,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="15dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginEnd="10dp"
                 android:gravity="center">
 

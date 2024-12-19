@@ -16,6 +16,7 @@ import com.amtech.baseetcustomer.Helper.myToast
 import com.amtech.baseetcustomer.MainActivity.Adapter.AdapterAllOrder
 import com.amtech.baseetcustomer.MainActivity.MainActivity
 import com.amtech.baseetcustomer.MainActivity.Model.ModelAllOrder
+import com.amtech.baseetcustomer.MainActivity.Model.ModelCancel.ModelCancel
 import com.amtech.baseetcustomer.MainActivity.Model.Order
 import com.amtech.baseetcustomer.R
 import com.amtech.baseetcustomer.databinding.FragmentNotificationBinding
@@ -32,7 +33,7 @@ import java.net.MalformedURLException
 import java.net.URL
 
 
-class OrderListFragment : Fragment(),AdapterAllOrder.VideoCall {
+ class OrderListFragment : Fragment(),AdapterAllOrder.VideoCall {
     private lateinit var  binding: FragmentNotificationBinding
     lateinit var sessionManager: SessionManager
     var count=0
@@ -186,4 +187,76 @@ class OrderListFragment : Fragment(),AdapterAllOrder.VideoCall {
 
     }
 
-}
+     override fun cancelOrder(orderId: String) {
+         apiCallCancelOrder(orderId)
+     }
+
+     private fun apiCallCancelOrder(orderId: String) {
+         AppProgressBar.showLoaderDialog(context)
+         ApiClient.apiService.cancelOrder(
+             sessionManager.idToken.toString(), orderId
+         ).enqueue(object :
+             Callback<ModelCancel> {
+             @SuppressLint("LogNotTimber", "LongLogTag", "SetTextI18n")
+             override fun onResponse(
+                 call: Call<ModelCancel>,
+                 response: Response<ModelCancel>
+             ) {
+                 try {
+                     if (response.code() == 500) {
+                         activity?.let { myToast(it, resources.getString(R.string.Server_Error)) }
+                         AppProgressBar.hideLoaderDialog()
+
+                     } else if (response.code() == 401) {
+                         activity?.let { myToast(it, resources.getString(R.string.Unauthorized)) }
+                         AppProgressBar.hideLoaderDialog()
+
+                     } else {
+
+                         if (response.isSuccessful) {
+                             activity?.let {
+                                 myToast(it, resources.getString(R.string.order_cancel_successfully))
+                                 apiCallAllOrder()
+                             }
+                         }else{
+                             activity?.let {
+                                 myToast(
+                                     it,
+                                     resources.getString(R.string.Something_went_wrong)
+                                 )
+                             }
+                             AppProgressBar.hideLoaderDialog()
+                         }
+
+                     }
+                 } catch (e: Exception) {
+                     e.printStackTrace()
+                     activity?.let {
+                         myToast(
+                             it,
+                             resources.getString(R.string.Something_went_wrong)
+                         )
+                     }
+                     AppProgressBar.hideLoaderDialog()
+
+                 }
+             }
+
+             override fun onFailure(call: Call<ModelCancel>, t: Throwable) {
+                 AppProgressBar.hideLoaderDialog()
+                 count++
+                 if (count <= 3) {
+                     Log.e("count", count.toString())
+                     apiCallCancelOrder(orderId)
+                 } else {
+                     activity?.let { myToast(it, t.message.toString()) }
+                     AppProgressBar.hideLoaderDialog()
+
+                 }
+                 AppProgressBar.hideLoaderDialog()
+             }
+
+         })
+     }
+
+ }

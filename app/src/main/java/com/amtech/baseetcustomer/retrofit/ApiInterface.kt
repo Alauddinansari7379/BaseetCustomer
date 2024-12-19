@@ -7,6 +7,7 @@ import com.amtech.baseetcustomer.AddService.modelcurrency.ModelConvertCurrency
 import com.amtech.baseetcustomer.AddService.modeldetails.ModelDetails
 import com.amtech.baseetcustomer.Login.model.ModelLogin
 import com.amtech.baseetcustomer.MainActivity.Model.ModelAllOrder
+import com.amtech.baseetcustomer.MainActivity.Model.ModelCancel.ModelCancel
 import com.amtech.baseetcustomer.MainActivity.Model.ModelGetProfile
 import com.amtech.baseetcustomer.MainActivity.Model.ModelGetTranslator
 import com.amtech.baseetcustomer.MainActivity.Model.ModelStatues.ModelStatues
@@ -37,7 +38,6 @@ interface ApiInterface {
     @POST("auth/login")
     fun login(
         @Query("phone") email: String,
-        @Query("password") password: String,
         @Query("device_token") device_token: String,
         @Query("device_type") device_type: String,
     ): Call<ModelLogin>
@@ -222,4 +222,9 @@ interface ApiInterface {
         @Header("Authorization") authorization: String,
         @Query("price") price: String
     ): Call<ModelConvertCurrency>
+    @POST("customer/order/cancel")
+    fun cancelOrder(
+        @Header("Authorization") authorization: String,
+        @Query("order_id") order_id: String
+    ): Call<ModelCancel>
 }

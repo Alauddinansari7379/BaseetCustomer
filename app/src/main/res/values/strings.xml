@@ -307,5 +307,6 @@
     <string name="driving_typen">Driving Type :</string>
     <string name="no_of_persons">No of Persons</string>
     <string name="payment_received">Amt received: </string>
+    <string name="order_cancel_successfully">Order has been successfully cancelled.</string>
 
 </resources>

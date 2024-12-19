@@ -11,7 +11,6 @@ import android.os.Handler
 import android.os.Looper
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
-import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
@@ -26,8 +25,14 @@ import com.amtech.baseetcustomer.R
 import com.amtech.baseetcustomer.SignUp.ForgotPassword
 import com.amtech.baseetcustomer.SignUp.SignUp
 import com.amtech.baseetcustomer.databinding.ActivityLoginBinding
+import com.amtech.baseetcustomer.otpless.ConfigurationSettings
 import com.amtech.baseetcustomer.retrofit.ApiClient
 import com.amtech.baseetcustomer.sharedpreferences.SessionManager
+import com.google.gson.JsonParser
+import com.otpless.dto.OtplessRequest
+import com.otpless.dto.OtplessResponse
+import com.otpless.main.OtplessManager
+import com.otpless.main.OtplessView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -48,16 +53,18 @@ class Login : AppCompatActivity() {
     private val FCM_TOKEN = "fcmtoken"
     private var fcmTokenNew = ""
     private var dialog: Dialog? = null
+    private lateinit var otplessView: OtplessView
 
     private lateinit var sharedPreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        initializeOtpless()
         sessionManager = SessionManager(context)
 
         sharedPreferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
-         Log.e("sessionManager.fcmToken", sessionManager.fcmToken.toString())
+        Log.e("sessionManager.fcmToken", sessionManager.fcmToken.toString())
 
 
 
@@ -101,32 +108,81 @@ class Login : AppCompatActivity() {
                 startActivity(Intent(context, ForgotPassword::class.java))
             }
             btnSignIn.setOnClickListener {
-                if (edtEmail.text!!.isEmpty()) {
-                    edtEmail.error =  resources.getString(R.string.Enter_Email)
-                    edtEmail.requestFocus()
-                    return@setOnClickListener
-                }
-                if (edtPassword.text!!.isEmpty()) {
-                    edtPassword.error = resources.getString(R.string.Enter_Password)
-                    edtPassword.requestFocus()
-                    return@setOnClickListener
-                }
-                if(sessionManager.fcmToken!!.isNotEmpty()){
-                    saveFCM(sessionManager.fcmToken.toString())
-                }
-                fcmTokenNew = sharedPreferences.getString(FCM_TOKEN, "").toString()
-
-                Log.e("FCMNewSession",fcmTokenNew)
-                apiCallLogin()
+                showPreBuiltUI()
+//                if (edtEmail.text!!.isEmpty()) {
+//                    edtEmail.error = resources.getString(R.string.Enter_Email)
+//                    edtEmail.requestFocus()
+//                    return@setOnClickListener
+//                }
+//                if (edtPassword.text!!.isEmpty()) {
+//                    edtPassword.error = resources.getString(R.string.Enter_Password)
+//                    edtPassword.requestFocus()
+//                    return@setOnClickListener
+//                }
+//                if (sessionManager.fcmToken!!.isNotEmpty()) {
+//                    saveFCM(sessionManager.fcmToken.toString())
+//                }
+//                fcmTokenNew = sharedPreferences.getString(FCM_TOKEN, "").toString()
+//
+//                Log.e("FCMNewSession", fcmTokenNew)
+//                apiCallLogin()
             }
         }
     }
 
-    private fun apiCallLogin() {
+    private fun initializeOtpless() {
+        // Initialise OtplessView in case of both Activity and Fragment
+        otplessView = OtplessManager.getInstance().getOtplessView(this)
+    }
+
+    private fun showPreBuiltUI() {
+        val request = OtplessRequest(ConfigurationSettings.APP_ID)
+        otplessView.setCallback(request, this::onOtplessCallback)
+        otplessView.showOtplessLoginPage(request, this::onOtplessCallback)
+    }
+
+    private fun onOtplessCallback(response: OtplessResponse) {
+//        otplessResponseHandler.visibility = View.VISIBLE
+        val response =
+            if (response.errorMessage != null) response.errorMessage else response.data.toString()
+
+
+        val jsonString = """$response"""
+
+        // Parse the JSON
+        val jsonObject = JsonParser.parseString(jsonString).asJsonObject
+
+        // Extract values
+        val status = jsonObject.get("status").asString
+        val mobile = jsonObject.getAsJsonArray("identities")
+            .first { it.asJsonObject.get("identityType").asString == "MOBILE" }
+            .asJsonObject.get("identityValue").asString
+
+        println("Status: $status")
+        println("Mobile: $mobile")
+        if (status == "SUCCESS"){
+
+            apiCallLogin(mobile.substringAfter("91"))
+        }else{
+            myToast(context,"Try Again: Verification Failed")
+        }
+
+        Log.i("ResponseOtpless",response)
+    }
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        otplessView.onNewIntent(intent)
+    }
+
+    override fun onBackPressed() {
+        // make sure you call this code before super.onBackPressed();
+        if (otplessView.onBackPressed()) return
+        super.onBackPressed()
+    }
+    private fun apiCallLogin(mobileNo: String) {
         AppProgressBar.showLoaderDialog(this@Login)
         ApiClient.apiService.login(
-            binding.edtEmail.text.toString().trim(),
-            binding.edtPassword.text.toString().trim(),
+            mobileNo,
             fcmTokenNew,
             "android",
         ).enqueue(object :
@@ -141,12 +197,7 @@ class Login : AppCompatActivity() {
                         myToast(this@Login, resources.getString(R.string.Server_Error))
                         AppProgressBar.hideLoaderDialog()
 
-                    } else if (response.code() == 401) {
-                        //myToast(this@Login, "Unauthorized")
-                        myToast(this@Login, resources.getString(R.string.Invalid_Phone_Password))
-                        AppProgressBar.hideLoaderDialog()
-
-                    } else {
+                    }  else {
                         sessionManager.isLogin = true
                         sessionManager.idToken = "Bearer " + response.body()!!.token
                         sessionManager.userId = response.body()!!.user_id.toString()
@@ -176,12 +227,12 @@ class Login : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<ModelLogin>, t: Throwable) {
-                myToast(this@Login,  resources.getString(R.string.Something_went_wrong))
+                myToast(this@Login, resources.getString(R.string.Something_went_wrong))
                 AppProgressBar.hideLoaderDialog()
                 countlogin++
                 if (countlogin <= 3) {
                     Log.e("count", countlogin.toString())
-                    apiCallLogin()
+                    apiCallLogin(mobileNo)
                 } else {
                     myToast(this@Login, t.message.toString())
                     AppProgressBar.hideLoaderDialog()
@@ -208,6 +259,7 @@ class Login : AppCompatActivity() {
 
         }
     }
+
     private fun languageDialog() {
         val view = layoutInflater.inflate(R.layout.dialog_langauge, null)
         dialog = Dialog(context)
@@ -259,6 +311,7 @@ class Login : AppCompatActivity() {
         startActivity(intent)
         overridePendingTransition(0, 0)
     }
+
     private fun langaugeSetting() {
         val locale: Locale = Locale(sessionManager.selectedLanguage!!)
         Locale.setDefault(locale)

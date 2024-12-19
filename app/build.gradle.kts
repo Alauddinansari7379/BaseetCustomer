@@ -176,5 +176,9 @@ dependencies {
     implementation("org.jitsi.react:jitsi-meet-sdk:8.5.0")
 
     //Langauge Change
+    // (Jitsi dependencies)
+//    implementation(libs.jitsi.meet.sdk)
+    //otpLess
+    implementation ("io.github.otpless-tech:otpless-android-sdk:2.5.3")
 
 }

@@ -9,9 +9,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="com.amtech.baseetcustomer" />
-                  <option name="mobileSdkAppId" value="1:12841086081:android:66243ce75dfdfb0c43f180" />
-                  <option name="projectId" value="notificationmsg-574c6" />
-                  <option name="projectNumber" value="12841086081" />
+                  <option name="mobileSdkAppId" value="1:1004018495961:android:eefbe82d070707015de9c8" />
+                  <option name="projectId" value="baseet-vendor" />
+                  <option name="projectNumber" value="1004018495961" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

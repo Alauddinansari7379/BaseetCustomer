@@ -53,6 +53,9 @@ class AdapterAllOrder(
                         binding.tvOrderStatus.text = order_status
 
                     }
+                    if (order_status == "confirmed"){
+                        binding.llCancel.visibility = View.VISIBLE
+                    }
                     if (order_status == "confirmed") {
                        binding.layoutProcessing.visibility=View.VISIBLE
                        binding.layoutCom.visibility=View.GONE
@@ -71,6 +74,7 @@ class AdapterAllOrder(
 
                     var serviceDate=""
                     var detailsNew=""
+                    var orderid=""
 
 //                    for (i in details){
 //                        detailsNew= i.food_details
@@ -119,7 +123,6 @@ class AdapterAllOrder(
 
                     binding.btnPayRemaning.setOnClickListener {
                          var foodId=""
-                         var orderid=""
                          var servID=""
                          var price=""
                         for (i in details){
@@ -141,7 +144,9 @@ class AdapterAllOrder(
                             .putExtra("usdPrice", result.toString())
                         context.startActivity(i)
                     }
-
+                    binding.layoutCancle.setOnClickListener {
+                        videoCall.cancelOrder(id.toString())
+                    }
                     binding.imgVideoCall.setOnClickListener {
                         videoCall.videoCall("Service$user_id")
                     }
@@ -191,6 +196,7 @@ class AdapterAllOrder(
     interface VideoCall{
         fun videoCall(toString: String)
         fun viewDoc(url: String?)
+        fun cancelOrder(orderId: String)
     }
 //    interface Cart{
 //        fun addToCart(toString: String)
