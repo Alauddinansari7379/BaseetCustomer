@@ -2,6 +2,7 @@ package com.amtech.baseetcustomer.MainActivity.Fragments
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,8 +12,10 @@ import android.widget.Button
 import android.widget.ImageView
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.amtech.baseetcustomer.Helper.AppProgressBar
 import com.amtech.baseetcustomer.Helper.myToast
+import com.amtech.baseetcustomer.Login.Login
 import com.amtech.baseetcustomer.MainActivity.Adapter.AdapterAllOrder
 import com.amtech.baseetcustomer.MainActivity.MainActivity
 import com.amtech.baseetcustomer.MainActivity.Model.ModelAllOrder
@@ -188,7 +191,18 @@ import java.net.URL
     }
 
      override fun cancelOrder(orderId: String) {
-         apiCallCancelOrder(orderId)
+         SweetAlertDialog(
+             requireContext(),
+             SweetAlertDialog.WARNING_TYPE
+         ).setTitleText(resources.getString(R.string.Are_You_Sure_No_Refund_on_Canceling)).setCancelText(resources.getString(R.string.No))
+             .setConfirmText(resources.getString(R.string.Yes)).showCancelButton(true)
+             .setConfirmClickListener { sDialog ->
+                 sDialog.cancel()
+                 apiCallCancelOrder(orderId)
+             }.setCancelClickListener { sDialog ->
+                 sDialog.cancel()
+             }.show()
+
      }
 
      private fun apiCallCancelOrder(orderId: String) {

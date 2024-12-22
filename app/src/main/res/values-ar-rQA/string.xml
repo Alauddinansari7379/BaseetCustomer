@@ -237,6 +237,7 @@
     <string name="ok">نعم</string>
     <string name="Your_Order_is_Placed">تم وضع طلبك</string>
     <string name="chose_lanaguge">اختار اللغة</string>
+    <string name="Are_You_Sure_No_Refund_on_Canceling">هل أنت متأكد؟ لا يوجد استرداد عند الإلغاء</string>
 
 
     // countryList

@@ -242,6 +242,7 @@
     <string name="Payment_Field">Payment Field</string>
     <string name="ok">OK</string>
      <string name="Are_you_sure_want_to_Logout">Are you sure want to Logout?</string>
+     <string name="Are_You_Sure_No_Refund_on_Canceling">Are You Sure? No Refund on Canceling</string>
     <string name="chose_lanaguge">Chose Language</string>
 
    // countryList

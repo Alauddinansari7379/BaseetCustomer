@@ -88,7 +88,7 @@
 
                 <data
                     android:host="otpless"
-                    android:scheme="otpless.yh21cmkp7hf20njmfs5r" />
+                    android:scheme="otpless.bmaozfdj9psetr1qj5oz" />
             </intent-filter>
         </activity>
         <meta-data

@@ -142,32 +142,51 @@ class Login : AppCompatActivity() {
     }
 
     private fun onOtplessCallback(response: OtplessResponse) {
-//        otplessResponseHandler.visibility = View.VISIBLE
-        val response =
-            if (response.errorMessage != null) response.errorMessage else response.data.toString()
+        val responseString = response.errorMessage ?: response.data.toString()
 
+        try {
+            // Parse the JSON
+            val jsonObject = JsonParser.parseString(responseString).asJsonObject
 
-        val jsonString = """$response"""
+            // Extract the status
+            val status = jsonObject.get("status")?.asString ?: throw Exception("Missing 'status' field")
 
-        // Parse the JSON
-        val jsonObject = JsonParser.parseString(jsonString).asJsonObject
+            // Extract the mobile number
+            val identities = jsonObject.getAsJsonArray("identities")
+            var mobile = identities.firstOrNull {
+                it.asJsonObject.get("identityType")?.asString == "MOBILE"
+            }?.asJsonObject?.get("identityValue")?.asString ?: throw Exception("Missing 'identityValue' for MOBILE")
 
-        // Extract values
-        val status = jsonObject.get("status").asString
-        val mobile = jsonObject.getAsJsonArray("identities")
-            .first { it.asJsonObject.get("identityType").asString == "MOBILE" }
-            .asJsonObject.get("identityValue").asString
+            // Extract the country code (optional)
+            val countryCode = jsonObject.getAsJsonObject("network")
+                ?.getAsJsonObject("ipLocation")
+                ?.getAsJsonObject("country")
+                ?.get("code")?.asString
 
-        println("Status: $status")
-        println("Mobile: $mobile")
-        if (status == "SUCCESS"){
+            println("Status: $status")
+            println("Mobile: $mobile")
+            println("Country Code: $countryCode")
 
-            apiCallLogin(mobile.substringAfter("91"))
-        }else{
-            myToast(context,"Try Again: Verification Failed")
+            if (status == "SUCCESS") {
+                // Clean the mobile number based on the country code
+                val cleanedMobile = when (countryCode) {
+                    "IN" -> mobile.substring(2) // Remove the first 2 digits for India
+                    "QA" -> mobile.substring(3) // Remove the first 3 digits for Qatar
+                    else -> mobile // No changes for other countries
+                }.trim()
+
+                apiCallLogin(cleanedMobile)
+            } else {
+                myToast(context, "Try Again: Verification Failed")
+            }
+
+        } catch (e: Exception) {
+            // Log and handle any parsing or processing errors
+            Log.e("OtplessCallbackError", "Error parsing response: $responseString", e)
+            myToast(context, "An error occurred. Please try again.")
         }
 
-        Log.i("ResponseOtpless",response)
+        Log.i("ResponseOtpless", responseString)
     }
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
