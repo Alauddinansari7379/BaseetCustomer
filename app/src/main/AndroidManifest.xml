@@ -91,12 +91,14 @@
                     android:scheme="otpless.bmaozfdj9psetr1qj5oz" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/app_logo" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel"
             android:value="@string/channel_id" />
+
         <service
             android:name=".Notification.MyFirebaseMessagingService"
             android:exported="false">

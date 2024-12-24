@@ -30,6 +30,7 @@ class SignUp : AppCompatActivity() {
     lateinit var sessionManager: SessionManager
     val context = this@SignUp
     var count = 0
+    var countryCodeNew="91"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -74,17 +75,25 @@ class SignUp : AppCompatActivity() {
                 }
                 apiCallSignUp()
             }
+            binding.spinnerCountryCode.setOnCountryChangeListener {
+                val countryCode = binding.spinnerCountryCode.selectedCountryCodeWithPlus
+
+                countryCodeNew = countryCode.substring(1)
+                Log.e("Log","countryCode-$countryCodeNew")
+
+            }
 
         }
     }
 
     private fun apiCallSignUp() {
         AppProgressBar.showLoaderDialog(context)
+        val newPhoneNo = countryCodeNew + binding.edtPhone.text.toString().trim()
         ApiClient.apiService.register(
             binding.edtFirstName.text.toString().trim(),
             binding.edtLastName.text.toString().trim(),
             binding.edtEmail.text.toString().trim(),
-            binding.edtPhone.text.toString().trim(),
+            newPhoneNo,
             binding.edtPassword.text.toString().trim(),
         ).enqueue(object :
             Callback<ModelSignUp> {

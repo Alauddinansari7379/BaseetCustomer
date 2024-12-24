@@ -180,20 +180,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp">
+                   <androidx.appcompat.widget.AppCompatTextView
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:layout_marginStart="10dp"
+                       android:layout_marginTop="10dp"
+                       android:fontFamily="@font/poppins_bold"
+                       android:text="@string/phone_number"
+                       android:textColor="@color/black"
+                       android:textSize="12sp">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="@string/phone_number"
-                    android:textColor="@color/black"
-                    android:textSize="12sp">
-
-                </androidx.appcompat.widget.AppCompatTextView>
-
-
+                   </androidx.appcompat.widget.AppCompatTextView>
             </LinearLayout>
 
             <LinearLayout
@@ -201,6 +198,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+
+                    >
+
+                    <com.hbb20.CountryCodePicker
+                        android:id="@+id/spinnerCountryCode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        app:ccp_showFlag="false"
+                        android:background="@drawable/corner"
+                        android:padding="5dp"
+                        app:ccp_textSize="15sp"
+                        />
+                </LinearLayout>
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/edtPhone"

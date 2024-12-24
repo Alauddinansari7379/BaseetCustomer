@@ -169,13 +169,13 @@ class Login : AppCompatActivity() {
 
             if (status == "SUCCESS") {
                 // Clean the mobile number based on the country code
-                val cleanedMobile = when (countryCode) {
-                    "IN" -> mobile.substring(2) // Remove the first 2 digits for India
-                    "QA" -> mobile.substring(3) // Remove the first 3 digits for Qatar
-                    else -> mobile // No changes for other countries
-                }.trim()
+//                val cleanedMobile = when (countryCode) {
+//                    "IN" -> mobile.substring(2) // Remove the first 2 digits for India
+//                    "QA" -> mobile.substring(3) // Remove the first 3 digits for Qatar
+//                    else -> mobile // No changes for other countries
+//                }.trim()
 
-                apiCallLogin(cleanedMobile)
+                apiCallLogin(mobile)
             } else {
                 myToast(context, "Try Again: Verification Failed")
             }
