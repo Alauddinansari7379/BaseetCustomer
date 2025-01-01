@@ -55,9 +55,9 @@ class ProfileFragment : Fragment() {
 //            }
         }
         with(binding) {
-            layoutEdit.setOnClickListener {
-                startActivity(Intent(requireContext(), EditProfile::class.java))
-            }
+//            layoutEdit.setOnClickListener {
+//                startActivity(Intent(requireContext(), EditProfile::class.java))
+//            }
 
             cardChange.setOnClickListener {
                 startActivity(Intent(requireContext(), ChangePassword::class.java))
